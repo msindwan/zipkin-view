@@ -1,0 +1,13 @@
+.ui.input {
+    input {
+        border-radius: 0;
+        background: #1f2129;
+        color: white;
+        font-size: 12px;
+    }
+
+    input:focus,
+    &.focus input {
+        border-color: #323232;
+    }
+}

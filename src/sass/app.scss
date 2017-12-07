@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Sans');
+@import url('//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css');
+
+@import './components/sidebar';
+@import './components/header';
+@import './components/semantic-ui/dropdown';
+@import './components/semantic-ui/button';
+@import './components/semantic-ui/input';
+
+body,
+html,
+#app {
+    height: 100%;
+    margin: 0;
+    background-color: rgb(238, 238, 238);
+    font-family: "PT Sans", Helvetica, Arial, sans-serif;
+}
+
+.zk-ui-container {
+    height: 100%;
+    width: 100%;
+}

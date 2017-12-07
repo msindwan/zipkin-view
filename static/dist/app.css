@@ -1,0 +1,94 @@
+@import url(https://fonts.googleapis.com/css?family=PT+Sans);@import url(//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css);.zk-ui-sidebar {
+  width: 260px;
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  z-index: 1;
+  box-shadow: rgba(0, 0, 0, 0.42) 0px 10px 30px -12px, rgba(0, 0, 0, 0.12) 0px 4px 25px 0px, rgba(0, 0, 0, 0.2) 0px 8px 10px -5px;
+  background: #2d303b; }
+  .zk-ui-sidebar .zk-ui-logo {
+    position: relative;
+    padding: 15px;
+    z-index: 4;
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase; }
+    .zk-ui-sidebar .zk-ui-logo a {
+      color: white;
+      text-decoration: none; }
+  .zk-ui-sidebar .zk-ui-sidebar-wrapper .zk-ui-form-control-container {
+    padding: 10px 15px; }
+    .zk-ui-sidebar .zk-ui-sidebar-wrapper .zk-ui-form-control-container .zk-ui-form-control-label {
+      color: white;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 10px;
+      display: block;
+      margin-bottom: 5px;
+      font-family: sans-serif; }
+    .zk-ui-sidebar .zk-ui-sidebar-wrapper .zk-ui-form-control-container .ui.button,
+    .zk-ui-sidebar .zk-ui-sidebar-wrapper .zk-ui-form-control-container .ui.input {
+      width: 100%; }
+
+.zk-ui-header {
+  position: fixed;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: 2px 2px 2px #d9d9d9;
+  width: 100%;
+  background: white;
+  left: 260px;
+  min-height: 50px; }
+
+.ui.fluid.dropdown {
+  border-radius: 0;
+  background: #1f2129;
+  padding: 10px;
+  color: white;
+  font-size: 12px; }
+  .ui.fluid.dropdown input {
+    color: white; }
+
+.ui.default.dropdown:not(.button) > .text,
+.ui.dropdown:not(.button) > .default.text {
+  color: lightgrey; }
+
+.ui.selection.active.dropdown,
+.ui.selection.active.dropdown:hover {
+  border-color: #323232; }
+  .ui.selection.active.dropdown .menu,
+  .ui.selection.active.dropdown:hover .menu {
+    border-color: #323232; }
+
+.ui.primary.button {
+  padding: 12px;
+  background: #4399b4;
+  border: 0;
+  color: white;
+  font-weight: bold;
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-size: 10px; }
+
+.ui.input input {
+  border-radius: 0;
+  background: #1f2129;
+  color: white;
+  font-size: 12px; }
+
+.ui.input input:focus,
+.ui.input.focus input {
+  border-color: #323232; }
+
+body,
+html,
+#app {
+  height: 100%;
+  margin: 0;
+  background-color: #eeeeee;
+  font-family: "PT Sans", Helvetica, Arial, sans-serif; }
+
+.zk-ui-container {
+  height: 100%;
+  width: 100%; }
