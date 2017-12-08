@@ -1,11 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=PT+Sans');
-@import url('//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css');
+@import './controls';
 
 @import './components/sidebar';
 @import './components/header';
-@import './components/semantic-ui/dropdown';
-@import './components/semantic-ui/button';
-@import './components/semantic-ui/input';
+@import './containers/browser';
+
 
 body,
 html,

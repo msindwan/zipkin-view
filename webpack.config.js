@@ -22,6 +22,9 @@ module.exports = {
      },
 
      module: {
+         loaders: [
+             { test: /\\.(gif|ttf|eot|svg|woff2?)$/, use: 'url-loader?name=[name].[ext]'},
+         ],
          rules: [{
              test: /\.jsx?$/,
              exclude: /node_modules/,

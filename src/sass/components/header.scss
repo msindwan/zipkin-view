@@ -7,4 +7,9 @@
     background: white;
     left: 260px;
     min-height: 50px;
+
+    &:before {
+        display: table;
+        content: " ";
+    }
 }

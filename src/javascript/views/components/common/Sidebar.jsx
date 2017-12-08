@@ -7,7 +7,6 @@
  * Description : App Sidebar.
  **/
 
-import { Dropdown, Input, Button } from 'semantic-ui-react'
 import React from 'react';
 
 const Sidebar = () => (
@@ -18,32 +17,30 @@ const Sidebar = () => (
         <div className="zk-ui-sidebar-wrapper">
             <div className="zk-ui-form-control-container">
                 <span className="zk-ui-form-control-label">Service</span>
-                 <Dropdown
-                     placeholder='Select Service'
-                     fluid
-                     search
-                     selection
-                     options={[ { key: 'af', value: 'af', text: 'service' }]} />
+                <input className="zk-ui-input dark" />
             </div>
             <div className="zk-ui-form-control-container">
                 <span className="zk-ui-form-control-label">Span Name</span>
-                <Dropdown
-                    placeholder='Select Span Name'
-                    fluid
-                    search
-                    selection
-                    options={[ { key: 'af', value: 'af', text: 'span' }]} />
+                <input className="zk-ui-input dark" />
+            </div>
+            <div className="zk-ui-form-control-container">
+                <span className="zk-ui-form-control-label">Start Date</span>
+                <input className="zk-ui-input dark" />
+            </div>
+            <div className="zk-ui-form-control-container">
+                <span className="zk-ui-form-control-label">End Date</span>
+                <input className="zk-ui-input dark" />
             </div>
             <div className="zk-ui-form-control-container">
                 <span className="zk-ui-form-control-label">Duration</span>
-                <Input />
+                <input className="zk-ui-input dark" />
             </div>
             <div className="zk-ui-form-control-container">
                 <span className="zk-ui-form-control-label">Limit</span>
-                <Input />
+                <input className="zk-ui-input dark" />
             </div>
             <div className="zk-ui-form-control-container">
-                <Button primary>Find Traces</Button>
+                <button className="zk-ui-button primary">Find Traces</button>
             </div>
         </div>
     </div>

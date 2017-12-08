@@ -10,8 +10,15 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NotFoundContainer from './views/containers/NotFoundContainer.jsx';
 import BrowserContainer from './views/containers/BrowserContainer.jsx';
+import Moment from 'moment';
+import NumberLocalizer from 'react-widgets-simple-number';
+import MomentLocalizer from 'react-widgets-moment';
 import ReactDOM from 'react-dom';
 import React from 'react';
+
+Moment.locale('en');
+MomentLocalizer();
+NumberLocalizer();
 
 // App entry point.
 window.addEventListener("load", function() {

@@ -9,6 +9,7 @@
 
 import Header from '../components/common/Header.jsx';
 import Sidebar from '../components/common/Sidebar.jsx';
+import Browser from '../components/browser/Browser.jsx'
 import React from 'react';
 
 const BrowserContainer = () => (
@@ -16,6 +17,7 @@ const BrowserContainer = () => (
         <Sidebar />
         <div className="zk-ui-content">
             <Header />
+            <Browser />
         </div>
     </div>
 );
