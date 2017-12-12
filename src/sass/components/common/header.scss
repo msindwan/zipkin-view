@@ -1,0 +1,33 @@
+.zk-ui-header {
+    position: fixed;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: 2px 2px 2px #d9d9d9;
+    width: 100%;
+    background: white;
+    left: 260px;
+    min-height: 50px;
+
+    &:before {
+        display: table;
+        content: " ";
+    }
+
+    .zk-ui-trace-search {
+        padding: 10px 30px;
+        .zk-ui-input {
+            width: 300px;
+            border-bottom: 1px solid #4399b4;
+            background: transparent;
+            color: black;
+            padding-left: 0;
+        }
+
+        .fa.fa-search {
+            color: white;
+            background: #4399b4;
+            padding: 10px;
+            border-radius: 50%;
+        }
+    }
+}

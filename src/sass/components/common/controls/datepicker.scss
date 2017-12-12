@@ -1,0 +1,122 @@
+.zk-ui-datepicker {
+
+    .DayPicker-wrapper {
+        outline: none;
+    }
+
+    .Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
+    background-color: #f0f8ff !important;
+    color: #4a90e2;
+  }
+  .Selectable .DayPicker-Day {
+    border-radius: 0 !important;
+  }
+  .Selectable .DayPicker-Day--start {
+    border-top-left-radius: 50% !important;
+    border-bottom-left-radius: 50% !important;
+  }
+  .Selectable .DayPicker-Day--end {
+    border-top-right-radius: 50% !important;
+    border-bottom-right-radius: 50% !important;
+  }
+
+    .zk-ui-datepicker-container {
+        display: flex;
+
+        > .zk-ui-input {
+            flex: 1;
+        }
+
+        .zk-ui-dropdown-button {
+            display: table;
+            width: 36px;
+            height: 36px;
+            background: #161616;
+            transition: all 0.2s ease;
+            cursor:pointer;
+            &:hover {
+                background: #68c4dc;
+            }
+
+            .fa.fa-calendar {
+                display: table-cell;
+                vertical-align: middle;
+                color: white;
+                font-size: 10px;
+                text-align: center;
+            }
+        }
+    }
+
+    .zk-ui-popover-container {
+        margin-top:5px;
+        position: absolute;
+        z-index: 10000000000;
+        opacity: 0;
+        transition: all 0.2s ease;
+        pointer-events: none;
+
+        .zk-ui-arrow-up {
+            margin-left: 5px;
+            border-bottom-color: #161616;
+        }
+
+        &.active {
+          opacity: 1;
+          pointer-events: all;
+        }
+    }
+
+    .zk-ui-popover-content {
+      background: white;
+      overflow: auto;
+      display: flex;
+    }
+
+    .zk-ui-datepicker-predefined {
+        flex-direction: column;
+        background: #1c1e24;
+    }
+
+    .zk-ui-datepicker-predefined-row {
+        padding: 5px;
+        background: #161616;
+        margin: 5px;
+        border-radius: 2px;
+        font-size: 11px;
+        cursor: pointer;
+        white-space: nowrap;
+        color: white;
+        &:hover {
+            background: #68c4dc;
+        }
+    }
+
+    .zk-ui-datepicker-calendars {
+        font-size: 12px;
+    }
+
+    .DayPicker-Months {
+        flex-wrap: nowrap;
+    }
+
+    .zk-ui-datepicker-time {
+        margin: 15px;
+        label {
+            display: block;
+        }
+        input {
+            width: 80px;
+            display: inline-block;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            font-size: 12px;
+            padding: 4px;
+            border: 0;
+            border-bottom: 1px solid #4399b4;
+            background-color: white;
+            padding-left: 0;
+            outline: 0;
+        }
+    }
+}

@@ -1,0 +1,59 @@
+.zk-ui-combobox {
+     position: relative;
+
+    .zk-ui-combobox-container {
+        display: flex;
+        > .zk-ui-input {
+            flex: 1;
+        }
+    }
+
+    .zk-ui-dropdown-button {
+        display: inline-block;
+        width: 36px;
+        height: 36px;
+        background: #161616;
+        transition: all 0.2s ease;
+        cursor:pointer;
+        &:hover {
+            background: #68c4dc;
+        }
+    }
+
+    .zk-ui-popover-container {
+        width: 100%;
+        margin-top:5px;
+        position: absolute;
+        z-index: 10000000000;
+        opacity: 0;
+        transition: all 0.2s ease;
+        pointer-events: none;
+
+        &.active {
+          opacity: 1;
+          pointer-events: all;
+        }
+    }
+
+    .zk-ui-popover-content {
+      background: white;
+      max-height: 200px;
+      overflow: auto;
+    }
+
+    .zk-ui-combobox-container {
+      display: flex;
+    }
+
+    .zk-ui-combobox-row {
+      padding: 10px;
+      font-family: inherit;
+      font-size: 12px;
+    }
+
+    .zk-ui-combobox-row:hover {
+      background: #68c4dc;
+      color: white;
+      cursor: pointer;
+    }
+}

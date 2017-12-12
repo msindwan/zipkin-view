@@ -1,8 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=PT+Sans');
-@import './controls';
+@import url('https://use.fontawesome.com/releases/v5.0.1/css/all.css');
 
-@import './components/sidebar';
-@import './components/header';
+@import './components/common/controls/common';
+@import './components/common/controls/combobox';
+@import './components/common/controls/datepicker';
+@import './components/common/sidebar';
+@import './components/common/header';
 @import './containers/browser';
 
 

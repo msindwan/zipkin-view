@@ -22,9 +22,6 @@ module.exports = {
      },
 
      module: {
-         loaders: [
-             { test: /\\.(gif|ttf|eot|svg|woff2?)$/, use: 'url-loader?name=[name].[ext]'},
-         ],
          rules: [{
              test: /\.jsx?$/,
              exclude: /node_modules/,
@@ -41,6 +38,9 @@ module.exports = {
                     loader: "sass-loader"
                 }]
             })
+        }, {
+            test: /\.css$/,
+            loader: ['style-loader', 'css-loader']
         }]
     },
     plugins: [

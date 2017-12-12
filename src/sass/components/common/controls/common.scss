@@ -32,3 +32,22 @@ input.zk-ui-input {
     }
     outline: 0;
 }
+
+.zk-ui-arrow-up {
+     width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid white;
+    margin: auto;
+}
+
+.zk-ui-arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid white;
+    margin: auto;
+    margin-top: 50%;
+}

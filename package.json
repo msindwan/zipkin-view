@@ -35,5 +35,13 @@
     "style-loader": "^0.19.0",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.9.7"
+  },
+  "dependencies": {
+    "i18next": "^10.2.1",
+    "i18next-browser-languagedetector": "^2.1.0",
+    "moment": "^2.19.3",
+    "react-day-picker": "^7.0.5",
+    "react-i18next": "^7.1.1",
+    "reduxion": "^1.0.5"
   }
 }
