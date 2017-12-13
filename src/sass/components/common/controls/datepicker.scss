@@ -1,7 +1,21 @@
 .zk-ui-datepicker {
 
+    position: relative;
+
     .DayPicker-wrapper {
         outline: none;
+        padding-bottom: 0;
+    }
+
+    .DayPicker {
+        display: block;
+    }
+
+    .zk-ui-datepicker-time-label {
+        font-size: 11px;
+        white-space: nowrap;
+        text-align: right;
+        padding-right: 10px;
     }
 
     .Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
@@ -55,11 +69,8 @@
         opacity: 0;
         transition: all 0.2s ease;
         pointer-events: none;
+        width: 100%;
 
-        .zk-ui-arrow-up {
-            margin-left: 5px;
-            border-bottom-color: #161616;
-        }
 
         &.active {
           opacity: 1;
@@ -71,6 +82,7 @@
       background: white;
       overflow: auto;
       display: flex;
+      flex-direction: column;
     }
 
     .zk-ui-datepicker-predefined {
@@ -102,11 +114,12 @@
 
     .zk-ui-datepicker-time {
         margin: 15px;
+        margin-top: 0;
         label {
             display: block;
         }
         input {
-            width: 80px;
+            width: 100%;
             display: inline-block;
             margin-top: 10px;
             margin-bottom: 15px;
@@ -117,6 +130,11 @@
             background-color: white;
             padding-left: 0;
             outline: 0;
+            box-sizing: border-box;
         }
+    }
+
+    table {
+        width: 100%;
     }
 }

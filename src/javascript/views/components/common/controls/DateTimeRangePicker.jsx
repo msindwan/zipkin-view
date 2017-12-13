@@ -114,42 +114,40 @@ class DateTimeRangePicker extends React.Component {
 
                     <div className="zk-ui-arrow-up"></div>
                     <div className="zk-ui-popover-content">
-                        <div className="zk-ui-datepicker-predefined">
-                        {
-                            this.props.predefinedRanges.map((range, i) => {
-                                return (
-                                    <div
-                                        key={i}
-                                        onClick={e => this.onPredefinedRangeClick(e, range)}
-                                        className="zk-ui-datepicker-predefined-row">
-                                            {range.value}
-                                    </div>
-                                )
-                            })
-                        }
-                        </div>
                         <div className="zk-ui-datepicker-calendars">
                             <DayPicker
                                 toMonth={today}
                                 disabledDays={{after: today}}
                                 className="Selectable"
-                                numberOfMonths={2}
+                                numberOfMonths={1}
                                 selectedDays={[from, { from, to }]}
                                 modifiers={modifiers}
                                 onDayClick={this.handleDayClick}
                                 />
                         </div>
                         <div className="zk-ui-datepicker-time">
-                            <label>{this.props.i18n('Start Time')}</label>
-                            <input
-                                value={this.state.startTime}
-                                onChange={e => this.setState({ startTime: e.target.value })}
-                                placeholder={defaultStart} />
-                            <label>{this.props.i18n('End Time')}</label>
-                            <input
-                                value={this.state.endTime}
-                                onChange={e => this.setState({ endTime: e.target.value })}
-                                placeholder={defaultEnd} />
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td className="zk-ui-datepicker-time-label">{this.props.i18n('Start Time')}</td>
+                                        <td>
+                                            <input
+                                            value={this.state.startTime}
+                                            onChange={e => this.setState({ startTime: e.target.value })}
+                                            placeholder={defaultStart} />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="zk-ui-datepicker-time-label">{this.props.i18n('End Time')}</td>
+                                        <td>
+                                            <input
+                                                value={this.state.endTime}
+                                                onChange={e => this.setState({ endTime: e.target.value })}
+                                                placeholder={defaultEnd} />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                             <button onClick={e => this.onApply(e)} className="zk-ui-button primary">
                                 { this.props.i18n('Apply') }
                             </button>

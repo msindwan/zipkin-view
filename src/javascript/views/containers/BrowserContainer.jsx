@@ -7,6 +7,7 @@
  * Description : Main application container.
  **/
 
+import TraceViewer from '../components/browser/TraceViewer.jsx';
 import Browser from '../components/browser/Browser.jsx';
 import Sidebar from '../components/common/Sidebar.jsx';
 import Header from '../components/common/Header.jsx';
@@ -33,14 +34,34 @@ class BrowserContainer extends React.Component {
 
     render() {
         const t = this.props.t;
+        let component;
+
+        console.log(this.state.browser.selectedTrace);
+
+        if (this.state.browser.selectedTrace === null) {
+            component = (
+                <Browser
+                    { ...this.state.browser }
+                    i18n={t} />
+            );
+        } else {
+            component = (
+                <TraceViewer
+                    trace={this.state.browser.selectedTrace}
+                    i18n={t} />
+            );
+        }
+
         return (
             <div className="zk-ui-container">
                 <Sidebar
                     { ...this.state.browser }
                     i18n={t} />
                 <div className="zk-ui-content">
-                    <Header i18n={t} />
-                    <Browser i18n={t} />
+                    <div className="zk-ui-content-container">
+                        <Header i18n={t} />
+                        { component }
+                    </div>
                 </div>
             </div>
         );

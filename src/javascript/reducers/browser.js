@@ -14,10 +14,12 @@ class BrowserReducer extends Reducer {
     constructor(name) {
         super(name, {
             selectedService: '',
+            selectedTrace: null,
             selectedSpan: '',
-            duration: null,
+            duration: '',
             services: [],
-            limit: null,
+            traces: null,
+            limit: '',
             spans: []
         });
     }
@@ -25,6 +27,18 @@ class BrowserReducer extends Reducer {
     // Updates the state with new filters.
     setBrowserFilters(filters) {
         this.setState(filters);
+    }
+
+    setTraces(traces) {
+        this.setState({
+            traces: traces
+        });
+    }
+
+    setSelectedTrace(trace) {
+        this.setState({
+            selectedTrace: trace
+        });
     }
 
 }

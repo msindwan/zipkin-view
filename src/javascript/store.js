@@ -7,7 +7,7 @@
  * Description: Main application store.
  **/
 
-import BrowserReducer from './reducers/browser';
+import BrowserReducer from './reducers/Browser';
 import { Store } from 'reduxion';
 
 // Create the app reducers.

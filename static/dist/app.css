@@ -10,6 +10,17 @@
   .zk-ui-button.primary {
     background: #4399b4; }
 
+textarea.zk-ui-input {
+  border: 0;
+  outline: 0;
+  background: #1c1e24;
+  color: white;
+  font-family: inherit;
+  box-sizing: border-box;
+  padding: 8px;
+  resize: vertical;
+  width: 100%; }
+
 input.zk-ui-input {
   width: 100%;
   font-family: inherit;
@@ -19,6 +30,8 @@ input.zk-ui-input {
   padding: 8px;
   font-size: 14px;
   border: 0;
+  transition: all 0.2s ease;
+  text-overflow: ellipsis;
   outline: 0; }
   input.zk-ui-input.dark {
     background: #1c1e24;
@@ -42,6 +55,22 @@ input.zk-ui-input {
   border-top: 5px solid white;
   margin: auto;
   margin-top: 50%; }
+
+.zk-ui-card {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.14) 0px 1px 4px 0px;
+  border-radius: 0px;
+  color: rgba(0, 0, 0, 0.87);
+  background: white;
+  min-height: 200px; }
+
+.zk-ui-card-header {
+  border-radius: 0px;
+  padding: 8px;
+  background: #4399b4;
+  color: white; }
 
 .zk-ui-combobox {
   position: relative; }
@@ -84,111 +113,117 @@ input.zk-ui-input {
     color: white;
     cursor: pointer; }
 
-.zk-ui-datepicker .DayPicker-wrapper {
-  outline: none; }
-
-.zk-ui-datepicker .Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
-  background-color: #f0f8ff !important;
-  color: #4a90e2; }
-
-.zk-ui-datepicker .Selectable .DayPicker-Day {
-  border-radius: 0 !important; }
-
-.zk-ui-datepicker .Selectable .DayPicker-Day--start {
-  border-top-left-radius: 50% !important;
-  border-bottom-left-radius: 50% !important; }
-
-.zk-ui-datepicker .Selectable .DayPicker-Day--end {
-  border-top-right-radius: 50% !important;
-  border-bottom-right-radius: 50% !important; }
-
-.zk-ui-datepicker .zk-ui-datepicker-container {
-  display: flex; }
-  .zk-ui-datepicker .zk-ui-datepicker-container > .zk-ui-input {
-    flex: 1; }
-  .zk-ui-datepicker .zk-ui-datepicker-container .zk-ui-dropdown-button {
-    display: table;
-    width: 36px;
-    height: 36px;
-    background: #161616;
-    transition: all 0.2s ease;
-    cursor: pointer; }
-    .zk-ui-datepicker .zk-ui-datepicker-container .zk-ui-dropdown-button:hover {
-      background: #68c4dc; }
-    .zk-ui-datepicker .zk-ui-datepicker-container .zk-ui-dropdown-button .fa.fa-calendar {
-      display: table-cell;
-      vertical-align: middle;
-      color: white;
-      font-size: 10px;
-      text-align: center; }
-
-.zk-ui-datepicker .zk-ui-popover-container {
-  margin-top: 5px;
-  position: absolute;
-  z-index: 10000000000;
-  opacity: 0;
-  transition: all 0.2s ease;
-  pointer-events: none; }
-  .zk-ui-datepicker .zk-ui-popover-container .zk-ui-arrow-up {
-    margin-left: 5px;
-    border-bottom-color: #161616; }
-  .zk-ui-datepicker .zk-ui-popover-container.active {
-    opacity: 1;
-    pointer-events: all; }
-
-.zk-ui-datepicker .zk-ui-popover-content {
-  background: white;
-  overflow: auto;
-  display: flex; }
-
-.zk-ui-datepicker .zk-ui-datepicker-predefined {
-  flex-direction: column;
-  background: #1c1e24; }
-
-.zk-ui-datepicker .zk-ui-datepicker-predefined-row {
-  padding: 5px;
-  background: #161616;
-  margin: 5px;
-  border-radius: 2px;
-  font-size: 11px;
-  cursor: pointer;
-  white-space: nowrap;
-  color: white; }
-  .zk-ui-datepicker .zk-ui-datepicker-predefined-row:hover {
-    background: #68c4dc; }
-
-.zk-ui-datepicker .zk-ui-datepicker-calendars {
-  font-size: 12px; }
-
-.zk-ui-datepicker .DayPicker-Months {
-  flex-wrap: nowrap; }
-
-.zk-ui-datepicker .zk-ui-datepicker-time {
-  margin: 15px; }
-  .zk-ui-datepicker .zk-ui-datepicker-time label {
+.zk-ui-datepicker {
+  position: relative; }
+  .zk-ui-datepicker .DayPicker-wrapper {
+    outline: none;
+    padding-bottom: 0; }
+  .zk-ui-datepicker .DayPicker {
     display: block; }
-  .zk-ui-datepicker .zk-ui-datepicker-time input {
-    width: 80px;
-    display: inline-block;
-    margin-top: 10px;
-    margin-bottom: 15px;
-    font-size: 12px;
-    padding: 4px;
-    border: 0;
-    border-bottom: 1px solid #4399b4;
-    background-color: white;
-    padding-left: 0;
-    outline: 0; }
+  .zk-ui-datepicker .zk-ui-datepicker-time-label {
+    font-size: 11px;
+    white-space: nowrap;
+    text-align: right;
+    padding-right: 10px; }
+  .zk-ui-datepicker .Selectable .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
+    background-color: #f0f8ff !important;
+    color: #4a90e2; }
+  .zk-ui-datepicker .Selectable .DayPicker-Day {
+    border-radius: 0 !important; }
+  .zk-ui-datepicker .Selectable .DayPicker-Day--start {
+    border-top-left-radius: 50% !important;
+    border-bottom-left-radius: 50% !important; }
+  .zk-ui-datepicker .Selectable .DayPicker-Day--end {
+    border-top-right-radius: 50% !important;
+    border-bottom-right-radius: 50% !important; }
+  .zk-ui-datepicker .zk-ui-datepicker-container {
+    display: flex; }
+    .zk-ui-datepicker .zk-ui-datepicker-container > .zk-ui-input {
+      flex: 1; }
+    .zk-ui-datepicker .zk-ui-datepicker-container .zk-ui-dropdown-button {
+      display: table;
+      width: 36px;
+      height: 36px;
+      background: #161616;
+      transition: all 0.2s ease;
+      cursor: pointer; }
+      .zk-ui-datepicker .zk-ui-datepicker-container .zk-ui-dropdown-button:hover {
+        background: #68c4dc; }
+      .zk-ui-datepicker .zk-ui-datepicker-container .zk-ui-dropdown-button .fa.fa-calendar {
+        display: table-cell;
+        vertical-align: middle;
+        color: white;
+        font-size: 10px;
+        text-align: center; }
+  .zk-ui-datepicker .zk-ui-popover-container {
+    margin-top: 5px;
+    position: absolute;
+    z-index: 10000000000;
+    opacity: 0;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    width: 100%; }
+    .zk-ui-datepicker .zk-ui-popover-container.active {
+      opacity: 1;
+      pointer-events: all; }
+  .zk-ui-datepicker .zk-ui-popover-content {
+    background: white;
+    overflow: auto;
+    display: flex;
+    flex-direction: column; }
+  .zk-ui-datepicker .zk-ui-datepicker-predefined {
+    flex-direction: column;
+    background: #1c1e24; }
+  .zk-ui-datepicker .zk-ui-datepicker-predefined-row {
+    padding: 5px;
+    background: #161616;
+    margin: 5px;
+    border-radius: 2px;
+    font-size: 11px;
+    cursor: pointer;
+    white-space: nowrap;
+    color: white; }
+    .zk-ui-datepicker .zk-ui-datepicker-predefined-row:hover {
+      background: #68c4dc; }
+  .zk-ui-datepicker .zk-ui-datepicker-calendars {
+    font-size: 12px; }
+  .zk-ui-datepicker .DayPicker-Months {
+    flex-wrap: nowrap; }
+  .zk-ui-datepicker .zk-ui-datepicker-time {
+    margin: 15px;
+    margin-top: 0; }
+    .zk-ui-datepicker .zk-ui-datepicker-time label {
+      display: block; }
+    .zk-ui-datepicker .zk-ui-datepicker-time input {
+      width: 100%;
+      display: inline-block;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      font-size: 12px;
+      padding: 4px;
+      border: 0;
+      border-bottom: 1px solid #4399b4;
+      background-color: white;
+      padding-left: 0;
+      outline: 0;
+      box-sizing: border-box; }
+  .zk-ui-datepicker table {
+    width: 100%; }
 
 .zk-ui-sidebar {
-  width: 260px;
-  position: fixed;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  z-index: 1;
+  width: 300px;
+  /* position: fixed; */
+  /* top: 0px; */
+  /* bottom: 0px; */
+  /* left: 0px; */
+  /* z-index: 1; */
   box-shadow: rgba(0, 0, 0, 0.42) 0px 10px 30px -12px, rgba(0, 0, 0, 0.12) 0px 4px 25px 0px, rgba(0, 0, 0, 0.2) 0px 8px 10px -5px;
-  background: #2d303b; }
+  background: #2d303b;
+  /* display: flex; */
+  /* flex-direction: column; */
+  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto; }
   .zk-ui-sidebar .zk-ui-logo {
     position: relative;
     padding: 15px;
@@ -201,6 +236,8 @@ input.zk-ui-input {
       text-decoration: none; }
   .zk-ui-sidebar .zk-ui-sidebar-wrapper .zk-ui-form-control-container {
     margin: 15px 15px; }
+    .zk-ui-sidebar .zk-ui-sidebar-wrapper .zk-ui-form-control-container i.pull-right {
+      float: right; }
     .zk-ui-sidebar .zk-ui-sidebar-wrapper .zk-ui-form-control-container .zk-ui-form-control-label {
       color: white;
       font-weight: bold;
@@ -214,13 +251,11 @@ input.zk-ui-input {
       width: 100%; }
 
 .zk-ui-header {
-  position: fixed;
   padding: 0;
   border-radius: 0;
   box-shadow: 2px 2px 2px #d9d9d9;
   width: 100%;
   background: white;
-  left: 260px;
   min-height: 50px; }
   .zk-ui-header:before {
     display: table;
@@ -242,11 +277,12 @@ input.zk-ui-input {
 .zk-ui-content {
   position: relative;
   float: right;
-  width: calc(100% - 260px);
+  width: calc(100% - 300px);
   transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
-  max-height: 100%; }
+  max-height: 100%;
+  overflow: auto; }
   .zk-ui-content .zk-ui-browser {
-    margin-top: 70px;
+    margin-top: 15px;
     padding: 10px 15px;
     min-height: calc(100% - 123px); }
     .zk-ui-content .zk-ui-browser .zk-ui-browser-container {
@@ -254,26 +290,73 @@ input.zk-ui-input {
       padding-left: 15px;
       margin-right: auto;
       margin-left: auto; }
-      .zk-ui-content .zk-ui-browser .zk-ui-browser-container .zk-ui-browser-card {
-        display: inline-block;
-        position: relative;
+      .zk-ui-content .zk-ui-browser .zk-ui-browser-container .zk-ui-card .zk-ui-browser-card-cell {
+        padding: 10px;
+        border-bottom: 1px solid #f8f8f8; }
+        .zk-ui-content .zk-ui-browser .zk-ui-browser-container .zk-ui-card .zk-ui-browser-card-cell:hover {
+          background: #f0f7f9;
+          cursor: pointer; }
+        .zk-ui-content .zk-ui-browser .zk-ui-browser-container .zk-ui-card .zk-ui-browser-card-cell .zk-ui-browser-card-cell-container {
+          margin-bottom: 5px; }
+          .zk-ui-content .zk-ui-browser .zk-ui-browser-container .zk-ui-card .zk-ui-browser-card-cell .zk-ui-browser-card-cell-container > table {
+            width: 100%; }
+            .zk-ui-content .zk-ui-browser .zk-ui-browser-container .zk-ui-card .zk-ui-browser-card-cell .zk-ui-browser-card-cell-container > table .zk-ui-browser-card-cell-span-name {
+              width: 40%; }
+              .zk-ui-content .zk-ui-browser .zk-ui-browser-container .zk-ui-card .zk-ui-browser-card-cell .zk-ui-browser-card-cell-container > table .zk-ui-browser-card-cell-span-name .zk-ui-browser-card-cell-num-spans {
+                font-size: 10px;
+                font-weight: bold;
+                color: #3b3b3b;
+                padding-top: 5px; }
+            .zk-ui-content .zk-ui-browser .zk-ui-browser-container .zk-ui-card .zk-ui-browser-card-cell .zk-ui-browser-card-cell-container > table .zk-ui-browser-card-cell-span-info {
+              width: 60%; }
+            .zk-ui-content .zk-ui-browser .zk-ui-browser-container .zk-ui-card .zk-ui-browser-card-cell .zk-ui-browser-card-cell-container > table .zk-ui-browser-card-cell-span-width {
+              height: 2px;
+              width: 70%;
+              background: #4399b4; }
+            .zk-ui-content .zk-ui-browser .zk-ui-browser-container .zk-ui-card .zk-ui-browser-card-cell .zk-ui-browser-card-cell-container > table .zk-ui-browser-card-cell-span-duration {
+              padding-top: 5px;
+              width: 50%;
+              display: inline-block;
+              padding-bottom: 10px; }
+            .zk-ui-content .zk-ui-browser .zk-ui-browser-container .zk-ui-card .zk-ui-browser-card-cell .zk-ui-browser-card-cell-container > table .zk-ui-browser-card-cell-span-date {
+              padding-top: 5px;
+              width: 50%;
+              display: inline-block;
+              text-align: right;
+              font-size: 10px; }
+      .zk-ui-content .zk-ui-browser .zk-ui-browser-container .zk-ui-card .zk-ui-browser-card-content-placeholder {
+        width: 135px;
+        margin: auto;
+        display: block;
+        margin-top: 40px;
+        opacity: 0.1; }
+  .zk-ui-content .zk-ui-trace-viewer {
+    margin-top: 15px;
+    padding: 10px 15px;
+    min-height: calc(100% - 123px); }
+    .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container {
+      padding-right: 15px;
+      padding-left: 15px;
+      margin-right: auto;
+      margin-left: auto; }
+      .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content {
         width: 100%;
-        box-shadow: rgba(0, 0, 0, 0.14) 0px 1px 4px 0px;
-        border-radius: 0px;
-        color: rgba(0, 0, 0, 0.87);
-        background: white;
-        min-height: 200px; }
-        .zk-ui-content .zk-ui-browser .zk-ui-browser-container .zk-ui-browser-card .zk-ui-browser-card-header {
-          border-radius: 0px;
-          padding: 8px;
-          background: #4399b4;
-          color: white; }
-        .zk-ui-content .zk-ui-browser .zk-ui-browser-container .zk-ui-browser-card .zk-ui-browser-card-content-placeholder {
-          width: 135px;
-          margin: auto;
-          display: block;
-          margin-top: 40px;
-          opacity: 0.1; }
+        padding: 10px;
+        box-sizing: border-box; }
+        .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content > table {
+          width: 100%;
+          text-align: left;
+          padding: 10px;
+          table-layout: fixed;
+          font-size: 12px;
+          border-collapse: collapse; }
+          .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content > table td {
+            padding-top: 5px;
+            padding-bottom: 5px; }
+          .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content > table .zk-ui-trace-service-name .fa.fa-minus {
+            margin-right: 5px; }
+            .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content > table .zk-ui-trace-service-name .fa.fa-minus.hidden {
+              visibility: hidden; }
 
 body,
 html,
@@ -281,8 +364,13 @@ html,
   height: 100%;
   margin: 0;
   background-color: #eeeeee;
-  font-family: "PT Sans", Helvetica, Arial, sans-serif; }
+  font-family: "PT Sans", Helvetica, Arial, sans-serif;
+  overflow: hidden; }
 
 .zk-ui-container {
-  height: 100%;
-  width: 100%; }
+  display: flex;
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  top: 0; }

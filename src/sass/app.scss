@@ -16,9 +16,14 @@ html,
     margin: 0;
     background-color: rgb(238, 238, 238);
     font-family: "PT Sans", Helvetica, Arial, sans-serif;
+    overflow: hidden;
 }
 
 .zk-ui-container {
-    height: 100%;
-    width: 100%;
+    display: flex;
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
 }

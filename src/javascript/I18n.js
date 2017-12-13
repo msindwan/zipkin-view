@@ -24,7 +24,8 @@ i18n
                     "Trace ID": "Trace ID",
                     "Start Time": "Start Time",
                     "End Time": "End Time",
-                    "Apply": "Apply"
+                    "Apply": "Apply",
+                    "Annotations": "Annotations"
                 }
             }
         },

@@ -1,12 +1,15 @@
 .zk-ui-sidebar {
-    width: 260px;
-    position: fixed;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    z-index: 1;
+    width: 300px;
+    /* position: fixed; */
+    /* top: 0px; */
+    /* bottom: 0px; */
+    /* left: 0px; */
+    /* z-index: 1; */
     box-shadow: rgba(0, 0, 0, 0.42) 0px 10px 30px -12px, rgba(0, 0, 0, 0.12) 0px 4px 25px 0px, rgba(0, 0, 0, 0.2) 0px 8px 10px -5px;
-    background: rgb(45, 48, 59);
+    background: #2d303b;
+    /* display: flex; */
+    /* flex-direction: column; */
+    overflow: auto;
 
     .zk-ui-logo {
         position: relative;
@@ -22,10 +25,17 @@
         }
     }
 
+    overflow-x: hidden;
+    overflow-y: auto;
+
     .zk-ui-sidebar-wrapper {
 
         .zk-ui-form-control-container {
             margin: 15px 15px;
+
+            i.pull-right {
+                float: right;
+            }
 
             .zk-ui-form-control-label {
                 color: white;

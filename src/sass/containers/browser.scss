@@ -1,12 +1,13 @@
 .zk-ui-content {
     position: relative;
     float: right;
-    width: calc(100% - 260px);
+    width: calc(100% - 300px);
     transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
     max-height: 100%;
+    overflow: auto;
 
     .zk-ui-browser {
-        margin-top: 70px;
+        margin-top: 15px;
         padding: 10px 15px;
         min-height: calc(100% - 123px);
 
@@ -16,21 +17,60 @@
             margin-right: auto;
             margin-left: auto;
 
-            .zk-ui-browser-card {
-                display: inline-block;
-                position: relative;
-                width: 100%;
-                box-shadow: rgba(0, 0, 0, 0.14) 0px 1px 4px 0px;
-                border-radius: 0px;
-                color: rgba(0, 0, 0, 0.87);
-                background: rgb(255, 255, 255);
-                min-height: 200px;
+            .zk-ui-card {
 
-                .zk-ui-browser-card-header {
-                    border-radius: 0px;
-                    padding: 8px;
-                    background: rgb(67, 153, 180);
-                    color: white;
+                .zk-ui-browser-card-cell {
+                    padding: 10px;
+                    border-bottom: 1px solid #f8f8f8;
+
+                    &:hover {
+                        background: #f0f7f9;
+                        cursor: pointer;
+                    }
+
+                    .zk-ui-browser-card-cell-container {
+                        margin-bottom: 5px;
+
+                        > table {
+                            width: 100%;
+
+                            .zk-ui-browser-card-cell-span-name {
+                                width: 40%;
+
+                                .zk-ui-browser-card-cell-num-spans {
+                                    font-size: 10px;
+                                    font-weight: bold;
+                                    color: #3b3b3b;
+                                    padding-top: 5px;
+                                }
+                            }
+
+                            .zk-ui-browser-card-cell-span-info {
+                                width: 60%;
+                            }
+
+                            .zk-ui-browser-card-cell-span-width {
+                                height: 2px;
+                                width: 70%;
+                                background: #4399b4;
+                            }
+
+                            .zk-ui-browser-card-cell-span-duration {
+                                padding-top: 5px;
+                                width: 50%;
+                                display: inline-block;
+                                padding-bottom: 10px;
+                            }
+
+                            .zk-ui-browser-card-cell-span-date {
+                                padding-top: 5px;
+                                width: 50%;
+                                display: inline-block;
+                                text-align: right;
+                                font-size: 10px;
+                            }
+                        }
+                    }
                 }
 
                 .zk-ui-browser-card-content-placeholder {
@@ -43,6 +83,48 @@
 
             }
 
+        }
+    }
+
+    .zk-ui-trace-viewer {
+        margin-top: 15px;
+        padding: 10px 15px;
+        min-height: calc(100% - 123px);
+
+        .zk-ui-trace-viewer-container {
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+
+            .zk-ui-card-content {
+                width: 100%;
+                padding: 10px;
+                box-sizing: border-box;
+
+                > table {
+                    width: 100%;
+                    text-align: left;
+                    padding: 10px;
+                    table-layout: fixed;
+                    font-size: 12px;
+                    border-collapse: collapse;
+
+                    td {
+                        padding-top: 5px;
+                        padding-bottom: 5px;
+                    }
+
+                    .zk-ui-trace-service-name {
+                        .fa.fa-minus {
+                            margin-right: 5px;
+                            &.hidden {
+                                visibility: hidden;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 

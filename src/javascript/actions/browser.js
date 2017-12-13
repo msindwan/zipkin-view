@@ -7,12 +7,22 @@
  * Description : Browser actions.
  **/
 
-import API from '../util/ApiHelper';
+import API from '../util/Api';
 import { Action } from 'reduxion';
 
 // Stores browser filters.
 const SetBrowserFilters = Action("setBrowserFilters", filters => {
     return filters;
+});
+
+// Stores traces.
+const SetTraces = Action("setTraces", traces => {
+    return traces;
+});
+
+// Set the selected trace.
+const SetSelectedTrace = Action("setSelectedTrace", trace => {
+    return trace;
 });
 
 // Fetches all services.
@@ -36,11 +46,19 @@ const GetSpans = (service) => {
 };
 
 const FetchTraces = (filters) => {
-    // TODO
+    API.fetchTraces(filters, traces => {
+        SetTraces(traces);
+    }, error => {
+        // TODO: Handle errors.
+        alert(error);
+    })
 };
 
 export {
     SetBrowserFilters,
+    SetSelectedTrace,
     GetServices,
+    FetchTraces,
+    SetTraces,
     GetSpans
 };

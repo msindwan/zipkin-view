@@ -13,6 +13,18 @@
     }
 }
 
+textarea.zk-ui-input {
+    border: 0;
+    outline: 0;
+    background: #1c1e24;
+    color: white;
+    font-family: inherit;
+    box-sizing: border-box;
+    padding: 8px;
+    resize: vertical;
+    width: 100%;
+}
+
 input.zk-ui-input {
     width: 100%;
     font-family: inherit;
@@ -22,6 +34,8 @@ input.zk-ui-input {
     padding: 8px;
     font-size: 14px;
     border: 0;
+    transition: all 0.2s ease;
+    text-overflow: ellipsis;
     &.dark {
         background: #1c1e24;
         color: white;
@@ -50,4 +64,22 @@ input.zk-ui-input {
     border-top: 5px solid white;
     margin: auto;
     margin-top: 50%;
+}
+
+.zk-ui-card {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.14) 0px 1px 4px 0px;
+    border-radius: 0px;
+    color: rgba(0, 0, 0, 0.87);
+    background: rgb(255, 255, 255);
+    min-height: 200px;
+}
+
+.zk-ui-card-header {
+    border-radius: 0px;
+    padding: 8px;
+    background: rgb(67, 153, 180);
+    color: white;
 }
