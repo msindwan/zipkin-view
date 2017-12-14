@@ -16,6 +16,10 @@ class Zipkin {
         return trace[0].duration/1000000;
     }
 
+    static durationToString(duration) {
+        return `${duration/1000000}s`;
+    }
+
     static getTraceName(trace) {
         return trace[0].name;
     }
@@ -26,6 +30,10 @@ class Zipkin {
 
     static getTraceDate(trace) {
         return Moment(trace[0].timestamp/1000).fromNow();
+    }
+
+    static convertTimestampToDate(timestamp) {
+        return Moment(timestamp/1000).format('MM/DD/YYYY, LTS');
     }
 
 }

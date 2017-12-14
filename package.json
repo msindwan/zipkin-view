@@ -12,8 +12,8 @@
     "node": ">=v6.10.0"
   },
   "scripts": {
-    "build": "node ./node_modules/webpack/bin/webpack.js --watch",
-    "server": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-base static/"
+    "build": "node ./node_modules/webpack/bin/webpack.js --config webpack.prod.js",
+    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.dev.js"
   },
   "babel": {
     "presets": [
@@ -28,18 +28,23 @@
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.7",
     "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.19.0",
+    "uglifyjs-webpack-plugin": "^1.1.4",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7",
+    "webpack-merge": "^4.1.1",
+    "write-file-webpack-plugin": "^4.2.0"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "i18next": "^10.2.1",
+    "i18next-browser-languagedetector": "^2.1.0",
+    "isomorphic-fetch": "^2.2.1",
+    "moment": "^2.19.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
-    "sass-loader": "^6.0.6",
-    "style-loader": "^0.19.0",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.7"
-  },
-  "dependencies": {
-    "i18next": "^10.2.1",
-    "i18next-browser-languagedetector": "^2.1.0",
-    "moment": "^2.19.3",
     "react-day-picker": "^7.0.5",
     "react-i18next": "^7.1.1",
     "reduxion": "^1.0.5"

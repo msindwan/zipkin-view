@@ -14,6 +14,9 @@ class TraceViewer extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            selectedSpan: null
+        };
     }
 
     buildHeirarchy() {
@@ -54,6 +57,7 @@ class TraceViewer extends React.Component {
     }
 
     getTableRows(spans, numHeaders, startTs) {
+        const duration = Zipkin.getTraceDuration(this.props.trace);
         const rows = [];
         let key = 0;
 
@@ -69,24 +73,74 @@ class TraceViewer extends React.Component {
                 emptyCells.push((<td key={i}></td>));
             }
 
-            console.log((span.timestamp - startTs) / 1000000);
+            const left = ((span.timestamp - startTs) / 1000000) *(numHeaders - 1)*100  + '%';
+            const width = (span.duration/1000000/duration) * 100 *(numHeaders - 1) + '%';
 
             rows.push((
-                <tr key={key++}>
+                <tr onClick={e => this.setState({ selectedSpan : span })} key={key++}>
                     <td>
                         <div style={{ marginLeft: depth*10 }} className="zk-ui-trace-service-name">
                             { span._children_.length ?
                                 <i className="fa fa-minus"></i> :
                                 <i className="fa fa-minus hidden"></i> }
                             <span>{span.annotations[0].endpoint.serviceName}</span>
+                            <span className="zk-ui-trace-span-name">{span.name}</span>
                         </div>
                     </td>
                     <td>
-                        <div className="zk-ui-trace-span"></div>
+                        <div className="zk-ui-trace-span" style={{ marginLeft: left, width: width }}></div>
                     </td>
                     { emptyCells }
                 </tr>
             ));
+
+            if (span === this.state.selectedSpan) {
+                rows.push((
+                    <tr className="zk-ui-trace-span-context-row" key={'selected-span'}>
+                        <td colSpan={numHeaders}>
+                            <div className="zk-ui-trace-span-context">
+                                <table className="zk-ui-trace-span-context-table">
+                                    <tbody>
+                                        <tr>
+                                            <td className="header">Annotation</td>
+                                            <td className="header">Date Time</td>
+                                            <td className="header">Relative Time</td>
+                                            <td className="header">Address</td>
+                                        </tr>
+                                        {
+                                            span.annotations.map((annotation, i) => {
+                                                return (
+                                                    <tr key={i}>
+                                                        <td>{annotation.value}</td>
+                                                        <td>{Zipkin.convertTimestampToDate(annotation.timestamp)}</td>
+                                                        <td></td>
+                                                        <td>{`${annotation.endpoint.ipv4}:${annotation.endpoint.port} (${annotation.endpoint.serviceName})`}</td>
+                                                    </tr>
+                                                )
+                                            })
+                                        }
+                                        <tr>
+                                            <td className="header">Key</td>
+                                            <td className="header">Value</td>
+                                        </tr>
+                                        {
+                                            span.binaryAnnotations.map((annotation, i) => {
+                                                return (
+                                                    <tr key={i}>
+                                                        <td>{annotation.key}</td>
+                                                        <td>{annotation.value}</td>
+                                                    </tr>
+                                                )
+                                            })
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                ));
+            }
+
             depth++;
             span._children_.forEach(child => {
                 child._depth_ = depth;
@@ -108,7 +162,7 @@ class TraceViewer extends React.Component {
                     <div className="zk-ui-card">
                         <div className="zk-ui-card-header"></div>
                         <div className="zk-ui-card-content">
-                            <table>
+                            <table className="zk-ui-trace-table">
                                 <thead>
                                     <tr>
                                         { headers }

@@ -7,6 +7,8 @@
  * Description: Zipkin API Wrapper.
  **/
 
+import 'isomorphic-fetch';
+
 class API {
 
     static fetchServices(success, failure) {
