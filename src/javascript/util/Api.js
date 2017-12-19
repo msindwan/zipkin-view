@@ -7,17 +7,20 @@
  * Description: Zipkin API Wrapper.
  **/
 
-import 'isomorphic-fetch';
+import 'isomorphic-fetch'; // TODO: Replace with XMLHttpRequest
 
 class API {
 
     static fetchServices(success, failure) {
-        fetch("http://localhost:9411/zipkin/api/v1/services").then(response => {
+        fetch("/api/v1/services").then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to fetch services (error code ${response.status})`);
+            }
             const contentType = response.headers.get("content-type");
             if (contentType && contentType.includes("application/json")) {
                 return response.json();
             }
-            throw new TypeError("Invalid content-type");
+            throw new TypeError("Failed to fetch services (invalid content-type)");
         })
         .then(success)
         .catch(failure);
@@ -28,20 +31,23 @@ class API {
             service = 'all';
         }
 
-        const uri = `http://localhost:9411/zipkin/api/v1/spans?serviceName=${service}`;
+        const uri = `/api/v1/spans?serviceName=${service}`;
         fetch(uri).then(response => {
+            if(!response.ok) {
+                throw new Error(`Failed to fetch spans (error code ${response.status})`);
+            }
             const contentType = response.headers.get("content-type");
             if (contentType && contentType.includes("application/json")) {
                 return response.json();
             }
-            throw new TypeError("Invalid content-type");
+            throw new TypeError("Failed to fetch services (invalid content-type)");
         })
         .then(success)
         .catch(failure);
     }
 
     static fetchTraces(filters, success, failure) {
-        let uri = 'http://localhost:9411/zipkin/api/v1/traces?';
+        let uri = '/api/v1/traces?';
         uri += `serviceName=${filters.selectedService}`;
         uri += `&spanName=${filters.selectedSpan}`;
         uri += `&lookback=190083615834`;
@@ -52,16 +58,34 @@ class API {
         uri += `&sortOrder=duration-desc`;
 
         fetch(uri).then(response => {
+            if(!response.ok) {
+                throw new Error(`Failed to fetch traces (error code ${response.status})`);
+            }
             const contentType = response.headers.get("content-type");
             if (contentType && contentType.includes("application/json")) {
                 return response.json();
             }
-            throw new TypeError("Invalid content-type");
+            throw new TypeError("Failed to fetch services (invalid content-type)");
         })
         .then(success)
         .catch(failure);
     }
 
+    static fetchTrace(trace, success, failure) {
+        const uri = `/api/v1/trace/${trace}`;
+        fetch(uri).then(response => {
+            if(!response.ok) {
+                throw new Error(`Failed to fetch trace (error code ${response.status})`);
+            }
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.includes("application/json")) {
+                return response.json();
+            }
+            throw new TypeError("Failed to fetch services (invalid content-type)");
+        })
+        .then(success)
+        .catch(failure);
+    }
 }
 
 export default API;

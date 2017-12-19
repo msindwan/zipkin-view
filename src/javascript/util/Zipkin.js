@@ -16,8 +16,8 @@ class Zipkin {
         return trace[0].duration/1000000;
     }
 
-    static durationToString(duration) {
-        return `${duration/1000000}s`;
+    static getTraceService(trace) {
+        return Zipkin.getSpanService(trace[0]);
     }
 
     static getTraceName(trace) {
@@ -30,6 +30,14 @@ class Zipkin {
 
     static getTraceDate(trace) {
         return Moment(trace[0].timestamp/1000).fromNow();
+    }
+
+    static getSpanService(span) {
+        return span.annotations[0].endpoint.serviceName;
+    }
+
+    static durationToString(duration) {
+        return `${duration/1000000}s`;
     }
 
     static convertTimestampToDate(timestamp) {

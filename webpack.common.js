@@ -6,7 +6,7 @@
  *
  * Description : Webpack configuration for all zipkin-ui builds.
  **/
- 
+
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const WriteFilePlugin = require('write-file-webpack-plugin');
 
@@ -16,7 +16,13 @@ const extractSass = new ExtractTextPlugin({
 
 module.exports = {
      context: __dirname + "/src",
-     entry: ['babel-polyfill', './javascript/App.jsx', './sass/app.scss'],
+     entry: [
+         // Polyfill
+         'babel-polyfill',
+         // App
+         './javascript/App.jsx',
+         './sass/app.scss'
+     ],
 
      output: {
          filename: "app.js",

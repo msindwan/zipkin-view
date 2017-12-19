@@ -7,6 +7,8 @@
  * Description : Trace Viewer.
  **/
 
+import { SetSelectedTrace } from '../../../actions/Browser';
+import { FormattedMessage } from 'react-intl';
 import Zipkin from '../../../util/Zipkin';
 import React from 'react';
 
@@ -15,8 +17,33 @@ class TraceViewer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedSpan: null
+            selectedSpan: null,
+            toggleState: {}
         };
+    }
+
+    toggleChildren(e, span) {
+        e.stopPropagation();
+        let toggleState = this.state.toggleState[span.id];
+        if (typeof toggleState === 'undefined') {
+            toggleState = true;
+        }
+
+        toggleState = !toggleState;
+        this.setState({
+            toggleState: {
+                ...this.state.toggleState,
+                [span.id] : toggleState
+            }
+        })
+    }
+
+    setSelectedSpan(e, span) {
+        if (this.state.selectedSpan === span) {
+            // Toggle the current span.
+            span = null;
+        }
+        this.setState({ selectedSpan : span });
     }
 
     buildHeirarchy() {
@@ -38,7 +65,6 @@ class TraceViewer extends React.Component {
             }
         });
 
-        console.log(roots);
         return roots;
     }
 
@@ -75,20 +101,25 @@ class TraceViewer extends React.Component {
 
             const left = ((span.timestamp - startTs) / 1000000) *(numHeaders - 1)*100  + '%';
             const width = (span.duration/1000000/duration) * 100 *(numHeaders - 1) + '%';
+            const collapsed = this.state.toggleState[span.id] === false;
 
             rows.push((
-                <tr onClick={e => this.setState({ selectedSpan : span })} key={key++}>
+                <tr onClick={e => this.setSelectedSpan(e, span)} key={key++}>
                     <td>
                         <div style={{ marginLeft: depth*10 }} className="zk-ui-trace-service-name">
                             { span._children_.length ?
-                                <i className="fa fa-minus"></i> :
+                                <i
+                                    onClick={e => this.toggleChildren(e, span)}
+                                    className={`fa fa-${collapsed ? 'plus' : 'minus'}`} /> :
                                 <i className="fa fa-minus hidden"></i> }
-                            <span>{span.annotations[0].endpoint.serviceName}</span>
-                            <span className="zk-ui-trace-span-name">{span.name}</span>
+                            <span>{Zipkin.getSpanService(span)}</span>
                         </div>
                     </td>
                     <td>
                         <div className="zk-ui-trace-span" style={{ marginLeft: left, width: width }}></div>
+                        <div className="zk-ui-trace-span-name" style={{ marginLeft: left }}>
+                            {`${span.name} - ${Zipkin.durationToString(span.duration)}`}
+                        </div>
                     </td>
                     { emptyCells }
                 </tr>
@@ -109,12 +140,19 @@ class TraceViewer extends React.Component {
                                         </tr>
                                         {
                                             span.annotations.map((annotation, i) => {
+                                                let endpoint = annotation.endpoint.ipv4;
+                                                if (annotation.endpoint.port) {
+                                                    endpoint += `:${annotation.endpoint.port}`;
+                                                }
                                                 return (
                                                     <tr key={i}>
-                                                        <td>{annotation.value}</td>
+                                                        <td>
+                                                            <FormattedMessage
+                                                                id={annotation.value} />
+                                                        </td>
                                                         <td>{Zipkin.convertTimestampToDate(annotation.timestamp)}</td>
-                                                        <td></td>
-                                                        <td>{`${annotation.endpoint.ipv4}:${annotation.endpoint.port} (${annotation.endpoint.serviceName})`}</td>
+                                                        <td>{Zipkin.durationToString(annotation.timestamp - startTs)}</td>
+                                                        <td>{`${endpoint} (${annotation.endpoint.serviceName})`}</td>
                                                     </tr>
                                                 )
                                             })
@@ -142,10 +180,13 @@ class TraceViewer extends React.Component {
             }
 
             depth++;
-            span._children_.forEach(child => {
-                child._depth_ = depth;
-                spans.unshift(child);
-            });
+
+            if (!collapsed) {
+                span._children_.forEach(child => {
+                    child._depth_ = depth;
+                    spans.unshift(child);
+                });
+            }
         }
 
         return rows;
@@ -160,7 +201,11 @@ class TraceViewer extends React.Component {
             <div className="zk-ui-trace-viewer">
                 <div className="zk-ui-trace-viewer-container">
                     <div className="zk-ui-card">
-                        <div className="zk-ui-card-header"></div>
+                        <div className="zk-ui-card-header">
+                            <div onClick={e => SetSelectedTrace(null)} className="zk-ui-button">
+                                <i className="fa fa-arrow-left"></i>{' '}<span>Back</span>
+                            </div>
+                        </div>
                         <div className="zk-ui-card-content">
                             <table className="zk-ui-trace-table">
                                 <thead>

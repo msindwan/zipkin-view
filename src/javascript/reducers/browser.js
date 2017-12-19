@@ -20,7 +20,8 @@ class BrowserReducer extends Reducer {
             services: [],
             traces: null,
             limit: '',
-            spans: []
+            spans: [],
+            loading: false
         });
     }
 
@@ -38,6 +39,12 @@ class BrowserReducer extends Reducer {
     setSelectedTrace(trace) {
         this.setState({
             selectedTrace: trace
+        });
+    }
+
+    setBrowserLoading(loading) {
+        this.setState({
+            loading: loading
         });
     }
 

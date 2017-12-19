@@ -76,6 +76,7 @@ class Combobox extends React.Component {
             <div className="zk-ui-combobox">
                 <div className="zk-ui-combobox-container">
                     <input
+                        placeholder={this.props.placeholder}
                         ref={(input) => { this.searchInput = input; }}
                         value={this.state.value}
                         onFocus={e => this.onFocus(e)}

@@ -7,6 +7,8 @@
     border-radius: 2px;
     text-transform: uppercase;
     font-size: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
 
     &.primary {
         background: #4399b4;
@@ -23,9 +25,11 @@ textarea.zk-ui-input {
     padding: 8px;
     resize: vertical;
     width: 100%;
+    font-size: 12px;
 }
 
 input.zk-ui-input {
+    min-width: 0;
     width: 100%;
     font-family: inherit;
     -webkit-box-sizing: border-box;
@@ -45,6 +49,13 @@ input.zk-ui-input {
         border: 0;
     }
     outline: 0;
+}
+
+.zk-ui-input {
+    &:-ms-input-placeholder {
+        color: #ccc !important;
+        font-weight: 400 !important;
+    }
 }
 
 .zk-ui-arrow-up {
@@ -82,4 +93,73 @@ input.zk-ui-input {
     padding: 8px;
     background: rgb(67, 153, 180);
     color: white;
+}
+
+.zk-ui-popover-container {
+    margin-top:5px;
+    position: absolute;
+    z-index: 10000000000;
+    opacity: 0;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    width: 100%;
+    visibility: hidden;
+
+    .zk-ui-popover-content {
+        background: white;
+        overflow: auto;
+        display: flex;
+        flex-direction: column;
+        color: black;
+    }
+
+    &.active {
+      opacity: 1;
+      pointer-events: all;
+      visibility: visible;
+    }
+}
+
+/* https://projects.lukehaas.me/css-loaders/ */
+.zk-ui-loader,
+.zk-ui-loader:after {
+    border-radius: 50%;
+    width: 10em;
+    height: 10em;
+}
+.zk-ui-loader {
+    margin: 60px auto;
+    font-size: 10px;
+    position: relative;
+    text-indent: -9999em;
+    border-top: 0.5em solid rgba(0, 128, 192, 0.2);
+    border-right: 0.5em solid rgba(0, 128, 192, 0.2);
+    border-bottom: 0.5em solid rgba(0, 128, 192, 0.2);
+    border-left: 0.5em solid #4399b4;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation: load8 1.1s infinite linear;
+    animation: load8 1.1s infinite linear;
+    overflow: hidden;
+}
+@-webkit-keyframes load8 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes load8 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }

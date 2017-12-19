@@ -7,15 +7,38 @@
  * Description : App Header.
  **/
 
+import { GetTrace } from '../../../actions/Browser';
 import React from 'react';
 
-const Header = ({ i18n }) => (
-    <div className="zk-ui-header">
-        <div className="zk-ui-trace-search">
-            <input className="zk-ui-input" placeholder={i18n('Trace ID')} />
-            <i className="fa fa-search"></i>
-        </div>
-    </div>
-);
+class Header extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            searchText: ''
+        };
+    }
+
+    onSearch(e) {
+        if (this.state.searchText) {
+            GetTrace(this.state.searchText);
+        }
+    }
+
+    render() {
+        return (
+            <div className="zk-ui-header">
+                <div className="zk-ui-trace-search">
+                    <input
+                        value={this.state.searchText}
+                        onChange={e => this.setState({ searchText : e.target.value })}
+                        className="zk-ui-input" placeholder={'Trace ID'} />
+                    <i onClick={e => this.onSearch(e)} className="fa fa-search"></i>
+                </div>
+            </div>
+        );
+    }
+
+}
 
 export default Header;

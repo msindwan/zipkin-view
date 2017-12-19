@@ -10,21 +10,23 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NotFoundContainer from './views/containers/NotFoundContainer.jsx';
 import BrowserContainer from './views/containers/BrowserContainer.jsx';
-import { I18nextProvider } from 'react-i18next';
+import { IntlProvider } from 'react-intl';
 import ReactDOM from 'react-dom';
 import React from 'react';
-import i18n from './I18n';
+import Intl from './Intl';
 
 // App entry point.
-window.addEventListener("load", function() {
+window.addEventListener("load", () => {
     ReactDOM.render((
-        <I18nextProvider i18n={i18n}>
+        <IntlProvider
+            locale={Intl.GetLocale()}
+            messages={Intl.GetTranslations()}>
             <Router>
                 <Switch>
                     <Route exact path="/" component={BrowserContainer}/>
                     <Route component={NotFoundContainer}/>
                 </Switch>
             </Router>
-        </I18nextProvider>
+        </IntlProvider>
     ), document.getElementById("app"));
 });

@@ -20,21 +20,6 @@
         }
     }
 
-    .zk-ui-popover-container {
-        width: 100%;
-        margin-top:5px;
-        position: absolute;
-        z-index: 10000000000;
-        opacity: 0;
-        transition: all 0.2s ease;
-        pointer-events: none;
-
-        &.active {
-          opacity: 1;
-          pointer-events: all;
-        }
-    }
-
     .zk-ui-popover-content {
       background: white;
       max-height: 200px;

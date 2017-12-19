@@ -7,11 +7,10 @@
  * Description : Main application container.
  **/
 
+import TraceBrowser from '../components/browser/TraceBrowser.jsx';
 import TraceViewer from '../components/browser/TraceViewer.jsx';
-import Browser from '../components/browser/Browser.jsx';
 import Sidebar from '../components/common/Sidebar.jsx';
 import Header from '../components/common/Header.jsx';
-import { translate } from 'react-i18next';
 import AppStore from '../../Store';
 import React from 'react';
 
@@ -33,33 +32,31 @@ class BrowserContainer extends React.Component {
     }
 
     render() {
-        const t = this.props.t;
         let component;
 
-        console.log(this.state.browser.selectedTrace);
-
-        if (this.state.browser.selectedTrace === null) {
+        if (this.state.browser.loading) {
             component = (
-                <Browser
-                    { ...this.state.browser }
-                    i18n={t} />
+                <div className="zk-ui-loader"></div>
+            );
+        } else if (this.state.browser.selectedTrace === null) {
+            component = (
+                <TraceBrowser
+                    { ...this.state.browser } />
             );
         } else {
             component = (
                 <TraceViewer
-                    trace={this.state.browser.selectedTrace}
-                    i18n={t} />
+                    trace={this.state.browser.selectedTrace} />
             );
         }
 
         return (
             <div className="zk-ui-container">
                 <Sidebar
-                    { ...this.state.browser }
-                    i18n={t} />
+                    { ...this.state.browser } />
                 <div className="zk-ui-content">
                     <div className="zk-ui-content-container">
-                        <Header i18n={t} />
+                        <Header />
                         { component }
                     </div>
                 </div>
@@ -68,4 +65,4 @@ class BrowserContainer extends React.Component {
     }
 }
 
-export default translate()(BrowserContainer);
+export default BrowserContainer;

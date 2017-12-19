@@ -2,7 +2,7 @@
  * Zipkin-ui Webpack Prod Config
  *
  * @Author : Mayank Sindwani
- * @Date   : 2017-12-04
+ * @Date   : 2017-12-14
  *
  * Description : Webpack configuration for prod zipkin-ui builds.
  **/

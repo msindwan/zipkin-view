@@ -39,6 +39,7 @@
 
         > .zk-ui-input {
             flex: 1;
+            margin-right: 2px;
         }
 
         .zk-ui-dropdown-button {
@@ -60,29 +61,6 @@
                 text-align: center;
             }
         }
-    }
-
-    .zk-ui-popover-container {
-        margin-top:5px;
-        position: absolute;
-        z-index: 10000000000;
-        opacity: 0;
-        transition: all 0.2s ease;
-        pointer-events: none;
-        width: 100%;
-
-
-        &.active {
-          opacity: 1;
-          pointer-events: all;
-        }
-    }
-
-    .zk-ui-popover-content {
-      background: white;
-      overflow: auto;
-      display: flex;
-      flex-direction: column;
     }
 
     .zk-ui-datepicker-predefined {
@@ -118,20 +96,32 @@
         label {
             display: block;
         }
-        input {
-            width: 100%;
-            display: inline-block;
-            margin-top: 10px;
-            margin-bottom: 15px;
+
+        .zk-ui-datepicker-date-label {
+            white-space: nowrap;
             font-size: 12px;
-            padding: 4px;
-            border: 0;
-            border-bottom: 1px solid #4399b4;
-            background-color: white;
-            padding-left: 0;
-            outline: 0;
-            box-sizing: border-box;
+            text-align: right;
+            padding-right: 10px;
         }
+
+        .zk-ui-datepicker-time-input {
+                input {
+                    width: 100%;
+                    display: inline-block;
+                    margin-top: 10px;
+                    margin-bottom: 15px;
+                    font-size: 12px;
+                    padding: 4px;
+                    border: 0;
+                    border-bottom: 1px solid #4399b4;
+                    background-color: white;
+                    padding-left: 0;
+                    outline: 0;
+                    box-sizing: border-box;
+                    margin-right: 2px;
+                }
+        }
+
     }
 
     table {
