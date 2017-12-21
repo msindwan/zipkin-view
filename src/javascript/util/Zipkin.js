@@ -24,6 +24,10 @@ class Zipkin {
         return trace[0].name;
     }
 
+    static getTraceID(trace) {
+        return trace[0].traceId;
+    }
+
     static getTraceSpanCount(trace) {
         return trace.length;
     }

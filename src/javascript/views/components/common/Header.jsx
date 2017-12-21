@@ -7,7 +7,6 @@
  * Description : App Header.
  **/
 
-import { GetTrace } from '../../../actions/Browser';
 import React from 'react';
 
 class Header extends React.Component {
@@ -20,8 +19,10 @@ class Header extends React.Component {
     }
 
     onSearch(e) {
-        if (this.state.searchText) {
-            GetTrace(this.state.searchText);
+        const searchText = this.state.searchText;
+        if (searchText) {
+            this.setState({ searchText: ''});
+            this.props.history.push(`/traces/${searchText}`);
         }
     }
 

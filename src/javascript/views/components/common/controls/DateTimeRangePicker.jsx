@@ -19,10 +19,10 @@ class DateTimeRangePicker extends React.Component {
     	super(props);
         Moment.locale(this.props.locale);
         this.state = {
-            inputStartTimeMinute: '',
-            inputEndTimeMinute: '',
-            inputStartTimeHour: '',
-            inputEndTimeHour: '',
+            inputStartTimeMinute: '00',
+            inputEndTimeMinute: '00',
+            inputStartTimeHour: '00',
+            inputEndTimeHour: '00',
             inputFrom: undefined,
             inputTo: undefined,
             startTimeMinute: '',
@@ -45,6 +45,33 @@ class DateTimeRangePicker extends React.Component {
     componentWillUnmount() {
         document.removeEventListener(
             'click', this.handleClickOutside.bind(this), true);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.dateInputFrom !== this.state.dateInputFrom
+            || nextProps.dateInputTo !== this.state.dateInputTo) {
+
+            const startDate = Moment(nextProps.dateInputFrom);
+            const endDate = Moment(nextProps.dateInputTo);
+
+            // Update the state with the new props.
+            this.setState({
+                dateInputFrom: startDate.format('ll HH:mm'),
+                dateInputTo: endDate.format('ll HH:mm'),
+                startTimeMinute: startDate.minutes(),
+                endTimeMinute: endDate.minutes(),
+                startTimeHour: startDate.hours(),
+                endTimeHour: endDate.hours(),
+                from: startDate.toDate(),
+                to: endDate.toDate(),
+                inputStartTimeMinute: startDate.minutes(),
+                inputEndTimeMinute: endDate.minutes(),
+                inputStartTimeHour: startDate.hours(),
+                inputEndTimeHour: endDate.hours(),
+                inputFrom: startDate.toDate(),
+                inputTo: endDate.toDate(),
+            });
+        }
     }
 
     handleClickOutside(event) {

@@ -8,20 +8,27 @@
  **/
 
 import { Reducer } from 'reduxion';
+import Moment from 'moment';
 
 class BrowserReducer extends Reducer {
 
     constructor(name) {
         super(name, {
-            selectedService: '',
+            serviceName: '',
+            spanName: '',
+            endTs: Moment().valueOf(),
+            startTs: Moment().subtract(1, 'days').valueOf(),
+            minDuration: '',
+            limit: '',
+            annotationQuery: '',
+            sortOrder: 'duration-desc',
             selectedTrace: null,
-            selectedSpan: '',
-            duration: '',
             services: [],
             traces: null,
-            limit: '',
             spans: [],
-            loading: false
+            loading: false,
+            dateFrom: null,
+            dateTo: null
         });
     }
 
@@ -33,12 +40,6 @@ class BrowserReducer extends Reducer {
     setTraces(traces) {
         this.setState({
             traces: traces
-        });
-    }
-
-    setSelectedTrace(trace) {
-        this.setState({
-            selectedTrace: trace
         });
     }
 

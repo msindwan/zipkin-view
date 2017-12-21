@@ -22,11 +22,6 @@ const SetTraces = Action("setTraces", traces => {
     return traces;
 });
 
-// Set the selected trace.
-const SetSelectedTrace = Action("setSelectedTrace", trace => {
-    return trace;
-});
-
 // Toggles the loading state.
 const SetBrowserLoading = Action("setBrowserLoading", toggle => {
     return toggle;
@@ -58,6 +53,7 @@ const GetSpans = (service) => {
     });
 };
 
+// Fetches all of the traces for a given set of filters.
 const GetTraces = (filters) => {
     SetBrowserLoading(true);
     API.fetchTraces(filters, traces => {
@@ -73,29 +69,10 @@ const GetTraces = (filters) => {
     });
 };
 
-const GetTrace = (traceId) => {
-    SetBrowserLoading(true);
-    setTimeout(function() {
-        API.fetchTrace(traceId, trace => {
-            SetSelectedTrace(trace);
-            SetBrowserLoading(false);
-        }, error => {
-            new Noty({
-                type: 'error',
-                timeout: 7500,
-                text: error.toString()
-            }).show();
-            SetBrowserLoading(false);
-        });
-    }, 1000);
-};
-
 export {
     SetBrowserFilters,
-    SetSelectedTrace,
     GetServices,
     GetTraces,
     SetTraces,
-    GetTrace,
     GetSpans
 };

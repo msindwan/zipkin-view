@@ -14,6 +14,7 @@ module.exports = merge(common, {
     devtool: 'inline-source-map',
     devServer: {
         contentBase: './static',
+        historyApiFallback: true,
         proxy: {
             '/api': {
                 target: process.env.ZIPKIN_API,

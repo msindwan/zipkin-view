@@ -8,6 +8,7 @@
  **/
 
 import 'isomorphic-fetch'; // TODO: Replace with XMLHttpRequest
+import Utils from './Utils';
 
 class API {
 
@@ -47,15 +48,16 @@ class API {
     }
 
     static fetchTraces(filters, success, failure) {
-        let uri = '/api/v1/traces?';
-        uri += `serviceName=${filters.selectedService}`;
-        uri += `&spanName=${filters.selectedSpan}`;
-        uri += `&lookback=190083615834`;
-        uri += `&endTs=1513056278239`;
-        uri += `&minDuration=${filters.duration}`;
-        uri += `&limit=${filters.limit}`;
-        uri += `&annotationQuery=`;
-        uri += `&sortOrder=duration-desc`;
+        const query = {
+            ...filters,
+            lookback: filters['endTs'] - filters['startTs']
+        };
+
+        if (typeof query['annotationQuery'] !== 'undefined') {
+            query['annotationQuery'] = query['annotationQuery'].replace(/(?:\r\n|\r|\n)/g, '');
+        }
+
+        const uri = `/api/v1/traces${Utils.URLify(query)}`;
 
         fetch(uri).then(response => {
             if(!response.ok) {

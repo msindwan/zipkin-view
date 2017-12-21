@@ -372,6 +372,12 @@ input.zk-ui-input {
         display: block;
         margin-top: 40px;
         opacity: 0.1; }
+  .zk-ui-content .zk-ui-traces-placeholder {
+    text-align: center;
+    margin: auto;
+    display: block;
+    margin-top: 40px;
+    color: #a7a7a7; }
   .zk-ui-content .zk-ui-trace-viewer {
     margin-top: 15px;
     padding: 10px 15px;
