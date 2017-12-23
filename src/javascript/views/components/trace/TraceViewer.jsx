@@ -1,10 +1,22 @@
 /**
+ * Copyright 2017 Mayank Sindwani
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  * Zipkin-ui Browser component
  *
- * @Author : Mayank Sindwani
- * @Date   : 2017-12-13
- *
- * Description : Trace Viewer.
+ * @Date : 2017-12-13
+ * @Description : Trace container.
  **/
 
 import { SetSelectedTrace } from '../../../actions/Trace';
@@ -22,6 +34,13 @@ class TraceViewer extends React.Component {
         };
     }
 
+    /**
+     * Toggle Children
+     *
+     * Description: Toggles the visibility of a span's children.
+     * @param e {event}     // The event object.
+     * @param span {object} // The selected span.
+     */
     toggleChildren(e, span) {
         e.stopPropagation();
         let toggleState = this.state.toggleState[span.id];
@@ -35,9 +54,16 @@ class TraceViewer extends React.Component {
                 ...this.state.toggleState,
                 [span.id] : toggleState
             }
-        })
+        });
     }
 
+    /**
+     * Set Selected Span
+     *
+     * Description: Sets the selected span to view annotations.
+     * @param e {event}     // The event object.
+     * @param span {object} // The selected span.
+     */
     setSelectedSpan(e, span) {
         if (this.state.selectedSpan === span) {
             // Toggle the current span.
@@ -46,6 +72,12 @@ class TraceViewer extends React.Component {
         this.setState({ selectedSpan : span });
     }
 
+    /**
+     * Build Heirarchy
+     *
+     * Description: Builds the tree hierarchy for a trace.
+     * @returns {array} // the tree for the trace.
+     */
     buildHeirarchy() {
         const spanLookup = {};
         const roots = [];
@@ -68,10 +100,16 @@ class TraceViewer extends React.Component {
         return roots;
     }
 
+    /**
+     * Get Table Headers
+     *
+     * Description: Returns the set of headers for the trace table.
+     * @returns {array} // the set of headers.
+     */
     getTableHeaders() {
         const headers = [ 'Service', '' ];
         const trace = this.props.trace;
-        const interval = Zipkin.getTraceDuration(trace)/5;
+        const interval = Zipkin.GetTraceDuration(trace)/5;
 
         for (let i = 1; i <= 5; i++) {
             headers.push(`${(interval*i).toFixed(3)}s`);
@@ -82,8 +120,17 @@ class TraceViewer extends React.Component {
         });
     }
 
+    /**
+     * Get Table Rows
+     *
+     * Description: Returns the set of rows for the trace table.
+     * @param spans {array}    // The set of spans to render.
+     * @param numHeaders {int} // The number of headers.
+     * @param startTs (int)    // The starting timestamp
+     * @returns {array}        // the set of rows.
+     */
     getTableRows(spans, numHeaders, startTs) {
-        const duration = Zipkin.getTraceDuration(this.props.trace);
+        const duration = Zipkin.GetTraceDuration(this.props.trace);
         const rows = [];
         let key = 0;
 
@@ -112,13 +159,13 @@ class TraceViewer extends React.Component {
                                     onClick={e => this.toggleChildren(e, span)}
                                     className={`fa fa-${collapsed ? 'plus' : 'minus'}`} /> :
                                 <i className="fa fa-minus hidden"></i> }
-                            <span>{Zipkin.getSpanService(span)}</span>
+                            <span>{Zipkin.GetSpanService(span)}</span>
                         </div>
                     </td>
                     <td>
                         <div className="zk-ui-trace-span" style={{ marginLeft: left, width: width }}></div>
                         <div className="zk-ui-trace-span-name" style={{ marginLeft: left }}>
-                            {`${span.name} - ${Zipkin.durationToString(span.duration)}`}
+                            {`${span.name} - ${Zipkin.DurationToString(span.duration)}`}
                         </div>
                     </td>
                     { emptyCells }
@@ -150,11 +197,17 @@ class TraceViewer extends React.Component {
                                                             <FormattedMessage
                                                                 id={annotation.value} />
                                                         </td>
-                                                        <td>{Zipkin.convertTimestampToDate(annotation.timestamp)}</td>
-                                                        <td>{Zipkin.durationToString(annotation.timestamp - startTs)}</td>
-                                                        <td>{`${endpoint} (${annotation.endpoint.serviceName})`}</td>
+                                                        <td>
+                                                            {Zipkin.ConvertTimestampToDate(annotation.timestamp)}
+                                                        </td>
+                                                        <td>
+                                                            {Zipkin.DurationToString(annotation.timestamp - startTs)}
+                                                        </td>
+                                                        <td>
+                                                            {`${endpoint} (${annotation.endpoint.serviceName})`}
+                                                        </td>
                                                     </tr>
-                                                )
+                                                );
                                             })
                                         }
                                         <tr>
@@ -168,7 +221,7 @@ class TraceViewer extends React.Component {
                                                         <td>{annotation.key}</td>
                                                         <td>{annotation.value}</td>
                                                     </tr>
-                                                )
+                                                );
                                             })
                                         }
                                     </tbody>
@@ -192,6 +245,11 @@ class TraceViewer extends React.Component {
         return rows;
     }
 
+    /**
+     * On Back Click
+     *
+     * Description: Handler for when the back button is clicked.
+     */
     onBackClicked() {
         SetSelectedTrace(null);
         this.props.history.goBack();

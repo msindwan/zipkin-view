@@ -1,17 +1,28 @@
 /**
+ * Copyright 2017 Mayank Sindwani
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  * Zipkin-ui TraceContainer
  *
- * @Author : Mayank Sindwani
- * @Date   : 2017-12-07
- *
- * Description : Trace container.
+ * @Date : 2017-12-07
+ * @Description : Trace container.
  **/
 
 import TraceViewer from '../components/trace/TraceViewer.jsx';
 import Sidebar from '../components/common/Sidebar.jsx';
 import Header from '../components/common/Header.jsx';
 import { GetTrace } from '../../actions/Trace';
-import Zipkin from '../../util/Zipkin';
 import AppStore from '../../Store';
 import React from 'react';
 
@@ -19,12 +30,7 @@ class TraceContainer extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = this.getInitialState();
-    }
-
-    getInitialState() {
-        // Return the initial application state.
-        return AppStore.getState();
+        this.state = AppStore.getState();
     }
 
     componentDidMount() {
@@ -39,6 +45,11 @@ class TraceContainer extends React.Component {
         }
     }
 
+    /**
+     * Load State from History
+     *
+     * Description: Loads the state from the current location.
+     */
     loadStateFromHistory() {
         const traceId = this.props.match.params.traceId;
         GetTrace(traceId);

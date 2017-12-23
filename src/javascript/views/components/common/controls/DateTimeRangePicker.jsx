@@ -1,10 +1,22 @@
 /**
- * Zipkin-ui DatePicker
+ * Copyright 2017 Mayank Sindwani
  *
- * @Author : Mayank Sindwani
- * @Date   : 2017-12-09
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Description : DatePicker control.
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Zipkin-ui DateTimeRangePicker
+ *
+ * @Date : 2017-12-07
+ * @Description : DateTimeRangePicker Component.
  **/
 
 import DayPicker, { DateUtils } from 'react-day-picker';
@@ -16,8 +28,7 @@ import React from 'react';
 class DateTimeRangePicker extends React.Component {
 
     constructor(props) {
-    	super(props);
-        Moment.locale(this.props.locale);
+        super(props);
         this.state = {
             inputStartTimeMinute: '00',
             inputEndTimeMinute: '00',
@@ -33,18 +44,16 @@ class DateTimeRangePicker extends React.Component {
             dateInputTo: '',
             from: undefined,
             to: undefined,
-        	focus: ''
+            focus: ''
         };
     }
 
     componentDidMount() {
-        document.addEventListener(
-            'click', this.handleClickOutside.bind(this), true);
+        document.addEventListener('click', this.handleClickOutside.bind(this), true);
     }
 
     componentWillUnmount() {
-        document.removeEventListener(
-            'click', this.handleClickOutside.bind(this), true);
+        document.removeEventListener('click', this.handleClickOutside.bind(this), true);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -74,20 +83,38 @@ class DateTimeRangePicker extends React.Component {
         }
     }
 
-    handleClickOutside(event) {
-        if (!this.popover || !this.popover.contains(event.target)) {
+    /**
+     * Handle Click Outside
+     *
+     * Description: Handles click events outside of the date picker.
+     * @param e {event} // The event object.
+     */
+    handleClickOutside(e) {
+        if (!this.popover || !this.popover.contains(e.target)) {
             this.setState({ focus: '' });
         }
     }
 
-    handleDayClick(day, { disabled, selected }) {
+    /**
+     * Handle Day Click
+     *
+     * Description: Handles the day click event for the calendar.
+     * @param day {object} // The selected day.
+     * @param disabled {boolean} // True if disabled; false otherwise.
+     */
+    handleDayClick(day, { disabled }) {
         if (!disabled) {
             const range = DateUtils.addDayToRange(day, this.state);
             this.setState(range);
         }
     }
 
-    onClick(e) {
+    /**
+     * On Click
+     *
+     * Description: Handles the click event for the datepicker.
+     */
+    onClick() {
         this.setState({
             startTimeMinute: this.state.inputStartTimeMinute,
             endTimeMinute: this.state.inputEndTimeMinute,
@@ -99,20 +126,25 @@ class DateTimeRangePicker extends React.Component {
         });
     }
 
-    onApply(e) {
-        let mFrom = `${Moment(this.state.from).format('ll')} ${this.state.startTimeHour}:${this.state.startTimeMinute}`;
-        let mTo =`${Moment(this.state.to).format('ll')} ${this.state.endTimeHour}:${this.state.endTimeMinute}`;
+    /**
+     * On Apply
+     *
+     * Description: Handles the click event for the apply button.
+     */
+    onApply() {
+        const mFrom = `${Moment(this.state.from).format('ll')} ${this.state.startTimeHour}:${this.state.startTimeMinute}`;
+        const mTo =`${Moment(this.state.to).format('ll')} ${this.state.endTimeHour}:${this.state.endTimeMinute}`;
         const today = new Date();
 
-        mFrom = Moment(mFrom, 'll HH:mm');
-        mTo = Moment(mTo, 'll HH:mm');
+        const mFromDate = Moment(mFrom, 'll HH:mm');
+        const mToDate = Moment(mTo, 'll HH:mm');
 
-        if (!mFrom.isValid() || !mTo.isValid() || mFrom.isAfter(mTo) || mTo.isAfter(today)) {
+        if (!mFromDate.isValid() || !mToDate.isValid() || mFromDate.isAfter(mToDate) || mToDate.isAfter(today)) {
             alert('Invalid Time Range!');
         } else {
             this.setState({
-                dateInputFrom: mFrom.format('lll'),
-                dateInputTo: mTo.format('lll'),
+                dateInputFrom: mFrom,
+                dateInputTo: mTo,
                 inputStartTimeMinute: this.state.startTimeMinute,
                 inputEndTimeMinute: this.state.endTimeMinute,
                 inputStartTimeHour: this.state.startTimeHour,
@@ -121,7 +153,7 @@ class DateTimeRangePicker extends React.Component {
                 inputTo: this.state.to,
                 focus: ''
             });
-            this.props.onDateRangeSelected(mFrom, mTo);
+            this.props.onDateRangeSelected(mFromDate, mToDate);
         }
     }
 
@@ -130,7 +162,7 @@ class DateTimeRangePicker extends React.Component {
         const today = new Date();
 
         return (
-        	<div className="zk-ui-datepicker">
+            <div className="zk-ui-datepicker">
                 <div className="zk-ui-datepicker-container">
                     <input
                         onClick={e => this.onClick(e)}
@@ -165,7 +197,7 @@ class DateTimeRangePicker extends React.Component {
                                 selectedDays={[from, { from, to }]}
                                 modifiers={{ start: from, end: to }}
                                 onDayClick={this.handleDayClick.bind(this)}
-                                />
+                            />
                         </div>
                         <div className="zk-ui-datepicker-time">
                             <table>

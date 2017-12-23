@@ -1,10 +1,22 @@
 /**
+ * Copyright 2017 Mayank Sindwani
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  * Zipkin-ui Combobox
  *
- * @Author : Mayank Sindwani
- * @Date   : 2017-12-09
- *
- * Description : Combobox control.
+ * @Date : 2017-12-09
+ * @Description : Combobox control.
  **/
 
 import React from 'react';
@@ -13,12 +25,7 @@ class Combobox extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = this.getInitialState();
-    }
-
-    getInitialState() {
-        // Initial combobox state.
-        return {
+        this.state = {
             focus: '',
             value: this.props.value,
             options: this.props.data
@@ -35,11 +42,22 @@ class Combobox extends React.Component {
         }
     }
 
-    onFocus(e) {
+    /**
+     * On Focus
+     *
+     * Description: The handler that's fired when the input is focused on.
+     */
+    onFocus() {
         // Show the dropdown on input focus.
         this.setState({ focus: 'active' });
     }
 
+    /**
+     * On Blur
+     *
+     * Description: The handler that's fired when the input is blurred.
+     * @param e {event} // The event object.
+     */
     onBlur(e) {
         // Hide the dropdown on input blur.
         e.persist();
@@ -49,6 +67,12 @@ class Combobox extends React.Component {
         }, 250);
     }
 
+    /**
+     * On Change
+     *
+     * Description: The handler that's fired when the input is changed.
+     * @param e {event} // The event object.
+     */
     onChange(e) {
         // Filter options by search text.
         this.setState({
@@ -59,14 +83,25 @@ class Combobox extends React.Component {
         });
     }
 
-    onDropdownButtonClick(e) {
+    /**
+     * On Dropdown Button Click
+     *
+     * Description: The handler that's fired when the dropdown button is clicked.
+     */
+    onDropdownButtonClick() {
         // Set input focus to show the dropdown.
         if (this.state.focus === '') {
             this.searchInput.focus();
         }
     }
 
-    onRowClicked(option, e) {
+    /**
+     * On Row Clicked
+     *
+     * Description: The handler that's fired when a dropdown row is clicked.
+     * @param option {option} // The dropdown option.
+     */
+    onRowClicked(option) {
         // Update the search text.
         this.setState({ value: option });
     }
@@ -93,16 +128,18 @@ class Combobox extends React.Component {
                     <div className={`zk-ui-popover-container ${this.state.focus}`}>
                         <div className="zk-ui-arrow-up"></div>
                         <div className="zk-ui-popover-content">
-                        { this.state.options.map((option, i) => {
-                               return (
-                                   <div
-                                       key={i}
-                                       onClick={e => this.onRowClicked(option, e)}
-                                       className="zk-ui-combobox-row">
-                                       {option}
-                                   </div>
-                               );
-                        })}
+                            {
+                                this.state.options.map((option, i) => {
+                                    return (
+                                        <div
+                                            key={i}
+                                            onClick={e => this.onRowClicked(option, e)}
+                                            className="zk-ui-combobox-row">
+                                            { option }
+                                        </div>
+                                    );
+                                })
+                            }
                         </div>
                     </div>
                 )}

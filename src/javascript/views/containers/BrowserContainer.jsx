@@ -1,10 +1,22 @@
 /**
+ * Copyright 2017 Mayank Sindwani
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  * Zipkin-ui BrowserContainer
  *
- * @Author : Mayank Sindwani
- * @Date   : 2017-12-07
- *
- * Description : Browser container.
+ * @Date : 2017-12-07
+ * @Description : Browser container.
  **/
 
 import { GetTraces, SetBrowserFilters, SetTraces } from '../../actions/Browser';
@@ -14,19 +26,13 @@ import Sidebar from '../components/common/Sidebar.jsx';
 import Header from '../components/common/Header.jsx';
 import Utils from '../../util/Utils';
 import AppStore from '../../Store';
-import Moment from 'moment';
 import React from 'react';
 
 class BrowserContainer extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = this.getInitialState();
-    }
-
-    getInitialState() {
-        // Return the initial application state.
-        return AppStore.getState();
+        this.state = AppStore.getState();
     }
 
     componentDidMount() {
@@ -41,6 +47,11 @@ class BrowserContainer extends React.Component {
         }
     }
 
+    /**
+     * Load State from History
+     *
+     * Description: Loads the state from the current location.
+     */
     loadStateFromHistory() {
         const queryParams = Utils.GetQueryParams();
         SetSelectedTrace(null);
@@ -52,7 +63,7 @@ class BrowserContainer extends React.Component {
                 spanName: queryParams['spanName'],
                 minDuration: queryParams['minDuration'],
                 limit: queryParams['limit'],
-                annotationQuery: queryParams['annotationQuery'],
+                annotationQuery: queryParams['annotationQuery'] || '',
                 sortOrder: queryParams['sortOrder']
             };
 

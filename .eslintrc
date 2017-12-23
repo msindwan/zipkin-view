@@ -1,0 +1,34 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "experimentalObjectRestSpread": true
+        },
+    },
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "rules": {
+        "semi": 2,
+        "indent": [1, 4, {"SwitchCase": 1}],
+        "no-console": 0,
+        "eol-last": 1,
+        "react/prop-types": 0
+    },
+    "globals" : {
+        "Promise": true,
+        "chrome": true
+    },
+    "settings": {
+        "react": {
+            "pragma": "React"
+        }
+    },
+    "plugins": [
+        "react"
+    ],
+    "extends": ["eslint:recommended", "plugin:react/recommended"]
+}

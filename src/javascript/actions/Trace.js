@@ -1,41 +1,65 @@
 /**
+ * Copyright 2017 Mayank Sindwani
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  * Trace Actions
  *
- * @Author : Mayank Sindwani
- * @Date   : 2017-12-10
- *
- * Description : Trace actions.
+ * @Date : 2017-12-10
+ * @Description : Trace actions.
  **/
 
 import { Action } from 'reduxion';
+import Utils from '../util/Utils';
 import API from '../util/Api';
-import 'noty/lib/noty.css';
-import Noty from 'noty';
 
-// Set the selected trace.
+/**
+ * Set Selected Trace Action
+ *
+ * Description: Dispatches the current trace.
+ * @param trace {object} // The trace to store.
+ * @returns {object} The trace for the reducer to set.
+ */
 const SetSelectedTrace = Action("setSelectedTrace", trace => {
     return trace;
 });
 
-// Toggles the loading state.
+/**
+ * Set Trace Loading Action
+ *
+ * Description: Toggles the loading state for the trace.
+ * @param toggle {boolean} // True if the trace is loading; false otherwise.
+ * @returns {boolean} The toggle for the reducer to set.
+ */
 const SetTraceLoading = Action("setTraceLoading", toggle => {
     return toggle;
 });
 
-// Fetches a single trace.
+/**
+ * Get Trace Action
+ *
+ * Description: Fetches the specified trace.
+ * @param traceId {string} // The ID of the trace to fetch.
+ */
 const GetTrace = (traceId) => {
     SetTraceLoading(true);
     SetSelectedTrace(null);
 
-    API.fetchTrace(traceId, trace => {
+    API.FetchTrace(traceId, trace => {
         SetSelectedTrace(trace);
         SetTraceLoading(false);
     }, error => {
-        new Noty({
-            type: 'error',
-            timeout: 7500,
-            text: error.toString()
-        }).show();
+        Utils.Alert(error.toString());
         SetTraceLoading(false);
     });
 };

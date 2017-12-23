@@ -1,10 +1,22 @@
 /**
+ * Copyright 2017 Mayank Sindwani
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  * Zipkin-ui Sidebar component
  *
- * @Author : Mayank Sindwani
- * @Date   : 2017-12-07
- *
- * Description : App Sidebar.
+ * @Date : 2017-12-07
+ * @Description : App Sidebar.
  **/
 
 import DateTimeRangePicker from './controls/DateTimeRangePicker.jsx';
@@ -22,7 +34,12 @@ class Sidebar extends React.Component {
         BrowserActions.GetServices();
     }
 
-    onFindTracesClicked(e) {
+    /**
+     * On Find Traces Clicked
+     *
+     * Description: The handler that's fired when the find traces button is submitted.
+     */
+    onFindTracesClicked() {
         // Construct the query object.
         const query = {
             serviceName: this.props.serviceName,
@@ -39,6 +56,12 @@ class Sidebar extends React.Component {
         this.props.history.push(`/${Utils.URLify(query)}`);
     }
 
+    /**
+     * On Service Selected
+     *
+     * Description: The handler that's fired when the "find traces" button is submitted.
+     * @param e {event} // The event object.
+     */
     onServiceSelected(e) {
         if (e.target.value !== this.props.selectedService) {
             // Update the selected service and fetch the new spans.
@@ -51,7 +74,7 @@ class Sidebar extends React.Component {
     }
 
     render() {
-        const i18n = (s) => { return s };
+        const i18n = (s) => { return s; };
         return (
             <div className="zk-ui-sidebar">
                 <div className="zk-ui-logo">
@@ -127,7 +150,7 @@ class Sidebar extends React.Component {
                     </div>
                     <div className="zk-ui-form-control-container">
                         <button
-                            onClick={e => this.onFindTracesClicked(e)}
+                            onClick={() => this.onFindTracesClicked()}
                             className="zk-ui-button primary">
                             { i18n('Find Traces') }
                         </button>

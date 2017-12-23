@@ -1,37 +1,26 @@
 /**
+ * Copyright 2017 Mayank Sindwani
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  * Zipkin-ui Browser component
  *
- * @Author : Mayank Sindwani
- * @Date   : 2017-12-07
- *
- * Description : Trace Browser.
+ * @Date : 2017-12-07
+ * @Description : Trace Browser.
  **/
 
 import Zipkin from '../../../util/Zipkin';
 import React from 'react';
-
-const BrowserCell = ({ trace, onClick, width }) => (
-    <div onClick={e => onClick(e, trace)} className="zk-ui-browser-card-cell">
-        <div className="zk-ui-browser-card-cell-container">
-            <table>
-                <tbody>
-                    <tr>
-                        <td className="zk-ui-browser-card-cell-span-name">
-                            <span>{Zipkin.getTraceService(trace)}</span>
-                            <span className="zk-ui-trace-name">{Zipkin.getTraceName(trace)}</span>
-                            <div className="zk-ui-browser-card-cell-num-spans">{`${Zipkin.getTraceSpanCount(trace)} Spans`}</div>
-                        </td>
-                        <td className="zk-ui-browser-card-cell-span-info">
-                            <div style={{width: width}} className="zk-ui-browser-card-cell-span-width"></div>
-                            <div className="zk-ui-browser-card-cell-span-duration">{Zipkin.getTraceDuration(trace)}</div>
-                            <div className="zk-ui-browser-card-cell-span-date">{Zipkin.getTraceDate(trace)}</div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-);
 
 class Browser extends React.Component {
 
@@ -53,8 +42,15 @@ class Browser extends React.Component {
         }
     }
 
+    /**
+     * On Trace Click
+     *
+     * Description: The handler that's fired when a trace is clicked.
+     * @param e {event}      // The event object.
+     * @param trace {object} // The selected trace.
+     */
     onTraceClick(e, trace) {
-        this.props.history.push(`/traces/${Zipkin.getTraceID(trace)}`);
+        this.props.history.push(`/traces/${Zipkin.GetTraceID(trace)}`);
     }
 
     render() {
@@ -68,16 +64,46 @@ class Browser extends React.Component {
                     className="zk-ui-browser-card-content-placeholder" />
             );
         } else if (this.state.traces.length > 0) {
-            const traceDurations = this.state.traces.map(t => Zipkin.getTraceDuration(t));
+            const traceDurations = this.state.traces.map(t => Zipkin.GetTraceDuration(t));
             const longestDuration = Math.max(...traceDurations);
 
             card = this.state.traces.map((trace, i) => {
                 return (
-                    <BrowserCell
-                        width={`${traceDurations[i]*100/longestDuration}%`}
-                        onClick={(e, trace) => this.onTraceClick(e, trace)}
-                        trace={trace}
-                        key={i} />
+                    <div
+                        key={i}
+                        onClick={e => this.onTraceClick(e, trace)}
+                        className="zk-ui-browser-card-cell">
+                        <div className="zk-ui-browser-card-cell-container">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td className="zk-ui-browser-card-cell-span-name">
+                                            <span>
+                                                {Zipkin.GetTraceService(trace)}
+                                            </span>
+                                            <span className="zk-ui-trace-name">
+                                                {Zipkin.GetTraceName(trace)}
+                                            </span>
+                                            <div className="zk-ui-browser-card-cell-num-spans">
+                                                {`${Zipkin.GetTraceSpanCount(trace)} Spans`}
+                                            </div>
+                                        </td>
+                                        <td className="zk-ui-browser-card-cell-span-info">
+                                            <div
+                                                style={{width: `${traceDurations[i]*100/longestDuration}%`}}
+                                                className="zk-ui-browser-card-cell-span-width" />
+                                            <div className="zk-ui-browser-card-cell-span-duration">
+                                                {Zipkin.GetTraceDuration(trace)}
+                                            </div>
+                                            <div className="zk-ui-browser-card-cell-span-date">
+                                                {Zipkin.GetTraceDate(trace)}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 );
             });
         } else {
