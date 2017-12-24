@@ -100,9 +100,11 @@ class Browser extends React.Component {
                                             </div>
                                         </td>
                                         <td className="zk-ui-browser-card-cell-span-info">
-                                            <div
-                                                style={{width: `${traceDurations[i]*100/longestDuration}%`}}
-                                                className="zk-ui-browser-card-cell-span-width" />
+                                            <div className="zk-ui-browser-card-cell-span-width-container">
+                                                <div
+                                                    style={{width: `${traceDurations[i]*100/longestDuration}%`}}
+                                                    className="zk-ui-browser-card-cell-span-width" />
+                                            </div>
                                             <div className="zk-ui-browser-card-cell-span-duration">
                                                 { Zipkin.DurationToString(
                                                     Zipkin.GetTraceDuration(trace),

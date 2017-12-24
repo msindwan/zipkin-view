@@ -127,8 +127,7 @@ input.zk-ui-input {
   box-shadow: rgba(0, 0, 0, 0.14) 0px 1px 4px 0px;
   border-radius: 0px;
   color: rgba(0, 0, 0, 0.87);
-  background: white;
-  min-height: 200px; }
+  background: white; }
 
 .zk-ui-card-header {
   border-radius: 0px;
@@ -408,9 +407,11 @@ input.zk-ui-input {
                 padding-top: 5px; }
             .zk-ui-content .zk-ui-browser .zk-ui-browser-container .zk-ui-card .zk-ui-browser-card-cell .zk-ui-browser-card-cell-container > table .zk-ui-browser-card-cell-span-info {
               width: 60%; }
-            .zk-ui-content .zk-ui-browser .zk-ui-browser-container .zk-ui-card .zk-ui-browser-card-cell .zk-ui-browser-card-cell-container > table .zk-ui-browser-card-cell-span-width {
-              height: 2px;
-              background: #4399b4; }
+            .zk-ui-content .zk-ui-browser .zk-ui-browser-container .zk-ui-card .zk-ui-browser-card-cell .zk-ui-browser-card-cell-container > table .zk-ui-browser-card-cell-span-width-container {
+              background: #eeeeee; }
+              .zk-ui-content .zk-ui-browser .zk-ui-browser-container .zk-ui-card .zk-ui-browser-card-cell .zk-ui-browser-card-cell-container > table .zk-ui-browser-card-cell-span-width-container .zk-ui-browser-card-cell-span-width {
+                height: 2px;
+                background: #4399b4; }
             .zk-ui-content .zk-ui-browser .zk-ui-browser-container .zk-ui-card .zk-ui-browser-card-cell .zk-ui-browser-card-cell-container > table .zk-ui-browser-card-cell-span-duration {
               padding-top: 5px;
               width: 50%;
@@ -426,7 +427,7 @@ input.zk-ui-input {
         text-align: center;
         margin: auto;
         display: block;
-        margin-top: 40px;
+        margin: 60px;
         opacity: 0.3; }
         .zk-ui-content .zk-ui-browser .zk-ui-browser-container .zk-ui-card .zk-ui-browser-card-content-placeholder .zk-ui-placeholder-title {
           font-size: 30px; }
@@ -436,74 +437,78 @@ input.zk-ui-input {
     display: block;
     margin-top: 40px;
     color: #a7a7a7; }
-  .zk-ui-content .zk-ui-trace-viewer {
-    margin-top: 15px;
-    padding: 10px 15px;
-    min-height: calc(100% - 123px); }
-    .zk-ui-content .zk-ui-trace-viewer .zk-ui-card-header .zk-ui-button {
-      padding: 2px;
-      width: fit-content; }
-    .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container {
-      padding-right: 15px;
-      padding-left: 15px;
-      margin-right: auto;
-      margin-left: auto; }
-      .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content {
+
+.zk-ui-trace-viewer {
+  margin-top: 15px;
+  padding: 10px 15px;
+  min-height: calc(100% - 123px); }
+  .zk-ui-trace-viewer .zk-ui-card-header .zk-ui-button {
+    padding: 2px;
+    width: fit-content; }
+  .zk-ui-trace-viewer .zk-ui-trace-viewer-container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto; }
+    .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box; }
+      .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table {
         width: 100%;
+        text-align: left;
         padding: 10px;
-        box-sizing: border-box; }
-        .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table {
-          width: 100%;
-          text-align: left;
-          padding: 10px;
-          table-layout: fixed;
-          font-size: 12px;
-          border-collapse: collapse; }
-          .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table td {
-            padding-top: 5px;
-            padding-bottom: 5px;
-            border-left: 1px solid #e8e8e8; }
-            .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table td:nth-child(1) {
-              border-left: 0; }
-          .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table tr:hover {
-            background: #eff0f1;
-            cursor: pointer; }
-          .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-span-context-row:hover {
-            background: inherit; }
-          .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table th {
-            border-left: 1px solid #e8e8e8;
-            padding: 2px; }
-            .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table th:nth-child(1) {
-              border-left: 0; }
-          .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-span {
-            height: 10px;
-            border-radius: 2px;
-            background: #5fd2f7; }
-          .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-span-name {
-            display: inline-block;
-            margin-left: 5px;
-            color: #504f4f;
-            white-space: nowrap; }
-          .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-span-context {
-            min-height: 200px;
-            box-shadow: 0px 0px 1px #ababab;
-            padding: 10px; }
-            .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-span-context > table {
-              width: 100%; }
-          .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-service-name .fa.fa-minus,
-          .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-service-name .fa.fa-plus {
-            color: #5fd2f7;
-            margin-right: 5px; }
-            .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-service-name .fa.fa-minus.hidden,
-            .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-service-name .fa.fa-plus.hidden {
-              visibility: hidden; }
-        .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-span-context-table td {
-          border-left: 0; }
-        .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-span-context-table th {
-          border-left: 0; }
-        .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-span-context-table tr:hover {
+        table-layout: fixed;
+        font-size: 12px;
+        border-collapse: collapse; }
+        .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table td {
+          padding-top: 5px;
+          padding-bottom: 5px;
+          border-left: 1px solid #e8e8e8; }
+          .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table td:nth-child(1) {
+            border-left: 0; }
+        .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table tr:hover {
+          background: #eff0f1;
+          cursor: pointer; }
+        .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-span-context-row:hover {
           background: inherit; }
-        .zk-ui-content .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-span-context-table .header {
+        .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table th {
+          border-left: 1px solid #e8e8e8;
+          padding: 2px; }
+          .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table th:nth-child(1) {
+            border-left: 0; }
+        .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-span {
+          height: 10px;
+          border-radius: 2px;
+          background: #5fd2f7; }
+        .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-span-name {
+          display: inline-block;
+          margin-left: 5px;
+          color: #504f4f;
+          white-space: nowrap; }
+        .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-span-context {
+          box-shadow: 0px 0px 1px #ababab;
+          padding: 10px; }
+          .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-span-context > table {
+            width: 100%; }
+        .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-service-name .fa.fa-minus,
+        .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-service-name .fa.fa-plus {
+          color: #5fd2f7;
+          margin-right: 5px; }
+          .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-service-name .fa.fa-minus.hidden,
+          .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-service-name .fa.fa-plus.hidden {
+            visibility: hidden; }
+      .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-span-selected {
+        background: #e9f2f5; }
+      .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-span-context-table {
+        table-layout: fixed; }
+        .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-span-context-table td {
+          border-left: 0; }
+        .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-span-context-table th {
+          border-left: 0; }
+        .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-span-context-table tr:hover {
+          background: inherit; }
+        .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-span-context-table .header {
           font-weight: bold;
           font-size: 12px;
           padding-top: 10px;

@@ -93,7 +93,7 @@ class TraceViewer extends React.Component {
         this.props.trace.forEach(span => {
             const parent = spanLookup[span.parentId];
             if (typeof parent !== 'undefined') {
-                parent._children_.push(span);
+                parent._children_.unshift(span);
             }
         });
 
@@ -151,7 +151,10 @@ class TraceViewer extends React.Component {
             const collapsed = this.state.toggleState[span.id] === false;
 
             rows.push((
-                <tr onClick={e => this.setSelectedSpan(e, span)} key={key++}>
+                <tr
+                    className={span === this.state.selectedSpan ? 'zk-ui-trace-span-selected' : '' }
+                    onClick={e => this.setSelectedSpan(e, span)}
+                    key={key++}>
                     <td>
                         <div style={{ marginLeft: depth*10 }} className="zk-ui-trace-service-name">
                             { span._children_.length ?
@@ -182,63 +185,89 @@ class TraceViewer extends React.Component {
                                         <tr>
                                             <td className="header">
                                                 <FormattedMessage
-                                                    id="annotation_label" />
+                                                    id="timestamp_label" />
                                             </td>
                                             <td className="header">
                                                 <FormattedMessage
-                                                    id="date_time_label" />
+                                                    id="trace_id_label" />
                                             </td>
                                             <td className="header">
                                                 <FormattedMessage
-                                                    id="relative_time_label" />
+                                                    id="span_id_label" />
                                             </td>
                                             <td className="header">
                                                 <FormattedMessage
-                                                    id="address_label" />
+                                                    id="parent_id_label" />
                                             </td>
                                         </tr>
-                                        {
-                                            span.annotations.map((annotation, i) => {
-                                                let endpoint = annotation.endpoint.ipv4;
-                                                if (annotation.endpoint.port) {
-                                                    endpoint += `:${annotation.endpoint.port}`;
-                                                }
-                                                return (
-                                                    <tr key={i}>
-                                                        <td>
-                                                            <FormattedMessage
-                                                                id={annotation.value} />
-                                                        </td>
-                                                        <td>
-                                                            {Zipkin.ConvertTimestampToDate(annotation.timestamp)}
-                                                        </td>
-                                                        <td>
-                                                            {
-                                                                Zipkin.DurationToString(
-                                                                    annotation.timestamp - startTs,
-                                                                    this.props.intl
-                                                                )
-                                                            }
-                                                        </td>
-                                                        <td>
-                                                            {`${endpoint} (${annotation.endpoint.serviceName})`}
-                                                        </td>
-                                                    </tr>
-                                                );
-                                            })
-                                        }
                                         <tr>
-                                            <td className="header">
-                                                <FormattedMessage
-                                                    id="key_label" />
-                                            </td>
-                                            <td className="header">
-                                                <FormattedMessage
-                                                    id="value_label" />
-                                            </td>
+                                            <td>{Zipkin.ConvertTimestampToDate(span.timestamp)}</td>
+                                            <td>{Zipkin.GetTraceID(this.props.trace)}</td>
+                                            <td>{span.id}</td>
+                                            <td>{span.parentId}</td>
                                         </tr>
+                                        { span.annotations && (
+                                            <tr>
+                                                <td className="header">
+                                                    <FormattedMessage
+                                                        id="annotation_label" />
+                                                </td>
+                                                <td className="header">
+                                                    <FormattedMessage
+                                                        id="date_time_label" />
+                                                </td>
+                                                <td className="header">
+                                                    <FormattedMessage
+                                                        id="relative_time_label" />
+                                                </td>
+                                                <td className="header">
+                                                    <FormattedMessage
+                                                        id="address_label" />
+                                                </td>
+                                            </tr>
+                                        )}
+                                        { span.annotations && span.annotations.map((annotation, i) => {
+                                            let endpoint = annotation.endpoint.ipv4;
+                                            if (annotation.endpoint.port) {
+                                                endpoint += `:${annotation.endpoint.port}`;
+                                            }
+                                            return (
+                                                <tr key={i}>
+                                                    <td>
+                                                        <FormattedMessage
+                                                            id={annotation.value} />
+                                                    </td>
+                                                    <td>
+                                                        {Zipkin.ConvertTimestampToDate(annotation.timestamp)}
+                                                    </td>
+                                                    <td>
+                                                        {
+                                                            Zipkin.DurationToString(
+                                                                annotation.timestamp - startTs,
+                                                                this.props.intl
+                                                            )
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        {`${endpoint} (${annotation.endpoint.serviceName})`}
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
+                                        { span.binaryAnnotations && (
+                                            <tr>
+                                                <td className="header">
+                                                    <FormattedMessage
+                                                        id="key_label" />
+                                                </td>
+                                                <td className="header">
+                                                    <FormattedMessage
+                                                        id="value_label" />
+                                                </td>
+                                            </tr>
+                                        )}
                                         {
-                                            span.binaryAnnotations.map((annotation, i) => {
+                                            span.binaryAnnotations && span.binaryAnnotations.map((annotation, i) => {
                                                 return (
                                                     <tr key={i}>
                                                         <td>{annotation.key}</td>

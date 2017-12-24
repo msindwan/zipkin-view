@@ -98,7 +98,19 @@ class Zipkin {
      * @returns {string}    // The service name.
      */
     static GetSpanService(span) {
-        return span.annotations[0].endpoint.serviceName;
+        let endpoint;
+
+        if (typeof span.annotations !== 'undefined') {
+            endpoint = span.annotations[0].endpoint;
+        } else if (typeof span.binaryAnnotations !== 'undefined') {
+            endpoint =  span.binaryAnnotations[0].endpoint;
+        }
+
+        if (typeof endpoint !== 'undefined') {
+            return endpoint.serviceName;
+        }
+
+        return null;
     }
 
     /**
