@@ -23,6 +23,7 @@ import TraceViewer from '../components/trace/TraceViewer.jsx';
 import Sidebar from '../components/common/Sidebar.jsx';
 import Header from '../components/common/Header.jsx';
 import { GetTrace } from '../../actions/Trace';
+import Zipkin from '../../util/Zipkin';
 import AppStore from '../../Store';
 import React from 'react';
 
@@ -52,7 +53,11 @@ class TraceContainer extends React.Component {
      */
     loadStateFromHistory() {
         const traceId = this.props.match.params.traceId;
-        GetTrace(traceId);
+
+        // Don't fetch the trace if we already have it in memory.
+        if (this.state.trace.selectedTrace == null || Zipkin.GetTraceID( this.state.trace.selectedTrace) !== traceId) {
+            GetTrace(traceId);
+        }
     }
 
     render() {

@@ -168,7 +168,7 @@ class TraceViewer extends React.Component {
                     <td>
                         <div className="zk-ui-trace-span" style={{ marginLeft: left, width: width }}></div>
                         <div className="zk-ui-trace-span-name" style={{ marginLeft: left }}>
-                            {`${span.name} - ${Zipkin.DurationToString(span.duration, this.props.intl)}`}
+                            {`${span.name} : ${Zipkin.DurationToString(span.duration, this.props.intl)}`}
                         </div>
                     </td>
                     { emptyCells }
@@ -180,6 +180,9 @@ class TraceViewer extends React.Component {
                     <tr className="zk-ui-trace-span-context-row" key={'selected-span'}>
                         <td colSpan={numHeaders}>
                             <div className="zk-ui-trace-span-context">
+                                <div className="zk-ui-trace-span-name">
+                                    {`${Zipkin.GetSpanService(span)}.${span.name} : ${Zipkin.DurationToString(span.duration, this.props.intl)}`}
+                                </div>
                                 <table className="zk-ui-trace-span-context-table">
                                     <tbody>
                                         <tr>

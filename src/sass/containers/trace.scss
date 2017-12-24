@@ -73,8 +73,32 @@
                     box-shadow: 0px 0px 1px #ababab;
                     padding: 10px;
 
-                    > table {
+                    .zk-ui-trace-span-context-table {
+                        table-layout: fixed;
                         width: 100%;
+                        
+                        td {
+                            border-left: 0;
+                        }
+                        th {
+                            border-left: 0;
+                        }
+                        tr:hover {
+                            background: inherit;
+                        }
+                        .header {
+                            font-weight: bold;
+                            font-size: 12px;
+                            padding-top: 10px;
+                            padding-bottom: 10px;
+                        }
+                    }
+
+                    .zk-ui-trace-span-name {
+                        font-size: 20px;
+                        border-bottom: 1px solid silver;
+                        display: block;
+                        padding-bottom: 7px;
                     }
                 }
 
@@ -92,25 +116,6 @@
 
             .zk-ui-trace-span-selected {
                 background: #e9f2f5;
-            }
-
-            .zk-ui-trace-span-context-table {
-                table-layout: fixed;
-                td {
-                    border-left: 0;
-                }
-                th {
-                    border-left: 0;
-                }
-                tr:hover {
-                    background: inherit;
-                }
-                .header {
-                    font-weight: bold;
-                    font-size: 12px;
-                    padding-top: 10px;
-                    padding-bottom: 10px;
-                }
             }
         }
     }

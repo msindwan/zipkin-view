@@ -489,8 +489,25 @@ input.zk-ui-input {
         .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-span-context {
           box-shadow: 0px 0px 1px #ababab;
           padding: 10px; }
-          .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-span-context > table {
+          .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-span-context .zk-ui-trace-span-context-table {
+            table-layout: fixed;
             width: 100%; }
+            .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-span-context .zk-ui-trace-span-context-table td {
+              border-left: 0; }
+            .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-span-context .zk-ui-trace-span-context-table th {
+              border-left: 0; }
+            .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-span-context .zk-ui-trace-span-context-table tr:hover {
+              background: inherit; }
+            .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-span-context .zk-ui-trace-span-context-table .header {
+              font-weight: bold;
+              font-size: 12px;
+              padding-top: 10px;
+              padding-bottom: 10px; }
+          .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-span-context .zk-ui-trace-span-name {
+            font-size: 20px;
+            border-bottom: 1px solid silver;
+            display: block;
+            padding-bottom: 7px; }
         .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-service-name .fa.fa-minus,
         .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-table .zk-ui-trace-service-name .fa.fa-plus {
           color: #5fd2f7;
@@ -500,19 +517,6 @@ input.zk-ui-input {
             visibility: hidden; }
       .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-span-selected {
         background: #e9f2f5; }
-      .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-span-context-table {
-        table-layout: fixed; }
-        .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-span-context-table td {
-          border-left: 0; }
-        .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-span-context-table th {
-          border-left: 0; }
-        .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-span-context-table tr:hover {
-          background: inherit; }
-        .zk-ui-trace-viewer .zk-ui-trace-viewer-container .zk-ui-card-content .zk-ui-trace-span-context-table .header {
-          font-weight: bold;
-          font-size: 12px;
-          padding-top: 10px;
-          padding-bottom: 10px; }
 
 .error-container {
   background: white;

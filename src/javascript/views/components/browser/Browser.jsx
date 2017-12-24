@@ -20,6 +20,7 @@
  **/
 
 import { injectIntl, FormattedMessage } from 'react-intl';
+import { SetSelectedTrace } from '../../../actions/Trace';
 import Zipkin from '../../../util/Zipkin';
 import React from 'react';
 
@@ -51,6 +52,7 @@ class Browser extends React.Component {
      * @param trace {object} // The selected trace.
      */
     onTraceClick(e, trace) {
+        SetSelectedTrace(trace);
         this.props.history.push(`/traces/${Zipkin.GetTraceID(trace)}`);
     }
 
