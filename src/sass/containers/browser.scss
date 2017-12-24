@@ -77,11 +77,15 @@
                 }
 
                 .zk-ui-browser-card-content-placeholder {
-                    width: 135px;
+                    text-align: center;
                     margin: auto;
                     display: block;
                     margin-top: 40px;
-                    opacity: 0.1;
+                    opacity: 0.3;
+
+                    .zk-ui-placeholder-title {
+                        font-size: 30px;
+                    }
                 }
 
             }

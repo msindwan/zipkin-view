@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Zipkin-ui Combobox
+ * Combobox
  *
  * @Date : 2017-12-09
- * @Description : Combobox control.
+ * @Description : Combobox Control.
  **/
 
 import React from 'react';

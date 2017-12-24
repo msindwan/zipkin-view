@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Zipkin-ui Header component
+ * Header
  *
  * @Date : 2017-12-07
  * @Description : App Header.

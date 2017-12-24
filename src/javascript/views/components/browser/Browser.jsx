@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Zipkin-ui Browser component
+ * Browser
  *
  * @Date : 2017-12-07
  * @Description : Trace Browser.
@@ -58,10 +58,10 @@ class Browser extends React.Component {
 
         if (this.state.traces === null) {
             card = (
-                <img
-                    alt="OpenZipkin logo"
-                    src="../images/zipkin-logo-200x119.jpg"
-                    className="zk-ui-browser-card-content-placeholder" />
+                <div className="zk-ui-browser-card-content-placeholder">
+                    <div className="zk-ui-placeholder-title">ZIPKIN VIEW</div>
+                    <div>Search for Traces</div>
+                </div>
             );
         } else if (this.state.traces.length > 0) {
             const traceDurations = this.state.traces.map(t => Zipkin.GetTraceDuration(t));

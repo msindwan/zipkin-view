@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Zipkin-ui Api Helper
+ * Api Helper
  *
  * @Date : 2017-12-11
  * @Description : Zipkin API Wrapper.
@@ -32,7 +32,7 @@ class API {
      * @param failure {function} // The failure callback.
      */
     static FetchServices(success, failure) {
-        fetch("/api/v1/services")
+        fetch("/zipkin/api/v1/services")
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Failed to fetch services (error code ${response.status})`);
@@ -52,7 +52,7 @@ class API {
      * @param failure {function} // The failure callback.
      */
     static FetchSpans(service, success, failure) {
-        fetch(`/api/v1/spans?serviceName=${service}`)
+        fetch(`/zipkin/api/v1/spans?serviceName=${service}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Failed to fetch spans (error code ${response.status})`);
@@ -78,7 +78,7 @@ class API {
             annotationQuery: filters['annotationQuery'].replace(/(?:\r\n|\r|\n)/g, '')
         };
 
-        fetch(`/api/v1/traces${Utils.URLify(query)}`)
+        fetch(`/zipkin/api/v1/traces${Utils.URLify(query)}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Failed to fetch traces (error code ${response.status})`);
@@ -98,7 +98,7 @@ class API {
      * @param failure {function} // The failure callback.
      */
     static FetchTrace(trace, success, failure) {
-        fetch(`/api/v1/trace/${trace}`)
+        fetch(`/zipkin/api/v1/trace/${trace}`)
             .then(response => {
                 if(!response.ok) {
                     throw new Error(`Failed to fetch trace (error code ${response.status})`);

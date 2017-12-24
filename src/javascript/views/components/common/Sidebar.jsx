@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Zipkin-ui Sidebar component
+ * Sidebar
  *
  * @Date : 2017-12-07
  * @Description : App Sidebar.
@@ -78,7 +78,7 @@ class Sidebar extends React.Component {
         return (
             <div className="zk-ui-sidebar">
                 <div className="zk-ui-logo">
-                    <a href="/">Zipkin</a>
+                    <a href="/">Zipkin View</a>
                 </div>
                 <div className="zk-ui-sidebar-wrapper">
                     <div className="zk-ui-form-control-container">

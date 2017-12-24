@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Zipkin-ui Zipkin Util
+ * Zipkin Util
  *
  * @Date : 2017-12-11
  * @Description : Zipkin Helper Functions.

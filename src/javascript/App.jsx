@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Zipkin-ui Javascript Entry Point
+ * Javascript Entry Point
  *
  * @Date : 2017-12-07
  * @Description : Defines the entry point for the app.

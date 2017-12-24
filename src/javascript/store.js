@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Zipkin-ui Store
+ * Store
  *
  * @Date : 2017-12-10
  * @Description : Main application store.

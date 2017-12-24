@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Zipkin-ui Intl
+ * Intl
  *
  * @Date : 2017-12-16
  * @Description : App translations.

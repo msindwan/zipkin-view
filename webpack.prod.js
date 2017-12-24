@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Zipkin-ui Webpack Prod Config
+ * Webpack Prod Config
  *
  * @Date : 2017-12-14
- * @Description : Webpack configuration for prod zipkin-ui builds.
+ * @Description : Webpack configuration for prod builds.
  **/
 
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');

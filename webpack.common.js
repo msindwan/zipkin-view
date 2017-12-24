@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Zipkin-ui Webpack Common Config
+ * Webpack Common Config
  *
  * @Date : 2017-12-14
- * @Description : Webpack configuration for all zipkin-ui builds.
+ * @Description : Webpack configuration for all builds.
  **/
 
 const ExtractTextPlugin = require("extract-text-webpack-plugin");

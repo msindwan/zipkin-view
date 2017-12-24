@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Zipkin-ui TraceContainer
+ * TraceContainer
  *
  * @Date : 2017-12-07
- * @Description : Trace container.
+ * @Description : Trace Container.
  **/
 
 import TraceViewer from '../components/trace/TraceViewer.jsx';

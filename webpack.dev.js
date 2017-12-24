@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Zipkin-ui Webpack Dev Config
+ * Webpack Dev Config
  *
  * @Date : 2017-12-14
- * @Description : Webpack configuration for dev zipkin-ui builds.
+ * @Description : Webpack configuration for dev builds.
  **/
 
 const common = require('./webpack.common.js');
@@ -28,7 +28,7 @@ module.exports = merge(common, {
         contentBase: './static',
         historyApiFallback: true,
         proxy: {
-            '/api': {
+            '/zipkin': {
                 target: process.env.ZIPKIN_API,
                 secure: false
             }

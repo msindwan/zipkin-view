@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Zipkin-ui BrowserContainer
+ * BrowserContainer
  *
  * @Date : 2017-12-07
- * @Description : Browser container.
+ * @Description : Browser Container.
  **/
 
 import { GetTraces, SetBrowserFilters, SetTraces } from '../../actions/Browser';

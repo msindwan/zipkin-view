@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Zipkin-ui NotFoundContainer
+ * NotFoundContainer
  *
  * @Date : 2017-12-07
- * @Description : Application 404 container.
+ * @Description : Application 404 Container.
  **/
 
 import React from 'react';

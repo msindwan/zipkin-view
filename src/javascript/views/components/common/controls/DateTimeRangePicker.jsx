@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Zipkin-ui DateTimeRangePicker
+ * DateTimeRangePicker
  *
  * @Date : 2017-12-07
- * @Description : DateTimeRangePicker Component.
+ * @Description : DateTimeRangePicker Control.
  **/
 
 import DayPicker, { DateUtils } from 'react-day-picker';

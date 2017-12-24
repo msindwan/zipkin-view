@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Zipkin-ui Browser component
+ * Trace Viewer
  *
  * @Date : 2017-12-13
- * @Description : Trace container.
+ * @Description : Trace Container.
  **/
 
 import { SetSelectedTrace } from '../../../actions/Trace';

@@ -1,13 +1,13 @@
 {
-  "name": "zipkin-ui",
+  "name": "zipkin-view",
   "description": "",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:msindwan/zipkin-ui.git"
+    "url": "git+ssh://git@github.com:msindwan/zipkin-view.git"
   },
   "author": "Mayank Sindwani",
   "license": "Apache 2.0",
-  "homepage": "https://github.com/msindwan/zipkin-ui#readme",
+  "homepage": "https://github.com/msindwan/zipkin-view#readme",
   "engines": {
     "node": ">=v6.10.0"
   },
