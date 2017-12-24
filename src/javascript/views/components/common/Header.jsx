@@ -19,6 +19,7 @@
  * @Description : App Header.
  **/
 
+import { injectIntl } from 'react-intl';
 import React from 'react';
 
 class Header extends React.Component {
@@ -64,7 +65,7 @@ class Header extends React.Component {
                         value={this.state.searchText}
                         onChange={e => this.setState({ searchText : e.target.value })}
                         className="zk-ui-input"
-                        placeholder={'Trace ID'} />
+                        placeholder={this.props.intl.formatMessage({ id : 'trace_id_label' })} />
                     <i onClick={() => this.onSearch()} className="fa fa-search"></i>
                 </div>
             </div>
@@ -73,4 +74,4 @@ class Header extends React.Component {
 
 }
 
-export default Header;
+export default injectIntl(Header);

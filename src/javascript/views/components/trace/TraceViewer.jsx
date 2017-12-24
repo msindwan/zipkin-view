@@ -19,8 +19,8 @@
  * @Description : Trace Container.
  **/
 
+import { injectIntl, FormattedMessage } from 'react-intl';
 import { SetSelectedTrace } from '../../../actions/Trace';
-import { FormattedMessage } from 'react-intl';
 import Zipkin from '../../../util/Zipkin';
 import React from 'react';
 
@@ -107,12 +107,12 @@ class TraceViewer extends React.Component {
      * @returns {array} // the set of headers.
      */
     getTableHeaders() {
-        const headers = [ 'Service', '' ];
+        const headers = [ this.props.intl.formatMessage({ id: 'service_label'}), '' ];
         const trace = this.props.trace;
         const interval = Zipkin.GetTraceDuration(trace)/5;
 
         for (let i = 1; i <= 5; i++) {
-            headers.push(`${(interval*i).toFixed(3)}s`);
+            headers.push(Zipkin.DurationToString(interval*i, this.props.intl));
         }
 
         return headers.map((header, i) => {
@@ -146,8 +146,8 @@ class TraceViewer extends React.Component {
                 emptyCells.push((<td key={i}></td>));
             }
 
-            const left = ((span.timestamp - startTs) / 1000000) *(numHeaders - 1)*100  + '%';
-            const width = (span.duration/1000000/duration) * 100 *(numHeaders - 1) + '%';
+            const left = ((span.timestamp - startTs) / duration) *(numHeaders - 1)*100  + '%';
+            const width = (span.duration/duration) * 100 * (numHeaders - 1) + '%';
             const collapsed = this.state.toggleState[span.id] === false;
 
             rows.push((
@@ -165,7 +165,7 @@ class TraceViewer extends React.Component {
                     <td>
                         <div className="zk-ui-trace-span" style={{ marginLeft: left, width: width }}></div>
                         <div className="zk-ui-trace-span-name" style={{ marginLeft: left }}>
-                            {`${span.name} - ${Zipkin.DurationToString(span.duration)}`}
+                            {`${span.name} - ${Zipkin.DurationToString(span.duration, this.props.intl)}`}
                         </div>
                     </td>
                     { emptyCells }
@@ -180,10 +180,22 @@ class TraceViewer extends React.Component {
                                 <table className="zk-ui-trace-span-context-table">
                                     <tbody>
                                         <tr>
-                                            <td className="header">Annotation</td>
-                                            <td className="header">Date Time</td>
-                                            <td className="header">Relative Time</td>
-                                            <td className="header">Address</td>
+                                            <td className="header">
+                                                <FormattedMessage
+                                                    id="annotation_label" />
+                                            </td>
+                                            <td className="header">
+                                                <FormattedMessage
+                                                    id="date_time_label" />
+                                            </td>
+                                            <td className="header">
+                                                <FormattedMessage
+                                                    id="relative_time_label" />
+                                            </td>
+                                            <td className="header">
+                                                <FormattedMessage
+                                                    id="address_label" />
+                                            </td>
                                         </tr>
                                         {
                                             span.annotations.map((annotation, i) => {
@@ -201,7 +213,12 @@ class TraceViewer extends React.Component {
                                                             {Zipkin.ConvertTimestampToDate(annotation.timestamp)}
                                                         </td>
                                                         <td>
-                                                            {Zipkin.DurationToString(annotation.timestamp - startTs)}
+                                                            {
+                                                                Zipkin.DurationToString(
+                                                                    annotation.timestamp - startTs,
+                                                                    this.props.intl
+                                                                )
+                                                            }
                                                         </td>
                                                         <td>
                                                             {`${endpoint} (${annotation.endpoint.serviceName})`}
@@ -211,8 +228,14 @@ class TraceViewer extends React.Component {
                                             })
                                         }
                                         <tr>
-                                            <td className="header">Key</td>
-                                            <td className="header">Value</td>
+                                            <td className="header">
+                                                <FormattedMessage
+                                                    id="key_label" />
+                                            </td>
+                                            <td className="header">
+                                                <FormattedMessage
+                                                    id="value_label" />
+                                            </td>
                                         </tr>
                                         {
                                             span.binaryAnnotations.map((annotation, i) => {
@@ -266,7 +289,10 @@ class TraceViewer extends React.Component {
                     <div className="zk-ui-card">
                         <div className="zk-ui-card-header">
                             <div onClick={e => this.onBackClicked(e)} className="zk-ui-button">
-                                <i className="fa fa-arrow-left"></i>{' '}<span>Back</span>
+                                <i className="fa fa-arrow-left"></i>
+                                {' '}
+                                <FormattedMessage
+                                    id="back_label" />
                             </div>
                         </div>
                         <div className="zk-ui-card-content">
@@ -289,4 +315,4 @@ class TraceViewer extends React.Component {
 
 }
 
-export default TraceViewer;
+export default injectIntl(TraceViewer);

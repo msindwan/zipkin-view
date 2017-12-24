@@ -22,6 +22,20 @@
 import Utils from './Utils';
 import 'isomorphic-fetch';
 
+/**
+ * Handle JSON Response
+ *
+ * Description: Checks and verifies the response.
+ * @param response {object} // The response object.
+ * @returns {promise}       // The JSON promise.
+ */
+function handleJSONResponse(response) {
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
+    return response.json();
+}
+
 class API {
 
     /**
@@ -33,12 +47,7 @@ class API {
      */
     static FetchServices(success, failure) {
         fetch("/zipkin/api/v1/services")
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch services (error code ${response.status})`);
-                }
-                return response.json();
-            })
+            .then(handleJSONResponse)
             .then(success)
             .catch(failure);
     }
@@ -53,12 +62,7 @@ class API {
      */
     static FetchSpans(service, success, failure) {
         fetch(`/zipkin/api/v1/spans?serviceName=${service}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch spans (error code ${response.status})`);
-                }
-                return response.json();
-            })
+            .then(handleJSONResponse)
             .then(success)
             .catch(failure);
     }
@@ -79,12 +83,7 @@ class API {
         };
 
         fetch(`/zipkin/api/v1/traces${Utils.URLify(query)}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch traces (error code ${response.status})`);
-                }
-                return response.json();
-            })
+            .then(handleJSONResponse)
             .then(success)
             .catch(failure);
     }
@@ -99,12 +98,7 @@ class API {
      */
     static FetchTrace(trace, success, failure) {
         fetch(`/zipkin/api/v1/trace/${trace}`)
-            .then(response => {
-                if(!response.ok) {
-                    throw new Error(`Failed to fetch trace (error code ${response.status})`);
-                }
-                return response.json();
-            })
+            .then(handleJSONResponse)
             .then(success)
             .catch(failure);
     }

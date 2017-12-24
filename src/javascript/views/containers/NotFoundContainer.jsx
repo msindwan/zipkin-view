@@ -19,14 +19,24 @@
  * @Description : Application 404 Container.
  **/
 
+import { FormattedMessage } from 'react-intl';
 import React from 'react';
 
 const NotFoundContainer = () => (
     <div className="container">
         <div className="error-container">
-            <div className="code">404</div>
-            <div className="message">The requested resource was not found</div>
-            <a href="/">Click to go back to the homepage</a>
+            <div className="code">
+                <FormattedMessage
+                    id="not_found_code" />
+            </div>
+            <div className="message">
+                <FormattedMessage
+                    id="not_found_message" />
+            </div>
+            <a href="/">
+                <FormattedMessage
+                    id="not_found_go_back_message" />
+            </a>
         </div>
     </div>
 );

@@ -28,11 +28,11 @@ class Zipkin {
      *
      * Description: Gets the duration for a trace.
      * @param trace {object} // The trace object.
-     * @returns {int}        // The duration in seconds.
+     * @returns {int}        // The duration.
      */
     static GetTraceDuration(trace) {
         // TODO: Find out if the root span is sufficient.
-        return trace[0].duration/1000000;
+        return trace[0].duration;
     }
 
     /**
@@ -108,9 +108,13 @@ class Zipkin {
      * @param duration {int} // The duration in micro seconds.
      * @returns {string}     // The duration as a string.
      */
-    static DurationToString(duration) {
+    static DurationToString(duration, intl) {
         // TODO: Format this with other units if applicable.
-        return `${duration/1000000}s`;
+        return intl.formatMessage({
+            id: 'duration_seconds',
+        }, {
+            duration: intl.formatNumber(duration/1000000)
+        });
     }
 
     /**

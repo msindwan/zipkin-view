@@ -21,8 +21,8 @@
 
 import DateTimeRangePicker from './controls/DateTimeRangePicker.jsx';
 import * as BrowserActions from '../../../actions/Browser.js';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import Combobox from './controls/Combobox.jsx';
-import { FormattedMessage } from 'react-intl';
 import Utils from '../../../util/Utils.js';
 import Moment from 'moment';
 import React from 'react';
@@ -74,7 +74,6 @@ class Sidebar extends React.Component {
     }
 
     render() {
-        const i18n = (s) => { return s; };
         return (
             <div className="zk-ui-sidebar">
                 <div className="zk-ui-logo">
@@ -87,7 +86,7 @@ class Sidebar extends React.Component {
                                 id="service_label" />
                         </span>
                         <Combobox
-                            placeholder={'All'}
+                            placeholder={this.props.intl.formatMessage({ id: 'all_placeholder_label' })}
                             value={this.props.serviceName}
                             data={this.props.services}
                             onBlur={e => this.onServiceSelected(e)} />
@@ -98,14 +97,15 @@ class Sidebar extends React.Component {
                                 id="span_label" />
                         </span>
                         <Combobox
-                            placeholder={'All'}
+                            placeholder={this.props.intl.formatMessage({ id: 'all_placeholder_label' })}
                             value={this.props.spanName}
                             data={this.props.spans}
                             onBlur={e => BrowserActions.SetBrowserFilters({ spanName: e.target.value })} />
                     </div>
                     <div className="zk-ui-form-control-container">
                         <span className="zk-ui-form-control-label">
-                            { i18n('Date Time Range') }
+                            <FormattedMessage
+                                id="date_time_range_label" />
                         </span>
                         <DateTimeRangePicker
                             dateInputFrom={this.props.startTs}
@@ -114,12 +114,12 @@ class Sidebar extends React.Component {
                             onDateRangeSelected={(from, to) => BrowserActions.SetBrowserFilters({
                                 endTs: Moment(to).valueOf(),
                                 startTs: Moment(from).valueOf()
-                            })}
-                            i18n={i18n} />
+                            })} />
                     </div>
                     <div className="zk-ui-form-control-container">
                         <span className="zk-ui-form-control-label">
-                            { i18n('Duration') }
+                            <FormattedMessage
+                                id="duration_label" />
                         </span>
                         <input
                             value={this.props.minDuration}
@@ -128,7 +128,8 @@ class Sidebar extends React.Component {
                     </div>
                     <div className="zk-ui-form-control-container">
                         <span className="zk-ui-form-control-label">
-                            { i18n('Limit') }
+                            <FormattedMessage
+                                id="limit_label" />
                         </span>
                         <input
                             value={this.props.limit}
@@ -137,14 +138,15 @@ class Sidebar extends React.Component {
                     </div>
                     <div className="zk-ui-form-control-container">
                         <span className="zk-ui-form-control-label zk-ui-form-help">
-                            { i18n('Annotations') }
+                            <FormattedMessage
+                                id="annotations_label" />
                         </span>
                         <textarea
                             value={this.props.annotationQuery}
                             onChange={e => BrowserActions.SetBrowserFilters({
                                 annotationQuery: e.target.value
                             })}
-                            placeholder="(e.g. 'http.path=/foo/bar/ and cache.miss ...')"
+                            placeholder={this.props.intl.formatMessage({ id: 'annotations_placeholder_label' })}
                             rows="5"
                             className="zk-ui-input"></textarea>
                     </div>
@@ -152,7 +154,8 @@ class Sidebar extends React.Component {
                         <button
                             onClick={() => this.onFindTracesClicked()}
                             className="zk-ui-button primary">
-                            { i18n('Find Traces') }
+                            <FormattedMessage
+                                id="find_traces_label" />
                         </button>
                     </div>
                 </div>
@@ -161,4 +164,4 @@ class Sidebar extends React.Component {
     }
 }
 
-export default Sidebar;
+export default injectIntl(Sidebar);

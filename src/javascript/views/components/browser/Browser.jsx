@@ -19,6 +19,7 @@
  * @Description : Trace Browser.
  **/
 
+import { injectIntl, FormattedMessage } from 'react-intl';
 import Zipkin from '../../../util/Zipkin';
 import React from 'react';
 
@@ -59,8 +60,10 @@ class Browser extends React.Component {
         if (this.state.traces === null) {
             card = (
                 <div className="zk-ui-browser-card-content-placeholder">
-                    <div className="zk-ui-placeholder-title">ZIPKIN VIEW</div>
-                    <div>Search for Traces</div>
+                    <div>
+                        <FormattedMessage
+                            id="search_for_traces_placeholder_label" />
+                    </div>
                 </div>
             );
         } else if (this.state.traces.length > 0) {
@@ -85,7 +88,15 @@ class Browser extends React.Component {
                                                 {Zipkin.GetTraceName(trace)}
                                             </span>
                                             <div className="zk-ui-browser-card-cell-num-spans">
-                                                {`${Zipkin.GetTraceSpanCount(trace)} Spans`}
+                                                {
+                                                    this.props.intl.formatMessage({
+                                                        id: 'span_count'
+                                                    }, {
+                                                        count: this.props.intl.formatNumber(
+                                                            Zipkin.GetTraceSpanCount(trace)
+                                                        )
+                                                    })
+                                                }
                                             </div>
                                         </td>
                                         <td className="zk-ui-browser-card-cell-span-info">
@@ -93,7 +104,10 @@ class Browser extends React.Component {
                                                 style={{width: `${traceDurations[i]*100/longestDuration}%`}}
                                                 className="zk-ui-browser-card-cell-span-width" />
                                             <div className="zk-ui-browser-card-cell-span-duration">
-                                                {Zipkin.GetTraceDuration(trace)}
+                                                { Zipkin.DurationToString(
+                                                    Zipkin.GetTraceDuration(trace),
+                                                    this.props.intl
+                                                )}
                                             </div>
                                             <div className="zk-ui-browser-card-cell-span-date">
                                                 {Zipkin.GetTraceDate(trace)}
@@ -109,7 +123,8 @@ class Browser extends React.Component {
         } else {
             card = (
                 <div className="zk-ui-traces-placeholder">
-                    No traces were found
+                    <FormattedMessage
+                        id="no_traces_found_placeholder_label" />
                 </div>
             );
         }
@@ -130,4 +145,4 @@ class Browser extends React.Component {
 
 }
 
-export default Browser;
+export default injectIntl(Browser);

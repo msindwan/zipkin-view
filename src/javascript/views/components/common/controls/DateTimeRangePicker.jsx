@@ -19,6 +19,7 @@
  * @Description : DateTimeRangePicker Control.
  **/
 
+import { injectIntl, FormattedMessage } from 'react-intl';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import MomentLocaleUtils from 'react-day-picker/moment';
 import 'react-day-picker/lib/style.css';
@@ -167,13 +168,13 @@ class DateTimeRangePicker extends React.Component {
                     <input
                         onClick={e => this.onClick(e)}
                         readOnly={true}
-                        placeholder={'Start Date'}
+                        placeholder={this.props.intl.formatMessage({ id: 'start_date_label' })}
                         value={this.state.dateInputFrom}
                         className="zk-ui-input dark" />
                     <input
                         onClick={e => this.onClick(e)}
                         readOnly={true}
-                        placeholder={'End Date'}
+                        placeholder={this.props.intl.formatMessage({ id: 'end_date_label' })}
                         value={this.state.dateInputTo}
                         className="zk-ui-input dark" />
                     <div onClick={e => this.onClick(e)} className="zk-ui-dropdown-button">
@@ -204,18 +205,22 @@ class DateTimeRangePicker extends React.Component {
                                 <tbody>
                                     <tr>
                                         <td className="zk-ui-datepicker-date-label">
-                                            { this.props.i18n('Start Time') }
+                                            <FormattedMessage
+                                                id="start_time_label"
+                                            />
                                         </td>
                                         <td className="zk-ui-datepicker-time-input">
                                             <input
-                                                placeholder={'HH'}
+                                                placeholder={this.props.intl.formatMessage({ id: 'hour_placeholder' })}
                                                 className="zk-ui-input"
                                                 value={this.state.startTimeHour}
                                                 onChange={e => this.setState({ startTimeHour: e.target.value })} />
                                         </td>
                                         <td className="zk-ui-datepicker-time-input">
                                             <input
-                                                placeholder={'MM'}
+                                                placeholder={this.props.intl.formatMessage({
+                                                    id: 'minute_placeholder'
+                                                })}
                                                 className="zk-ui-input"
                                                 value={this.state.startTimeMinute}
                                                 onChange={e => this.setState({ startTimeMinute: e.target.value })} />
@@ -223,18 +228,22 @@ class DateTimeRangePicker extends React.Component {
                                     </tr>
                                     <tr>
                                         <td className="zk-ui-datepicker-date-label">
-                                            { this.props.i18n('End Time') }
+                                            <FormattedMessage
+                                                id="end_time_label"
+                                            />
                                         </td>
                                         <td className="zk-ui-datepicker-time-input">
                                             <input
-                                                placeholder={'HH'}
+                                                placeholder={this.props.intl.formatMessage({ id: 'hour_placeholder' })}
                                                 className="zk-ui-input"
                                                 value={this.state.endTimeHour}
                                                 onChange={e => this.setState({ endTimeHour: e.target.value })}  />
                                         </td>
                                         <td className="zk-ui-datepicker-time-input">
                                             <input
-                                                placeholder={'MM'}
+                                                placeholder={this.props.intl.formatMessage({
+                                                    id: 'minute_placeholder'
+                                                })}
                                                 className="zk-ui-input"
                                                 value={this.state.endTimeMinute}
                                                 onChange={e => this.setState({ endTimeMinute: e.target.value })}  />
@@ -243,7 +252,9 @@ class DateTimeRangePicker extends React.Component {
                                 </tbody>
                             </table>
                             <button onClick={e => this.onApply(e)} className="zk-ui-button primary">
-                                { this.props.i18n('Apply') }
+                                <FormattedMessage
+                                    id="apply_label"
+                                />
                             </button>
                         </div>
                     </div>
@@ -258,4 +269,4 @@ DateTimeRangePicker.defaultProps = {
     locale: 'en'
 };
 
-export default DateTimeRangePicker;
+export default injectIntl(DateTimeRangePicker);
