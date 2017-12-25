@@ -75,7 +75,7 @@ class Sidebar extends React.Component {
 
     render() {
         return (
-            <div className="zk-ui-sidebar">
+            <div className={`zk-ui-sidebar ${!this.props.sidebarVisible ? 'zk-ui-sidebar-collapsed' : ''}`}>
                 <div className="zk-ui-logo">
                     <a href="/">Zipkin View</a>
                 </div>

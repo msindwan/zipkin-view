@@ -16,7 +16,7 @@
  * Browser Actions
  *
  * @Date : 2017-12-10
- * @Description : Browser actions.
+ * @Description : Browser Actions.
  **/
 
 import { Action } from 'reduxion';

@@ -16,7 +16,7 @@
  * Trace Actions
  *
  * @Date : 2017-12-10
- * @Description : Trace actions.
+ * @Description : Trace Actions.
  **/
 
 import { Action } from 'reduxion';

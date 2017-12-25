@@ -317,6 +317,7 @@ input.zk-ui-input {
   box-shadow: rgba(0, 0, 0, 0.42) 0px 10px 30px -12px, rgba(0, 0, 0, 0.12) 0px 4px 25px 0px, rgba(0, 0, 0, 0.2) 0px 8px 10px -5px;
   background: #2d303b;
   overflow: auto;
+  transition: all 0.2s ease;
   overflow-x: hidden;
   overflow-y: auto; }
   .zk-ui-sidebar .zk-ui-logo {
@@ -329,6 +330,8 @@ input.zk-ui-input {
     .zk-ui-sidebar .zk-ui-logo a {
       color: white;
       text-decoration: none; }
+  .zk-ui-sidebar.zk-ui-sidebar-collapsed {
+    margin-left: -300px; }
   .zk-ui-sidebar .zk-ui-sidebar-wrapper .zk-ui-form-control-container {
     margin: 15px 15px; }
     .zk-ui-sidebar .zk-ui-sidebar-wrapper .zk-ui-form-control-container i.pull-right {
@@ -352,12 +355,17 @@ input.zk-ui-input {
   box-shadow: 2px 2px 2px #d9d9d9;
   width: 100%;
   background: white;
-  min-height: 50px; }
+  padding: 10px 30px;
+  display: table;
+  box-sizing: border-box; }
   .zk-ui-header:before {
     display: table;
     content: " "; }
+  .zk-ui-header .zk-ui-sidebar-toggle {
+    display: table-cell;
+    cursor: pointer; }
   .zk-ui-header .zk-ui-trace-search {
-    padding: 10px 30px; }
+    display: table-cell; }
     .zk-ui-header .zk-ui-trace-search .zk-ui-input {
       width: 300px;
       border-bottom: 1px solid #4399b4;

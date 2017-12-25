@@ -4,15 +4,24 @@
     box-shadow: 2px 2px 2px #d9d9d9;
     width: 100%;
     background: white;
-    min-height: 50px;
+    padding: 10px 30px;
+    display: table;
+    box-sizing: border-box;
 
     &:before {
         display: table;
         content: " ";
     }
 
+    .zk-ui-sidebar-toggle {
+        display: table-cell;
+        cursor: pointer;
+    }
+
     .zk-ui-trace-search {
-        padding: 10px 30px;
+
+        display: table-cell;
+
         .zk-ui-input {
             width: 300px;
             border-bottom: 1px solid #4399b4;

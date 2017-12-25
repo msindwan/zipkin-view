@@ -78,6 +78,7 @@ class TraceContainer extends React.Component {
         return (
             <div className="zk-ui-container">
                 <Sidebar
+                    sidebarVisible={this.state.global.sidebarVisible}
                     history={this.props.history}
                     { ...this.state.browser } />
                 <div className="zk-ui-content">

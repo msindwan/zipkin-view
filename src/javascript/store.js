@@ -20,12 +20,14 @@
  **/
 
 import BrowserReducer from './reducers/Browser';
+import GlobalReducer from './reducers/Global';
 import TraceReducer from './reducers/Trace';
 import { Store } from 'reduxion';
 
 // Create the app reducers.
 const browserReducer = new BrowserReducer('browser');
+const globalReducer = new GlobalReducer('global');
 const traceReducer = new TraceReducer('trace');
 
 // Create a new store with all of the reducers.
-export default new Store(browserReducer, traceReducer);
+export default new Store(browserReducer, globalReducer, traceReducer);

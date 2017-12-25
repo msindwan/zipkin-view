@@ -19,6 +19,7 @@
  * @Description : App Header.
  **/
 
+import { ToggleSidebar } from '../../../actions/Global';
 import { injectIntl } from 'react-intl';
 import React from 'react';
 
@@ -59,6 +60,9 @@ class Header extends React.Component {
     render() {
         return (
             <div className="zk-ui-header">
+                <div className="zk-ui-sidebar-toggle">
+                    <i className="fa fa-navicon" onClick={() => ToggleSidebar()}></i>
+                </div>
                 <div className="zk-ui-trace-search">
                     <input
                         onKeyPress={e => this.onKeyPress(e)}
