@@ -4,6 +4,7 @@
 @import './components/common/controls/common';
 @import './components/common/controls/combobox';
 @import './components/common/controls/datepicker';
+@import './components/common/controls/dropdown';
 @import './components/common/sidebar';
 @import './components/common/header';
 @import './containers/browser';
@@ -28,4 +29,8 @@ html,
     left: 0;
     bottom: 0;
     top: 0;
+
+    .zk-ui-content-container {
+        min-width: 800px;
+    }
 }

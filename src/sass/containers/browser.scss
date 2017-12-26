@@ -17,6 +17,25 @@
 
             .zk-ui-card {
 
+                .zk-ui-browser-sort-options {
+                    display: inline-block;
+                    width: 250px;
+
+                    .zk-ui-button {
+                        background: #60b3ce;
+                        text-align: left;
+                    }
+
+                    .zk-ui-dropdown-button {
+                        background: #60b3ce;
+                        padding: 1px;
+                    }
+
+                    .zk-ui-popover-content {
+                        box-shadow: 0px 0px 4px #ab9f9f;
+                    }
+                }
+
                 .zk-ui-browser-card-cell {
                     padding: 10px;
                     border-bottom: 1px solid #f8f8f8;
@@ -87,23 +106,11 @@
                     display: block;
                     margin: 60px;
                     opacity: 0.3;
-
-                    .zk-ui-placeholder-title {
-                        font-size: 30px;
-                    }
                 }
 
             }
 
         }
-    }
-
-    .zk-ui-traces-placeholder {
-        text-align: center;
-        margin: auto;
-        display: block;
-        margin-top: 40px;
-        color: #a7a7a7;
     }
 
 }

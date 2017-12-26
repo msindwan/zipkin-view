@@ -87,7 +87,18 @@ class Zipkin {
      * @returns {string}     // The date formatted as a string relative to now.
      */
     static GetTraceDate(trace) {
-        return Moment(trace[0].timestamp/1000).fromNow();
+        return Moment(Zipkin.GetTraceTimestamp(trace)/1000).fromNow();
+    }
+
+    /**
+     * Get Trace Timestamp
+     *
+     * Description: Gets the timestamp for the trace.
+     * @param trace {object} // The trace object.
+     * @returns {int}        // The timestamp in milliseconds.
+     */
+    static GetTraceTimestamp(trace) {
+        return trace[0].timestamp;
     }
 
     /**

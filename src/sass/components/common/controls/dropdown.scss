@@ -1,0 +1,50 @@
+.zk-ui-dropdown {
+     position: relative;
+
+    .zk-ui-dropdown-container {
+        display: flex;
+        > .zk-ui-button {
+            flex: 1;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+
+    .zk-ui-dropdown-button {
+        display: inline-block;
+        width: 36px;
+        background: #161616;
+        transition: all 0.2s ease;
+        cursor:pointer;
+
+        .zk-ui-arrow-down {
+            margin-top: calc(50% - 2.5px);
+        }
+
+        &:hover {
+            background: #68c4dc;
+        }
+    }
+
+    .zk-ui-popover-content {
+      background: white;
+      max-height: 200px;
+      overflow: auto;
+    }
+
+    .zk-ui-dropdown-container {
+      display: flex;
+    }
+
+    .zk-ui-dropdown-row {
+      padding: 10px;
+      font-family: inherit;
+      font-size: 12px;
+    }
+
+    .zk-ui-dropdown-row:hover {
+      background: #68c4dc;
+      color: white;
+      cursor: pointer;
+    }
+}

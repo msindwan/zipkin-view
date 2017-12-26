@@ -11,10 +11,14 @@
     .zk-ui-dropdown-button {
         display: inline-block;
         width: 36px;
-        height: 36px;
         background: #161616;
         transition: all 0.2s ease;
         cursor:pointer;
+
+        .zk-ui-arrow-down {
+            margin-top: calc(50% - 2.5px);
+        }
+
         &:hover {
             background: #68c4dc;
         }

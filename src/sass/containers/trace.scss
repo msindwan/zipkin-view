@@ -5,8 +5,9 @@
 
     .zk-ui-card-header {
         .zk-ui-button {
-            padding: 2px;
-            width: fit-content;
+            background: #60b3ce;
+            display: inline-block;
+            width: auto;
         }
     }
 
@@ -76,7 +77,7 @@
                     .zk-ui-trace-span-context-table {
                         table-layout: fixed;
                         width: 100%;
-                        
+
                         td {
                             border-left: 0;
                         }

@@ -60,8 +60,8 @@ class Header extends React.Component {
     render() {
         return (
             <div className="zk-ui-header">
-                <div className="zk-ui-sidebar-toggle">
-                    <i className="fa fa-navicon" onClick={() => ToggleSidebar()}></i>
+                <div className="zk-ui-sidebar-toggle"  onClick={() => ToggleSidebar()}>
+                    <i className="fa fa-navicon"></i>
                 </div>
                 <div className="zk-ui-trace-search">
                     <input

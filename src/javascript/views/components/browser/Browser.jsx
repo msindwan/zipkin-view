@@ -19,8 +19,10 @@
  * @Description : Trace Browser.
  **/
 
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { SetBrowserFilters } from '../../../actions/Browser';
 import { SetSelectedTrace } from '../../../actions/Trace';
+import { injectIntl, FormattedMessage } from 'react-intl';
+import Dropdown from '../common/controls/Dropdown.jsx';
 import Zipkin from '../../../util/Zipkin';
 import React from 'react';
 
@@ -69,10 +71,25 @@ class Browser extends React.Component {
                 </div>
             );
         } else if (this.state.traces.length > 0) {
-            const traceDurations = this.state.traces.map(t => Zipkin.GetTraceDuration(t));
+            const traces = this.state.traces;
+            traces.sort((a, b) => {
+                switch(this.props.sortOrder) {
+                    case 'timestamp-asc':
+                        return Zipkin.GetTraceTimestamp(b) - Zipkin.GetTraceTimestamp(a);
+                    case 'timestamp-desc':
+                        return Zipkin.GetTraceTimestamp(a) - Zipkin.GetTraceTimestamp(b);
+                    case 'duration-asc':
+                        return Zipkin.GetTraceDuration(a) - Zipkin.GetTraceDuration(b);
+                    case 'duration-desc':
+                    default:
+                        return Zipkin.GetTraceDuration(b) - Zipkin.GetTraceDuration(a);
+                }
+            });
+
+            const traceDurations = traces.map(t => Zipkin.GetTraceDuration(t));
             const longestDuration = Math.max(...traceDurations);
 
-            card = this.state.traces.map((trace, i) => {
+            card = traces.map((trace, i) => {
                 return (
                     <div
                         key={i}
@@ -126,7 +143,7 @@ class Browser extends React.Component {
             });
         } else {
             card = (
-                <div className="zk-ui-traces-placeholder">
+                <div className="zk-ui-browser-card-content-placeholder">
                     <FormattedMessage
                         id="no_traces_found_placeholder_label" />
                 </div>
@@ -137,7 +154,30 @@ class Browser extends React.Component {
             <div className="zk-ui-browser">
                 <div className="zk-ui-browser-container">
                     <div className="zk-ui-card">
-                        <div className="zk-ui-card-header"></div>
+                        <div className="zk-ui-card-header">
+                            <Dropdown
+                                value={this.props.intl.formatMessage({ id: this.props.sortOrder })}
+                                onOptionSelected={option => SetBrowserFilters({ sortOrder : option.value })}
+                                data={[
+                                    {
+                                        label: this.props.intl.formatMessage({ id: 'duration-asc' }),
+                                        value: 'duration-asc'
+                                    },
+                                    {
+                                        label: this.props.intl.formatMessage({ id: 'duration-desc' }),
+                                        value: 'duration-desc'
+                                    },
+                                    {
+                                        label: this.props.intl.formatMessage({ id: 'timestamp-asc' }),
+                                        value: 'timestamp-asc'
+                                    },
+                                    {
+                                        label: this.props.intl.formatMessage({ id: 'timestamp-desc' }),
+                                        value: 'timestamp-desc'
+                                    }
+                                ]}
+                                className="zk-ui-browser-sort-options" />
+                        </div>
                         <div className="zk-ui-card-content">
                             { card }
                         </div>
