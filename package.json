@@ -12,7 +12,7 @@
     "node": ">=v6.10.0"
   },
   "scripts": {
-    "build": "NODE_ENV=production node ./node_modules/webpack/bin/webpack.js --config webpack.prod.js",
+    "build": "node ./node_modules/webpack/bin/webpack.js --config webpack.prod.js",
     "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.dev.js"
   },
   "babel": {
