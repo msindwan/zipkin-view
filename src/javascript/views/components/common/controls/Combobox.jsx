@@ -113,7 +113,7 @@ class Combobox extends React.Component {
                     <input
                         placeholder={this.props.placeholder}
                         ref={(input) => { this.searchInput = input; }}
-                        value={this.state.value}
+                        value={this.state.value || ''}
                         onFocus={e => this.onFocus(e)}
                         onBlur={e => this.onBlur(e)}
                         onChange={e => this.onChange(e)}

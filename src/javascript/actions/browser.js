@@ -28,7 +28,7 @@ import API from '../util/Api';
  *
  * Description: Dispatches browser filters.
  * @param filters {object} // The filters to store.
- * @returns {object} // The filters for the reducer to set.
+ * @returns {object}       // The filters for the reducer to set.
  */
 const SetBrowserFilters = Action("setBrowserFilters", filters => {
     return filters;
@@ -39,7 +39,7 @@ const SetBrowserFilters = Action("setBrowserFilters", filters => {
  *
  * Description: Toggles the browser loading state.
  * @param toggle {boolean} // True if the browser is loading; false otherwise.
- * @returns {boolean} // The toggle for the reducer to set.
+ * @returns {boolean}      // The toggle for the reducer to set.
  */
 const SetBrowserLoading = Action("setBrowserLoading", toggle => {
     return toggle;
@@ -50,7 +50,7 @@ const SetBrowserLoading = Action("setBrowserLoading", toggle => {
  *
  * Description: Dispatches the list of traces.
  * @param traces {array} // The traces to store.
- * @returns {array} // The traces for the reducer to set.
+ * @returns {array}      // The traces for the reducer to set.
  */
 const SetTraces = Action("setTraces", traces => {
     return traces;
@@ -91,6 +91,7 @@ const GetSpans = (service) => {
  */
 const GetTraces = (filters) => {
     SetBrowserLoading(true);
+
     API.FetchTraces(filters, traces => {
         SetTraces(traces);
         SetBrowserLoading(false);

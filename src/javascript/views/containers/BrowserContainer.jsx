@@ -20,31 +20,18 @@
  **/
 
 import { GetTraces, SetBrowserFilters, SetTraces } from '../../actions/Browser';
+import AbstractContainer from './AbstractContainer.jsx';
 import { SetSelectedTrace } from '../../actions/Trace';
 import Browser from '../components/browser/Browser.jsx';
 import Sidebar from '../components/common/Sidebar.jsx';
 import Header from '../components/common/Header.jsx';
 import Utils from '../../util/Utils';
-import AppStore from '../../Store';
 import React from 'react';
 
-class BrowserContainer extends React.Component {
+class BrowserContainer extends AbstractContainer {
 
     constructor(props) {
         super(props);
-        this.state = AppStore.getState();
-    }
-
-    componentDidMount() {
-        // Subscribe to the store and update the state on change.
-        AppStore.subscribe(( _, store) => this.setState(store));
-        this.loadStateFromHistory();
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.location !== prevProps.location) {
-            this.loadStateFromHistory();
-        }
     }
 
     /**
@@ -55,32 +42,32 @@ class BrowserContainer extends React.Component {
     loadStateFromHistory() {
         const queryParams = Utils.GetQueryParams();
         SetSelectedTrace(null);
-        SetTraces(null);
 
         if (Object.keys(queryParams).length > 0) {
             const query = {
-                serviceName: queryParams['serviceName'],
-                spanName: queryParams['spanName'],
-                minDuration: queryParams['minDuration'],
-                limit: queryParams['limit'],
-                annotationQuery: queryParams['annotationQuery'] || '',
-                sortOrder: queryParams['sortOrder']
+                serviceName: queryParams.serviceName,
+                spanName: queryParams.spanName,
+                minDuration: queryParams.minDuration,
+                limit: queryParams.limit,
+                annotationQuery: queryParams.annotationQuery,
+                sortOrder: queryParams.sortOrder,
+                queryKey: this.props.location.key
             };
 
-            const endTs = parseInt(queryParams['endTs']);
-            const startTs = parseInt(queryParams['startTs']);
-
-            if (!isNaN(endTs)) {
-                query['endTs'] = endTs;
+            if (!isNaN(queryParams.endTs)) {
+                query.endTs = parseInt(queryParams.endTs);
+            }
+            if (!isNaN(queryParams.startTs)) {
+                query.startTs = parseInt(queryParams.startTs);
             }
 
-            if (!isNaN(startTs)) {
-                query['startTs'] = startTs;
+            if (this.props.location.key !== this.state.browser.queryKey) {
+                // Fetch traces.
+                SetBrowserFilters(query);
+                GetTraces(query);
             }
-
-            // Fetch traces.
-            SetBrowserFilters(query);
-            GetTraces(query);
+        } else {
+            SetTraces(null);
         }
     }
 

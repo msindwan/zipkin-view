@@ -20,7 +20,6 @@
  **/
 
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { SetSelectedTrace } from '../../../actions/Trace';
 import Zipkin from '../../../util/Zipkin';
 import React from 'react';
 
@@ -306,7 +305,6 @@ class TraceViewer extends React.Component {
      * Description: Handler for when the back button is clicked.
      */
     onBackClicked() {
-        SetSelectedTrace(null);
         this.props.history.goBack();
     }
 

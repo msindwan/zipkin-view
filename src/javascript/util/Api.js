@@ -78,9 +78,12 @@ class API {
     static FetchTraces(filters, success, failure) {
         const query = {
             ...filters,
-            lookback: filters['endTs'] - filters['startTs'],
-            annotationQuery: filters['annotationQuery'].replace(/(?:\r\n|\r|\n)/g, '')
+            lookback: filters.endTs - filters.startTs
         };
+
+        if (typeof filters.annotationQuery !== 'undefined') {
+            query.annotationQuery = filters.annotationQuery.replace(/(?:\r\n|\r|\n)/g, '');
+        }
 
         fetch(`/zipkin/api/v1/traces${Utils.URLify(query)}`)
             .then(handleJSONResponse)

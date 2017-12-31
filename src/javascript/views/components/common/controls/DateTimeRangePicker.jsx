@@ -47,14 +47,15 @@ class DateTimeRangePicker extends React.Component {
             to: undefined,
             focus: ''
         };
+        this.handleClickOutside = this.handleClickOutside.bind(this);
     }
 
     componentDidMount() {
-        document.addEventListener('click', this.handleClickOutside.bind(this), true);
+        document.addEventListener('click', this.handleClickOutside, true);
     }
 
     componentWillUnmount() {
-        document.removeEventListener('click', this.handleClickOutside.bind(this), true);
+        document.removeEventListener('click', this.handleClickOutside, true);
     }
 
     componentWillReceiveProps(nextProps) {

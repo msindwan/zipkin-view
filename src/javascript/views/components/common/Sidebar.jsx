@@ -29,19 +29,19 @@ import React from 'react';
 
 class Sidebar extends React.Component {
 
-    componentDidMount() {
-        // Populate the list of services.
-        BrowserActions.GetServices();
-    }
-
     /**
      * On Find Traces Clicked
      *
      * Description: The handler that's fired when the find traces button is submitted.
      */
     onFindTracesClicked() {
-        // Construct the query object.
-        const query = {
+        // Reset the client-side cache.
+        BrowserActions.SetBrowserFilters({
+            queryKey: null
+        });
+
+        // Redirect to the same route with the correct query parameters.
+        this.props.history.push(`/${Utils.URLify({
             serviceName: this.props.serviceName,
             spanName: this.props.spanName,
             endTs: this.props.endTs,
@@ -50,10 +50,7 @@ class Sidebar extends React.Component {
             limit: this.props.limit,
             annotationQuery: this.props.annotationQuery,
             sortOrder: this.props.sortOrder
-        };
-
-        // Redirect to the same route with the correct query parameters.
-        this.props.history.push(`/${Utils.URLify(query)}`);
+        })}`);
     }
 
     /**
@@ -122,7 +119,7 @@ class Sidebar extends React.Component {
                                 id="duration_label" />
                         </span>
                         <input
-                            value={this.props.minDuration}
+                            value={this.props.minDuration || ''}
                             className="zk-ui-input dark"
                             onChange={e => BrowserActions.SetBrowserFilters({ minDuration: e.target.value })} />
                     </div>
@@ -132,7 +129,7 @@ class Sidebar extends React.Component {
                                 id="limit_label" />
                         </span>
                         <input
-                            value={this.props.limit}
+                            value={this.props.limit || ''}
                             className="zk-ui-input dark"
                             onChange={e => BrowserActions.SetBrowserFilters({ limit: e.target.value })} />
                     </div>

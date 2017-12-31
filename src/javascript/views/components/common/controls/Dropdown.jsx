@@ -30,6 +30,7 @@ class Dropdown extends React.Component {
             value: this.props.value,
             options: this.props.data
         };
+        this.handleClickOutside = this.handleClickOutside.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -43,11 +44,11 @@ class Dropdown extends React.Component {
     }
 
     componentDidMount() {
-        document.addEventListener('click', this.handleClickOutside.bind(this), true);
+        document.addEventListener('click', this.handleClickOutside, true);
     }
 
     componentWillUnmount() {
-        document.removeEventListener('click', this.handleClickOutside.bind(this), true);
+        document.removeEventListener('click', this.handleClickOutside, true);
     }
 
     /**

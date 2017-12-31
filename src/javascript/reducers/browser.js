@@ -26,20 +26,21 @@ class BrowserReducer extends Reducer {
 
     constructor(name) {
         super(name, {
+            // Browser Filters.
             startTs: Moment().subtract(1, 'days').valueOf(),
             endTs: Moment().valueOf(),
             sortOrder: 'duration-desc',
-            selectedTrace: null,
             annotationQuery: '',
             minDuration: '',
             serviceName: '',
-            loading: false,
-            dateFrom: null,
-            services: [],
-            traces: null,
-            dateTo: null,
             spanName: '',
             limit: '',
+            queryKey: null,
+            // Browser state.
+            loading: false,
+            traces: null,
+            services: [],
+            selectedTrace: null,
             spans: []
         });
     }
@@ -48,7 +49,7 @@ class BrowserReducer extends Reducer {
      * Set Browser Filters
      *
      * Description: Sets the current set of browser filters.
-     * @param trace {object} // The filters to set.
+     * @param filters {object} // The filters to set.
      */
     setBrowserFilters(filters) {
         this.setState(filters);
