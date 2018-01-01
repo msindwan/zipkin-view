@@ -28,9 +28,9 @@ module.exports = merge(common, {
         contentBase: './static',
         historyApiFallback: true,
         proxy: {
-            '/zipkin': {
+            '/api': {
                 target: process.env.ZIPKIN_API,
-                secure: false
+                changeOrigin: true
             }
         }
     },

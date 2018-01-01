@@ -46,7 +46,7 @@ class API {
      * @param failure {function} // The failure callback.
      */
     static FetchServices(success, failure) {
-        fetch("/zipkin/api/v1/services")
+        fetch("/api/v1/services")
             .then(handleJSONResponse)
             .then(success)
             .catch(failure);
@@ -61,7 +61,7 @@ class API {
      * @param failure {function} // The failure callback.
      */
     static FetchSpans(service, success, failure) {
-        fetch(`/zipkin/api/v1/spans?serviceName=${service}`)
+        fetch(`/api/v1/spans?serviceName=${service}`)
             .then(handleJSONResponse)
             .then(success)
             .catch(failure);
@@ -85,7 +85,7 @@ class API {
             query.annotationQuery = filters.annotationQuery.replace(/(?:\r\n|\r|\n)/g, '');
         }
 
-        fetch(`/zipkin/api/v1/traces${Utils.URLify(query)}`)
+        fetch(`/api/v1/traces${Utils.URLify(query)}`)
             .then(handleJSONResponse)
             .then(success)
             .catch(failure);
@@ -100,7 +100,7 @@ class API {
      * @param failure {function} // The failure callback.
      */
     static FetchTrace(trace, success, failure) {
-        fetch(`/zipkin/api/v1/trace/${trace}`)
+        fetch(`/api/v1/trace/${trace}`)
             .then(handleJSONResponse)
             .then(success)
             .catch(failure);

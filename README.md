@@ -25,7 +25,7 @@ Zipkin View requires `node` to build the front-end assets. To start the developm
 
 1. Run `npm install` from the root directory.
 2. Ensure that you have an instance of Zipkin running. To start the dev server, run
-`ZIPKIN_API=<Zipkin instance's URL> npm run dev`. This will serve all assets and proxy API requests to Zipkin.
+`ZIPKIN_API=<Zipkin instance's URL>/api npm run dev`. This will serve all assets and proxy API requests to Zipkin.
 3. Code away!
 
 To build a production set of assets, run `NODE_ENV=production npm run build`.
