@@ -132,12 +132,27 @@ class Zipkin {
      * @returns {string}     // The duration as a string.
      */
     static DurationToString(duration, intl) {
-        // TODO: Format this with other units if applicable.
-        return intl.formatMessage({
-            id: 'duration_seconds',
-        }, {
-            duration: intl.formatNumber(duration/1000000)
-        });
+        const units = [
+            [ 1000000, 'duration_seconds' ],
+            [ 1000, 'duration_milliseconds' ],
+            [ 1, 'duration_microseconds' ]
+        ];
+
+        for (let i = 0; i < units.length; i++) {
+            const base = units[i][0];
+            const translation = units[i][1];
+            const convertedDuration = duration/base;
+
+            if (convertedDuration > 1 || i == units.length - 1) {
+                return intl.formatMessage({
+                    id: translation,
+                }, {
+                    duration: intl.formatNumber(convertedDuration)
+                });
+            }
+        }
+
+        throw new Error("Invalid duration");
     }
 
     /**

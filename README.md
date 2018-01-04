@@ -12,7 +12,7 @@ application. Zipkin View is built from scratch using React and other JavaScript 
 ## Quick Start
 
 Zipkin View is released as a zip folder of front-end assets. To deploy the application, simply serve the contents
-of the folder using the HTTP server of your choice. Be sure to configure the server to proxy all 'zipkin/' requests
+of the folder using the HTTP server of your choice. Be sure to configure the server to proxy all 'api/' requests
 to a running Zipkin instance.
 
 Alternatively, see the [development](#development) section to deploy a dev version.
@@ -25,7 +25,7 @@ Zipkin View requires `node` to build the front-end assets. To start the developm
 
 1. Run `npm install` from the root directory.
 2. Ensure that you have an instance of Zipkin running. To start the dev server, run
-`ZIPKIN_API=<Zipkin instance's URL>/api npm run dev`. This will serve all assets and proxy API requests to Zipkin.
+`ZIPKIN_API=<Zipkin instance's API URL> npm run dev`. This will serve all assets and proxy API requests to Zipkin.
 3. Code away!
 
 To build a production set of assets, run `NODE_ENV=production npm run build`.

@@ -145,8 +145,8 @@ class TraceViewer extends React.Component {
                 emptyCells.push((<td key={i}></td>));
             }
 
-            const left = ((span.timestamp - startTs) / duration) *(numHeaders - 1)*100  + '%';
-            const width = (span.duration/duration) * 100 * (numHeaders - 1) + '%';
+            const left = ((span.timestamp - startTs) / duration) * (numHeaders - 1) * 100  + '%';
+            const width = Math.max((span.duration/duration) * 100 * (numHeaders - 1), 2) + '%';
             const collapsed = this.state.toggleState[span.id] === false;
 
             rows.push((

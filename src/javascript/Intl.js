@@ -42,6 +42,8 @@ const translations = {
         'timestamp-desc': 'Sort by Oldest',
         duration_label: 'Duration',
         duration_seconds: '{duration}s',
+        duration_milliseconds: '{duration}ms',
+        duration_microseconds: '{duration}μs',
         end_date_label: 'End Date',
         end_time_label: 'End Time',
         find_traces_label: 'Find Traces',
