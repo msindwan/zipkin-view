@@ -21,6 +21,7 @@
             width: 100%;
             padding: 10px;
             box-sizing: border-box;
+            overflow-x: auto;
 
             .zk-ui-trace-table {
                 width: 100%;
@@ -68,6 +69,8 @@
                     margin-left: 5px;
                     color: #504f4f;
                     white-space: nowrap;
+                    overflow: auto;
+                    text-overflow: ellipsis;
                 }
 
                 .zk-ui-trace-span-context {
@@ -80,6 +83,8 @@
 
                         td {
                             border-left: 0;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
                         }
                         th {
                             border-left: 0;
