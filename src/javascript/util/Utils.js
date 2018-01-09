@@ -91,6 +91,31 @@ class Utils {
         }).show();
     }
 
+
+    /**
+     * Fetch JSON
+     *
+     * Description: Sends a GET request to the specified URL and returns the JSON response.
+     * @param url {string}       // The resource URL.
+     * @param success {function} // The success callback.
+     * @param failure {function} // The failure callback.
+     */
+    static FetchJSON(url, success, failure) {
+        const xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    success(JSON.parse(xhr.responseText));
+                } else {
+                    failure(new Error(xhr.statusText));
+                }
+            }
+        };
+
+        xhr.open("GET", url, true);
+        xhr.send();
+    }
 }
 
 export default Utils;

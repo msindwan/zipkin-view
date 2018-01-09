@@ -20,21 +20,6 @@
  **/
 
 import Utils from './Utils';
-import 'isomorphic-fetch';
-
-/**
- * Handle JSON Response
- *
- * Description: Checks and verifies the response.
- * @param response {object} // The response object.
- * @returns {promise}       // The JSON promise.
- */
-function handleJSONResponse(response) {
-    if (!response.ok) {
-        throw new Error(response.statusText);
-    }
-    return response.json();
-}
 
 class API {
 
@@ -46,10 +31,7 @@ class API {
      * @param failure {function} // The failure callback.
      */
     static FetchServices(success, failure) {
-        fetch("/api/v1/services")
-            .then(handleJSONResponse)
-            .then(success)
-            .catch(failure);
+        Utils.FetchJSON("/api/v1/services", success, failure);
     }
 
     /**
@@ -61,10 +43,7 @@ class API {
      * @param failure {function} // The failure callback.
      */
     static FetchSpans(service, success, failure) {
-        fetch(`/api/v1/spans?serviceName=${service}`)
-            .then(handleJSONResponse)
-            .then(success)
-            .catch(failure);
+        Utils.FetchJSON(`/api/v1/spans?serviceName=${service}`, success, failure);
     }
 
     /**
@@ -76,19 +55,15 @@ class API {
      * @param failure {function} // The failure callback.
      */
     static FetchTraces(filters, success, failure) {
-        const query = {
-            ...filters,
+        const query = Object.assign({}, filters, {
             lookback: filters.endTs - filters.startTs
-        };
+        });
 
         if (typeof filters.annotationQuery !== 'undefined') {
             query.annotationQuery = filters.annotationQuery.replace(/(?:\r\n|\r|\n)/g, '');
         }
 
-        fetch(`/api/v1/traces${Utils.URLify(query)}`)
-            .then(handleJSONResponse)
-            .then(success)
-            .catch(failure);
+        Utils.FetchJSON(`/api/v1/traces${Utils.URLify(query)}`, success, failure);
     }
 
     /**
@@ -100,10 +75,7 @@ class API {
      * @param failure {function} // The failure callback.
      */
     static FetchTrace(trace, success, failure) {
-        fetch(`/api/v1/trace/${trace}`)
-            .then(handleJSONResponse)
-            .then(success)
-            .catch(failure);
+        Utils.FetchJSON(`/api/v1/trace/${trace}`, success, failure);
     }
 }
 

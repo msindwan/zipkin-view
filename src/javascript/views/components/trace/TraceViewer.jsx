@@ -49,10 +49,9 @@ class TraceViewer extends React.Component {
 
         toggleState = !toggleState;
         this.setState({
-            toggleState: {
-                ...this.state.toggleState,
+            toggleState: Object.assign({}, this.state.toggleState, {
                 [span.id] : toggleState
-            }
+            })
         });
     }
 
