@@ -17,22 +17,27 @@ npm scripts.
 ## Quick Start
 
 Ensure that you have an instance of Zipkin running. To start the production server, run
-`NODE_ENV=production ZIPKIN_API=<Zipkin instance's API URL> npm run prod -- [webpack-dev-server options]`. This will serve all
-assets and make api requests against the specified Zipkin URL.
+
+`NODE_ENV=production ZIPKIN_API=<Zipkin instance's API URL> npm run prod -- [webpack-dev-server options]`
+
+This will serve all assets and make api requests against the specified Zipkin URL.
 
 ## Development
 
 Suggestions and contributions are greatly appreciated! Please see the contribution guidelines.
 
 To start the development process, run
-`NODE_ENV=development ZIPKIN_API=<Zipkin instance's API URL> npm run dev -- [webpack-dev-server options]`.
+
+`NODE_ENV=development ZIPKIN_API=<Zipkin instance's API URL> npm run dev -- [webpack-dev-server options]`
 
 ## Other Deployment Options
 
 If you want to serve files using a different http server (e.g nginx), you can build production assets alone by running
-`NODE_ENV=production ZIPKIN_API=<Zipkin instance's API URL> npm run build`. If the build is successful, the scripts should exist
-under the static directory. You can then configure your server to serve from the static directory. You would also need to fallback
-on the index page if the requested resource is not found.
+
+`NODE_ENV=production ZIPKIN_API=<Zipkin instance's API URL> npm run build`
+
+If the build is successful, the scripts should exist under the static directory. You can then configure your server to serve from
+the static directory. You would also need to fallback on the index page if the requested resource is not found.
 
 ## License
 
