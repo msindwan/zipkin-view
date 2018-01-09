@@ -9,26 +9,30 @@ application. Zipkin View is built from scratch using React and other JavaScript 
 **By using Zipkin View you agree to the [terms of use and privacy policy](
     https://github.com/msindwan/zipkin-view/wiki/Terms-of-Use-and-Privacy-Policy)**
 
+## Requirements
+
+Zipkin View requires `node` to build and serve assets. Make sure to run `npm install` from the root directory before running any
+npm scripts.
+
 ## Quick Start
 
-Zipkin View is released as a zip folder of front-end assets. To deploy the application, simply serve the contents
-of the folder using the HTTP server of your choice. Be sure to configure the server to proxy all 'api/' requests
-to a running Zipkin instance.
-
-Alternatively, see the [development](#development) section to deploy a dev version.
+Ensure that you have an instance of Zipkin running. To start the production server, run
+`NODE_ENV=production ZIPKIN_API=<Zipkin instance's API URL> npm run prod -- [webpack-dev-server options]`. This will serve all
+assets and make api requests against the specified Zipkin URL.
 
 ## Development
 
 Suggestions and contributions are greatly appreciated! Please see the contribution guidelines.
 
-Zipkin View requires `node` to build the front-end assets. To start the development process:
+To start the development process, run
+`NODE_ENV=development ZIPKIN_API=<Zipkin instance's API URL> npm run dev -- [webpack-dev-server options]`.
 
-1. Run `npm install` from the root directory.
-2. Ensure that you have an instance of Zipkin running. To start the dev server, run
-`ZIPKIN_API=<Zipkin instance's API URL> npm run dev`. This will serve all assets and proxy API requests to Zipkin.
-3. Code away!
+## Other Deployment Options
 
-To build a production set of assets, run `NODE_ENV=production npm run build`.
+If you want to serve files using a different http server (e.g nginx), you can build production assets alone by running
+`NODE_ENV=production ZIPKIN_API=<Zipkin instance's API URL> npm run build`. If the build is successful, the scripts should exist
+under the static directory. You can then configure your server to serve from the static directory. You would also need to fallback
+on the index page if the requested resource is not found.
 
 ## License
 

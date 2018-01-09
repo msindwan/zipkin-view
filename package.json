@@ -12,8 +12,9 @@
     "node": ">=v6.10.0"
   },
   "scripts": {
-    "build": "node ./node_modules/webpack/bin/webpack.js --config webpack.prod.js",
-    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.dev.js"
+    "prod": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.prod.js",
+    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.dev.js",
+    "build": "node ./node_modules/webpack/bin/webpack.js --config webpack.prod.js"
   },
   "babel": {
     "presets": [

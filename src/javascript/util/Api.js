@@ -31,7 +31,7 @@ class API {
      * @param failure {function} // The failure callback.
      */
     static FetchServices(success, failure) {
-        Utils.FetchJSON("/api/v1/services", success, failure);
+        Utils.FetchJSON(`${process.env.ZIPKIN_API}/api/v1/services`, success, failure);
     }
 
     /**
@@ -43,7 +43,7 @@ class API {
      * @param failure {function} // The failure callback.
      */
     static FetchSpans(service, success, failure) {
-        Utils.FetchJSON(`/api/v1/spans?serviceName=${service}`, success, failure);
+        Utils.FetchJSON(`${process.env.ZIPKIN_API}/api/v1/spans?serviceName=${service}`, success, failure);
     }
 
     /**
@@ -63,7 +63,7 @@ class API {
             query.annotationQuery = filters.annotationQuery.replace(/(?:\r\n|\r|\n)/g, '');
         }
 
-        Utils.FetchJSON(`/api/v1/traces${Utils.URLify(query)}`, success, failure);
+        Utils.FetchJSON(`${process.env.ZIPKIN_API}/api/v1/traces${Utils.URLify(query)}`, success, failure);
     }
 
     /**
@@ -75,7 +75,7 @@ class API {
      * @param failure {function} // The failure callback.
      */
     static FetchTrace(trace, success, failure) {
-        Utils.FetchJSON(`/api/v1/trace/${trace}`, success, failure);
+        Utils.FetchJSON(`${process.env.ZIPKIN_API}/api/v1/trace/${trace}`, success, failure);
     }
 }
 

@@ -21,6 +21,7 @@
 
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const WriteFilePlugin = require('write-file-webpack-plugin');
+const webpack = require('webpack');
 
 const extractSass = new ExtractTextPlugin({
     filename: "app.css"
@@ -83,8 +84,18 @@ module.exports = {
             loader: ['style-loader', 'css-loader']
         }]
     },
+    devServer: {
+        contentBase: './static',
+        historyApiFallback: true
+    },
     plugins: [
         extractSass,
-        new WriteFilePlugin()
+        new WriteFilePlugin(),
+        new webpack.DefinePlugin({
+            "process.env": {
+                "NODE_ENV": `"${process.env.NODE_ENV}"`,
+                "ZIPKIN_API": `"${process.env.ZIPKIN_API}"`
+            }
+        })
     ]
 };
