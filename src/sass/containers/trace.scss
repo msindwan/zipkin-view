@@ -59,9 +59,10 @@
                 }
 
                 .zk-ui-trace-span {
-                    height: 10px;
                     border-radius: 2px;
-                    background: #5fd2f7;
+                    background: #caeaf5;
+                    white-space: nowrap;
+                    padding: 2px;
                 }
 
                 .zk-ui-trace-span-name {

@@ -19,6 +19,7 @@
  * @Description : Trace Container.
  **/
 
+import ClusterizedContainer from '../common/controls/ClusterizedContainer.jsx';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import Zipkin from '../../../util/Zipkin';
 import React from 'react';
@@ -27,10 +28,10 @@ class TraceViewer extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
+        this.state = Object.assign({}, this.buildHeirarchy(), {
             selectedSpan: null,
             toggleState: {}
-        };
+        });
     }
 
     /**
@@ -78,16 +79,18 @@ class TraceViewer extends React.Component {
      */
     buildHeirarchy() {
         const spanLookup = {};
-        const roots = [];
+        const spans = [];
 
+        // Build the lookup.
         this.props.trace.forEach(span => {
             spanLookup[span.id] = span;
             span._children_ = [];
             if (typeof span.parentId === 'undefined') {
-                roots.push(span);
+                spans.push(span);
             }
         });
 
+        // Associate children.
         this.props.trace.forEach(span => {
             const parent = spanLookup[span.parentId];
             if (typeof parent !== 'undefined') {
@@ -95,7 +98,7 @@ class TraceViewer extends React.Component {
             }
         });
 
-        return roots;
+        return { spanLookup, spans };
     }
 
     /**
@@ -106,8 +109,7 @@ class TraceViewer extends React.Component {
      */
     getTableHeaders() {
         const headers = [ this.props.intl.formatMessage({ id: 'service_label'}), '' ];
-        const trace = this.props.trace;
-        const interval = Zipkin.GetTraceDuration(trace)/5;
+        const interval = Zipkin.GetTraceDuration(this.props.trace)/5;
 
         for (let i = 1; i <= 5; i++) {
             headers.push(Zipkin.DurationToString(interval*i, this.props.intl));
@@ -127,13 +129,14 @@ class TraceViewer extends React.Component {
      * @param startTs (int)    // The starting timestamp
      * @returns {array}        // the set of rows.
      */
-    getTableRows(spans, numHeaders, startTs) {
+    getTableRows(numHeaders) {
         const duration = Zipkin.GetTraceDuration(this.props.trace);
+        const startTs = Zipkin.GetTraceTimestamp(this.props.trace);
+        const spans = [ ...this.state.spans ];
         const rows = [];
-        let key = 0;
 
         while (spans.length > 0) {
-            const span = spans.shift();
+            const span = spans.pop();
             let depth = 0;
             if (typeof span._depth_ !== 'undefined') {
                 depth = span._depth_;
@@ -150,22 +153,22 @@ class TraceViewer extends React.Component {
 
             rows.push((
                 <tr
-                    className={span === this.state.selectedSpan ? 'zk-ui-trace-span-selected' : '' }
+                    data-key={span.id}
+                    className={`zk-ui-trace-span-row ${span === this.state.selectedSpan ? 'zk-ui-trace-span-selected' : ''}` }
                     onClick={e => this.setSelectedSpan(e, span)}
-                    key={key++}>
+                    key={span.id}>
                     <td>
                         <div style={{ marginLeft: depth*10 }} className="zk-ui-trace-service-name">
                             { span._children_.length ?
                                 <i
                                     onClick={e => this.toggleChildren(e, span)}
-                                    className={`fa fa-${collapsed ? 'plus' : 'minus'}`} /> :
-                                <i className="fa fa-minus hidden"></i> }
+                                    className={`zk-ui-trace-span-toggle fa fa-${collapsed ? 'plus' : 'minus'}`} /> :
+                                <i className="zk-ui-trace-span-toggle fa fa-minus hidden"></i> }
                             <span>{Zipkin.GetSpanService(span)}</span>
                         </div>
                     </td>
                     <td>
-                        <div className="zk-ui-trace-span" style={{ marginLeft: left, width: width }}></div>
-                        <div className="zk-ui-trace-span-name" style={{ marginLeft: left }}>
+                        <div className="zk-ui-trace-span" style={{ marginLeft: left, width: width }}>
                             {`${span.name} : ${Zipkin.DurationToString(span.duration, this.props.intl)}`}
                         </div>
                     </td>
@@ -185,20 +188,16 @@ class TraceViewer extends React.Component {
                                     <tbody>
                                         <tr>
                                             <td className="header">
-                                                <FormattedMessage
-                                                    id="timestamp_label" />
+                                                {this.props.intl.formatMessage({ id: "timestamp_label" })}
                                             </td>
                                             <td className="header">
-                                                <FormattedMessage
-                                                    id="trace_id_label" />
+                                                {this.props.intl.formatMessage({ id: "trace_id_label" })}
                                             </td>
                                             <td className="header">
-                                                <FormattedMessage
-                                                    id="span_id_label" />
+                                                {this.props.intl.formatMessage({ id: "span_id_label" })}
                                             </td>
                                             <td className="header">
-                                                <FormattedMessage
-                                                    id="parent_id_label" />
+                                                {this.props.intl.formatMessage({ id: "parent_id_label" })}
                                             </td>
                                         </tr>
                                         <tr>
@@ -210,20 +209,16 @@ class TraceViewer extends React.Component {
                                         { span.annotations && (
                                             <tr>
                                                 <td className="header">
-                                                    <FormattedMessage
-                                                        id="annotation_label" />
+                                                    {this.props.intl.formatMessage({ id: "annotation_label" })}
                                                 </td>
                                                 <td className="header">
-                                                    <FormattedMessage
-                                                        id="date_time_label" />
+                                                    {this.props.intl.formatMessage({ id: "date_time_label" })}
                                                 </td>
                                                 <td className="header">
-                                                    <FormattedMessage
-                                                        id="relative_time_label" />
+                                                    {this.props.intl.formatMessage({ id: "relative_time_label" })}
                                                 </td>
                                                 <td className="header">
-                                                    <FormattedMessage
-                                                        id="address_label" />
+                                                    {this.props.intl.formatMessage({ id: "address_label" })}
                                                 </td>
                                             </tr>
                                         )}
@@ -235,8 +230,7 @@ class TraceViewer extends React.Component {
                                             return (
                                                 <tr key={i}>
                                                     <td>
-                                                        <FormattedMessage
-                                                            id={annotation.value} />
+                                                        {this.props.intl.formatMessage({ id: annotation.value })}
                                                     </td>
                                                     <td>
                                                         {Zipkin.ConvertTimestampToDate(annotation.timestamp)}
@@ -258,12 +252,10 @@ class TraceViewer extends React.Component {
                                         { span.binaryAnnotations && (
                                             <tr>
                                                 <td className="header">
-                                                    <FormattedMessage
-                                                        id="key_label" />
+                                                    { this.props.intl.formatMessage({ id: 'key_label'}) }
                                                 </td>
                                                 <td className="header">
-                                                    <FormattedMessage
-                                                        id="value_label" />
+                                                    { this.props.intl.formatMessage({ id: 'value_label'}) }
                                                 </td>
                                             </tr>
                                         )}
@@ -290,7 +282,7 @@ class TraceViewer extends React.Component {
             if (!collapsed) {
                 span._children_.forEach(child => {
                     child._depth_ = depth;
-                    spans.unshift(child);
+                    spans.push(child);
                 });
             }
         }
@@ -307,10 +299,31 @@ class TraceViewer extends React.Component {
         this.props.history.goBack();
     }
 
+    /**
+     * On Row Click
+     *
+     * Description: Handler for when a row is clicked.
+     * @param e {event} // The event object.
+     */
+    onRowClicked(e) {
+        // Find the closest row element.
+        let elem = e.target;
+        while (elem.className.indexOf('zk-ui-trace-span-row') < 0) {
+            elem = elem.parentNode;
+        }
+        const spanId = elem.dataset.key;
+        if (e.target.className.indexOf('zk-ui-trace-span-toggle') >= 0) {
+            // Toggle children.
+            this.toggleChildren(e, this.state.spanLookup[spanId]);
+        } else {
+            // Set the selected span.
+            this.setSelectedSpan(e, this.state.spanLookup[spanId]);
+        }
+    }
+
     render() {
-        const spans = this.buildHeirarchy();
         const headers = this.getTableHeaders();
-        const rows = this.getTableRows(spans, headers.length, spans[0].timestamp);
+        const rows = this.getTableRows(headers.length);
 
         return (
             <div className="zk-ui-trace-viewer">
@@ -331,9 +344,12 @@ class TraceViewer extends React.Component {
                                         { headers }
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <ClusterizedContainer
+                                    tag='tbody'
+                                    scrollId='zk_ui_content'
+                                    onClick={e => this.onRowClicked(e)}>
                                     { rows }
-                                </tbody>
+                                </ClusterizedContainer>
                             </table>
                         </div>
                     </div>
