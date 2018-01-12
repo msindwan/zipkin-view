@@ -68,7 +68,7 @@ class TraceContainer extends AbstractContainer {
                     sidebarVisible={this.state.global.sidebarVisible}
                     history={this.props.history}
                     { ...this.state.browser } />
-                <div id="zk_ui_content" className="zk-ui-content">
+                <div className="zk-ui-content">
                     <div className="zk-ui-content-container">
                         <Header
                             history={this.props.history} />

@@ -30,7 +30,16 @@ html,
     bottom: 0;
     top: 0;
 
-    .zk-ui-content-container {
-        min-width: 800px;
+    .zk-ui-content {
+        position: relative;
+        transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
+        flex: 1;
+
+        .zk-ui-content-container {
+            min-width: 800px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
     }
 }

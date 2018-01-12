@@ -337,7 +337,7 @@ class TraceViewer extends React.Component {
                                     id="back_label" />
                             </div>
                         </div>
-                        <div className="zk-ui-card-content">
+                        <div id="trace_view_container" className="zk-ui-card-content">
                             <table className="zk-ui-trace-table">
                                 <thead>
                                     <tr>
@@ -345,8 +345,8 @@ class TraceViewer extends React.Component {
                                     </tr>
                                 </thead>
                                 <ClusterizedContainer
-                                    tag='tbody'
-                                    scrollId='zk_ui_content'
+                                    tag="tbody"
+                                    scrollId="trace_view_container"
                                     onClick={e => this.onRowClicked(e)}>
                                     { rows }
                                 </ClusterizedContainer>

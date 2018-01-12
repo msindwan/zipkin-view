@@ -1,7 +1,8 @@
 .zk-ui-trace-viewer {
     margin-top: 15px;
     padding: 10px 15px;
-    min-height: calc(100% - 123px);
+    flex: 1;
+    overflow: hidden;
 
     .zk-ui-card-header {
         .zk-ui-button {
@@ -16,8 +17,15 @@
         padding-left: 15px;
         margin-right: auto;
         margin-left: auto;
+        height: 100%;
 
-        .zk-ui-card-content {
+        .zk-ui-card {
+
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+
+            .zk-ui-card-content {
             width: 100%;
             padding: 10px;
             box-sizing: border-box;
@@ -124,6 +132,7 @@
             .zk-ui-trace-span-selected {
                 background: #e9f2f5;
             }
+        }
         }
     }
 }

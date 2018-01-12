@@ -1,116 +1,119 @@
-.zk-ui-content {
-    position: relative;
-    transition: all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1);
-    overflow: auto;
+.zk-ui-browser {
+    margin-top: 15px;
+    padding: 10px 15px;
     flex: 1;
+    box-sizing: border-box;
+    overflow: hidden;
 
-    .zk-ui-browser {
-        margin-top: 15px;
-        padding: 10px 15px;
-        min-height: calc(100% - 123px);
+    .zk-ui-browser-container {
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+        height: 100%;
 
-        .zk-ui-browser-container {
-            padding-right: 15px;
-            padding-left: 15px;
-            margin-right: auto;
-            margin-left: auto;
+        .zk-ui-card {
 
-            .zk-ui-card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
 
-                .zk-ui-browser-sort-options {
-                    display: inline-block;
-                    width: 250px;
+            .zk-ui-card-content {
+                overflow: auto;
+            }
 
-                    .zk-ui-button {
-                        background: #60b3ce;
-                        text-align: left;
-                    }
+            .zk-ui-browser-sort-options {
+                display: inline-block;
+                width: 250px;
 
-                    .zk-ui-dropdown-button {
-                        background: #60b3ce;
-                        padding: 1px;
-                    }
-
-                    .zk-ui-popover-content {
-                        box-shadow: 0px 0px 4px #ab9f9f;
-                    }
+                .zk-ui-button {
+                    background: #60b3ce;
+                    text-align: left;
                 }
 
-                .zk-ui-browser-card-cell {
-                    padding: 10px;
-                    border-bottom: 1px solid #f8f8f8;
+                .zk-ui-dropdown-button {
+                    background: #60b3ce;
+                    padding: 1px;
+                }
 
-                    &:hover {
-                        background: #f0f7f9;
-                        cursor: pointer;
-                    }
+                .zk-ui-popover-content {
+                    box-shadow: 0px 0px 4px #ab9f9f;
+                }
+            }
 
-                    .zk-ui-browser-card-cell-container {
-                        margin-bottom: 5px;
+            .zk-ui-browser-card-cell {
+                padding: 10px;
+                border-bottom: 1px solid #f8f8f8;
 
-                        > table {
-                            width: 100%;
+                &:hover {
+                    background: #f0f7f9;
+                    cursor: pointer;
+                }
 
-                            .zk-ui-browser-card-cell-span-name {
-                                width: 40%;
+                .zk-ui-browser-card-cell-container {
+                    margin-bottom: 5px;
 
-                                .zk-ui-trace-name {
-                                    margin-left: 10px;
-                                    font-size: 12px;
-                                    color: dimgrey;
-                                }
+                    > table {
+                        width: 100%;
 
-                                .zk-ui-browser-card-cell-num-spans {
-                                    font-size: 10px;
-                                    font-weight: bold;
-                                    color: #3b3b3b;
-                                    padding-top: 5px;
-                                }
+                        .zk-ui-browser-card-cell-span-name {
+                            width: 40%;
+
+                            .zk-ui-trace-name {
+                                margin-left: 10px;
+                                font-size: 12px;
+                                color: dimgrey;
                             }
 
-                            .zk-ui-browser-card-cell-span-info {
-                                width: 60%;
-                            }
-
-                            .zk-ui-browser-card-cell-span-width-container {
-
-                                background: #eeeeee;
-
-                                .zk-ui-browser-card-cell-span-width {
-                                    height: 2px;
-                                    background: #4399b4;
-                                }
-                            }
-
-                            .zk-ui-browser-card-cell-span-duration {
-                                padding-top: 5px;
-                                width: 50%;
-                                display: inline-block;
-                                padding-bottom: 10px;
-                            }
-
-                            .zk-ui-browser-card-cell-span-date {
-                                padding-top: 5px;
-                                width: 50%;
-                                display: inline-block;
-                                text-align: right;
+                            .zk-ui-browser-card-cell-num-spans {
                                 font-size: 10px;
+                                font-weight: bold;
+                                color: #3b3b3b;
+                                padding-top: 5px;
                             }
+                        }
+
+                        .zk-ui-browser-card-cell-span-info {
+                            width: 60%;
+                        }
+
+                        .zk-ui-browser-card-cell-span-width-container {
+
+                            background: #eeeeee;
+
+                            .zk-ui-browser-card-cell-span-width {
+                                height: 2px;
+                                background: #4399b4;
+                            }
+                        }
+
+                        .zk-ui-browser-card-cell-span-duration {
+                            padding-top: 5px;
+                            width: 50%;
+                            display: inline-block;
+                            padding-bottom: 10px;
+                        }
+
+                        .zk-ui-browser-card-cell-span-date {
+                            padding-top: 5px;
+                            width: 50%;
+                            display: inline-block;
+                            text-align: right;
+                            font-size: 10px;
                         }
                     }
                 }
+            }
 
-                .zk-ui-browser-card-content-placeholder {
-                    text-align: center;
-                    margin: auto;
-                    display: block;
-                    margin: 60px;
-                    opacity: 0.3;
-                }
-
+            .zk-ui-browser-card-content-placeholder {
+                text-align: center;
+                margin: auto;
+                display: block;
+                margin: 60px;
+                opacity: 0.3;
             }
 
         }
-    }
 
+    }
 }
