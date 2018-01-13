@@ -342,7 +342,7 @@ class TraceViewer extends React.Component {
                                 <ClusterizedContainer
                                     container="tbody"
                                     scrollId="trace_view_container"
-                                    rows_in_block={750}
+                                    rows_in_block={100}
                                     onRowClick={(e, row) => this.onRowClicked(e, row)}>
                                     { rows }
                                 </ClusterizedContainer>
