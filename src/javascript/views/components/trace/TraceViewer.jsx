@@ -305,14 +305,9 @@ class TraceViewer extends React.Component {
      * Description: Handler for when a row is clicked.
      * @param e {event} // The event object.
      */
-    onRowClicked(e) {
-        // Find the closest row element.
-        let elem = e.target;
-        while (elem.className.indexOf('zk-ui-trace-span-row') < 0) {
-            elem = elem.parentNode;
-        }
-        const spanId = elem.dataset.key;
-        if (e.target.className.indexOf('zk-ui-trace-span-toggle') >= 0) {
+    onRowClicked(e, row) {
+        const spanId = row.dataset.key;
+        if (e.target.classList.contains('zk-ui-trace-span-toggle')) {
             // Toggle children.
             this.toggleChildren(e, this.state.spanLookup[spanId]);
         } else {
@@ -345,9 +340,10 @@ class TraceViewer extends React.Component {
                                     </tr>
                                 </thead>
                                 <ClusterizedContainer
-                                    tag="tbody"
+                                    container="tbody"
                                     scrollId="trace_view_container"
-                                    onClick={e => this.onRowClicked(e)}>
+                                    rows_in_block={750}
+                                    onRowClick={(e, row) => this.onRowClicked(e, row)}>
                                     { rows }
                                 </ClusterizedContainer>
                             </table>
