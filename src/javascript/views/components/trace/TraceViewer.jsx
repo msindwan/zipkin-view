@@ -169,7 +169,7 @@ class TraceViewer extends React.Component {
                     </td>
                     <td>
                         <div className="zk-ui-trace-span" style={{ marginLeft: left, width: width }}>
-                            {`${span.name} : ${Zipkin.DurationToString(span.duration, this.props.intl)}`}
+                            {`${Zipkin.DurationToString(span.duration, this.props.intl)} : ${span.name}`}
                         </div>
                     </td>
                     { emptyCells }
