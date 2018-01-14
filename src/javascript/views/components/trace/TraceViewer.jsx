@@ -321,7 +321,7 @@ class TraceViewer extends React.Component {
      *
      * Description: Handler for when the download button on the trace viewer is clicked.
      */
-    downloadJSON() {
+    downloadJSON(e) {
         // Copy over the trace object with UI-specific attributes stripped.
         const trace = this.props.trace.map(span => {
             const newSpan = Object.assign({}, span);
@@ -331,10 +331,9 @@ class TraceViewer extends React.Component {
         });
         const data = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(trace))}`;
         const node = document.createElement('a');
-        node.setAttribute("href", data);
-        node.setAttribute("download", `${Zipkin.GetTraceID(this.props.trace)}.json`);
-        node.click();
-        node.remove();
+        e.target.setAttribute("href", data);
+        e.target.setAttribute("download", `${Zipkin.GetTraceID(this.props.trace)}.json`);
+        //e.target.click();
     }
 
     render() {
@@ -352,9 +351,10 @@ class TraceViewer extends React.Component {
                                 <FormattedMessage
                                     id="back_label" />
                             </div>
-                            <div className="zk-ui-card-header-padding"></div>
-                            <div onClick={e => this.downloadJSON(e)} className="zk-ui-button">
-                                <i className="fa fa-download"></i>
+                            <div className="zk-ui-card-right-menu">
+                                <a onClick={e => this.downloadJSON(e)} className="zk-ui-button">
+                                    <i className="fa fa-download"></i>
+                                </a>
                             </div>
                         </div>
                         <div id="trace_view_container" className="zk-ui-card-content">
