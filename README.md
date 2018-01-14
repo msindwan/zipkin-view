@@ -1,4 +1,4 @@
-# Zipkin View (Beta)
+# Zipkin View
 
 [![circleci](https://circleci.com/gh/msindwan/zipkin-view.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/msindwan/zipkin-view)
 
