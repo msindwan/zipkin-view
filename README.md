@@ -11,22 +11,21 @@ application. Zipkin View is built from scratch using React and other JavaScript 
 
 ## Requirements
 
-Zipkin View requires `node` to build and serve assets. Make sure to run `npm install` from the root directory before running any
-npm scripts.
+Zipkin View requires `node >= 6.10.0` to build and serve assets. After cloning the zipkin-view repo, make sure to run `npm install` from the root directory before running any npm scripts. You'll also need to have an instance of Zipkin running.
 
 ## Quick Start
 
-Ensure that you have an instance of Zipkin running. To start the production server, run
+From the root directory, run 
 
 `NODE_ENV=production ZIPKIN_API=<Zipkin instance's API URL> npm run prod -- [webpack-dev-server options]`
 
-This will serve all assets and make api requests against the specified Zipkin URL.
+to deploy a production server. This will serve all assets and make api requests against the specified Zipkin URL.
 
 ## Development
 
 Suggestions and contributions are greatly appreciated! Please see the contribution guidelines.
 
-To start the development process, run
+From the root directory, run
 
 `NODE_ENV=development ZIPKIN_API=<Zipkin instance's API URL> npm run dev -- [webpack-dev-server options]`
 
