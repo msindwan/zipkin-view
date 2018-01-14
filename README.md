@@ -41,5 +41,5 @@ the static directory. You would also need to fallback on the index page if the r
 ## License
 
 Zipkin View is licensed under the Apache License, Version 2.0. It was inspired by the OpenZipkin/zipkin project and
-released with the intention of complementing to the incredible work done by OpenZipkin. It is not, however, affiliated
+released with the intention of complementing the incredible work done by OpenZipkin. It is not, however, affiliated
 or endorsed by the OpenZipkin authors.
