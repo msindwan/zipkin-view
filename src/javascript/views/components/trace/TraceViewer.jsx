@@ -316,6 +316,27 @@ class TraceViewer extends React.Component {
         }
     }
 
+    /**
+     * Download JSON
+     *
+     * Description: Handler for when the download button on the trace viewer is clicked.
+     */
+    downloadJSON() {
+        // Copy over the trace object with UI-specific attributes stripped.
+        const trace = this.props.trace.map(span => {
+            const newSpan = Object.assign({}, span);
+            delete newSpan._children_;
+            delete newSpan._depth_;
+            return newSpan;
+        });
+        const data = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(trace))}`;
+        const node = document.createElement('a');
+        node.setAttribute("href", data);
+        node.setAttribute("download", `${Zipkin.GetTraceID(this.props.trace)}.json`);
+        node.click();
+        node.remove();
+    }
+
     render() {
         const headers = this.getTableHeaders();
         const rows = this.getTableRows(headers.length);
@@ -330,6 +351,10 @@ class TraceViewer extends React.Component {
                                 {' '}
                                 <FormattedMessage
                                     id="back_label" />
+                            </div>
+                            <div className="zk-ui-card-header-padding"></div>
+                            <div onClick={e => this.downloadJSON(e)} className="zk-ui-button">
+                                <i className="fa fa-download"></i>
                             </div>
                         </div>
                         <div id="trace_view_container" className="zk-ui-card-content">

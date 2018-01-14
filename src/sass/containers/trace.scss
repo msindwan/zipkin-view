@@ -5,6 +5,12 @@
     overflow: hidden;
 
     .zk-ui-card-header {
+        display: flex;
+
+        .zk-ui-card-header-padding {
+            flex: 1;
+        }
+
         .zk-ui-button {
             background: #60b3ce;
             display: inline-block;
