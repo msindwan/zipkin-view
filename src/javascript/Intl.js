@@ -63,6 +63,7 @@ const translations = {
         span_label: 'Span Name',
         sr: 'Server Receive',
         ss: 'Server Send',
+        no_root_spans: "There are no root spans for this trace. Please ensure that it isn't self-referencing.",
         span_id_label: 'Span ID',
         start_date_label: 'Start Date',
         start_time_label: 'Start Time',
