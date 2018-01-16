@@ -22,6 +22,7 @@
 import ClusterizedContainer from '../common/controls/ClusterizedContainer.jsx';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import Zipkin from '../../../util/Zipkin';
+import Utils from '../../../util/Utils';
 import React from 'react';
 
 class TraceViewer extends React.Component {
@@ -98,6 +99,9 @@ class TraceViewer extends React.Component {
             }
         });
 
+        if (spans.length === 0) {
+            Utils.Alert(this.props.intl.formatMessage({ id: "no_root_spans" }), 'warning');
+        }
         return { spanLookup, spans };
     }
 
