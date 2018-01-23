@@ -1,5 +1,7 @@
 # Zipkin View
 
+![zipkin-view screenshot](images/zipkin-view-trace.png?raw=true)
+
 [![circleci](https://circleci.com/gh/msindwan/zipkin-view.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/msindwan/zipkin-view)
 
 This is an alternative UI for [OpenZipkin/zipkin](https://github.com/openzipkin/zipkin). The motivation for implementing
@@ -15,7 +17,7 @@ Zipkin View requires `node >= 6.10.0` to build and serve assets. After cloning t
 
 ## Quick Start
 
-From the root directory, run 
+From the root directory, run
 
 `NODE_ENV=production ZIPKIN_API=<Zipkin instance's API URL> npm run prod -- [webpack-dev-server options]`
 
