@@ -76,6 +76,28 @@ class Utils {
     }
 
     /**
+     * Is Object
+     *
+     * Description: Checks if the provided argument is an object.
+     * @param o {object} // The argument to type-check.
+     * @returns {boolean} // True if o is an object; false otherwise.
+     */
+    static isObject(o) {
+        return o instanceof Object && o.constructor === Object;
+    }
+
+    /**
+     * Is String
+     *
+     * Description: Checks if the provided argument is a string.
+     * @param s {object} // The argument to type-check.
+     * @returns {boolean} // True if s is a string; false otherwise.
+     */
+    static isString(s) {
+        return typeof s === 'string' || s instanceof String;
+    }
+
+    /**
      * Alert
      *
      * Description: Creates a noty alert.

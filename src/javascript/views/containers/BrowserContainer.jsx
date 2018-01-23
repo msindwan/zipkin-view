@@ -30,10 +30,6 @@ import React from 'react';
 
 class BrowserContainer extends AbstractContainer {
 
-    constructor(props) {
-        super(props);
-    }
-
     /**
      * Load State from History
      *
@@ -82,6 +78,7 @@ class BrowserContainer extends AbstractContainer {
             component = (
                 <Browser
                     history={this.props.history}
+                    storage={this.state.global.storage}
                     { ...this.state.browser } />
             );
         }

@@ -86,13 +86,39 @@ input.zk-ui-input {
     border-radius: 0px;
     color: rgba(0, 0, 0, 0.87);
     background: rgb(255, 255, 255);
-}
 
-.zk-ui-card-header {
-    border-radius: 0px;
-    padding: 8px;
-    background: rgb(67, 153, 180);
-    color: white;
+    .zk-ui-card-header {
+        border-radius: 0px;
+        padding: 8px;
+        background: rgb(67, 153, 180);
+        color: white;
+        position: relative;
+
+        .zk-ui-card-tabs {
+            display: inline-block;
+            position: absolute;
+            bottom: 0;
+
+            .zk-ui-tab {
+                margin-right: 5px;
+                border-radius: 0;
+
+                &.selected {
+                    background: #2d87a5;
+                }
+            }
+        }
+
+        .zk-ui-card-right-menu {
+            float: right;
+        }
+        .zk-ui-button {
+            background: #60b3ce;
+            display: inline-block;
+            width: auto;
+        }
+    }
+
 }
 
 .zk-ui-popover-container {

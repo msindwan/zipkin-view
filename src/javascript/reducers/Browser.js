@@ -38,6 +38,8 @@ class BrowserReducer extends Reducer {
             queryKey: null,
             // Browser state.
             loading: false,
+            localTraces: null,
+            deletingLocalTraces: {},
             traces: null,
             services: [],
             selectedTrace: null,
@@ -68,6 +70,18 @@ class BrowserReducer extends Reducer {
     }
 
     /**
+     * Set Local Traces
+     *
+     * Description: Sets the current set of local traces.
+     * @param traces {array} // The traces to set.
+     */
+    setLocalTraces(traces) {
+        this.setState({
+            localTraces: traces
+        });
+    }
+
+    /**
      * Set Browser Loading State
      *
      * Description: Sets the browser loading state.
@@ -76,6 +90,56 @@ class BrowserReducer extends Reducer {
     setBrowserLoading(loading) {
         this.setState({
             loading: loading
+        });
+    }
+
+    /**
+     * Upload Local Trace Complete
+     *
+     * Description: Updates local traces when an upload is complete.
+     * @param trace {object} // The trace that was recently uploaded.
+     */
+    uploadLocalTraceComplete(trace) {
+        this.setLocalTraces([ ...this.state.localTraces, trace ]);
+    }
+
+    /**
+     * Delete Local Trace Begin
+     *
+     * Description: Updates local traces when a deletion begins.
+     * @param traceId {string} // The id of the trace that was recently deleted.
+     */
+    deleteLocalTraceBegin(traceId) {
+        this.setState({
+            deletingLocalTraces: Object.assign({}, this.state.deletingLocalTraces, {
+                [traceId] : true
+            })
+        });
+    }
+
+    /**
+     * Delete Local Trace Complete
+     *
+     * Description: Updates local traces when a deletion is complete.
+     * @param traceId {string} // The id of the trace that was recently deleted.
+     */
+    deleteLocalTraceComplete(traceId) {
+        this.setLocalTraces(this.state.localTraces.filter(t => {
+            return t.traceId !== traceId;
+        }));
+    }
+
+    /**
+     * Delete Local Trace Error
+     *
+     * Description: Updates local traces when a deletion fails.
+     * @param traceId {string} // The id of the trace that was recently deleted.
+     */
+    deleteLocalTraceError(traceId) {
+        this.setState({
+            deletingLocalTraces: Object.assign({}, this.state.deletingLocalTraces, {
+                [traceId] : false
+            })
         });
     }
 

@@ -70,12 +70,12 @@ class API {
      * Fetch Trace
      *
      * Description: Fetches the trace with the specified trace ID.
-     * @param trace   {string}   // The trace ID.
+     * @param traceId   {string} // The trace ID.
      * @param success {function} // The success callback.
      * @param failure {function} // The failure callback.
      */
-    static FetchTrace(trace, success, failure) {
-        Utils.FetchJSON(`${process.env.ZIPKIN_API}/api/v1/trace/${trace}`, success, failure);
+    static FetchTrace(traceId, success, failure) {
+        Utils.FetchJSON(`${process.env.ZIPKIN_API}/api/v1/trace/${traceId}`, success, failure);
     }
 }
 

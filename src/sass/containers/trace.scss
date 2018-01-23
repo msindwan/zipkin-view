@@ -4,17 +4,6 @@
     flex: 1;
     overflow: hidden;
 
-    .zk-ui-card-header {
-        .zk-ui-card-right-menu {
-            float: right;
-        }
-        .zk-ui-button {
-            background: #60b3ce;
-            display: inline-block;
-            width: auto;
-        }
-    }
-
     .zk-ui-trace-viewer-container {
         padding-right: 15px;
         padding-left: 15px;
@@ -43,8 +32,7 @@
                 border-collapse: collapse;
 
                 td {
-                    padding-top: 5px;
-                    padding-bottom: 5px;
+                    padding: 5px 0px;
                     border-left: 1px solid #e8e8e8;
 
                     &:nth-child(1) {
@@ -64,8 +52,10 @@
                 th {
                     border-left: 1px solid #e8e8e8;
                     padding: 2px;
+                    text-align: right;
                     &:nth-child(1) {
                         border-left: 0;
+                        text-align: left;
                     }
                 }
 
@@ -74,6 +64,7 @@
                     background: #caeaf5;
                     white-space: nowrap;
                     padding: 2px;
+                    box-sizing: border-box;
                 }
 
                 .zk-ui-trace-span-name {

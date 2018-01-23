@@ -19,7 +19,10 @@
  * @Description : App Header.
  **/
 
+import { UploadLocalTrace } from '../../../actions/Trace';
 import { ToggleSidebar } from '../../../actions/Global';
+import Zipkin from '../../../util/Zipkin';
+import Utils from '../../../util/Utils';
 import { injectIntl } from 'react-intl';
 import React from 'react';
 
@@ -27,9 +30,7 @@ class Header extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            searchText: ''
-        };
+        this.state = { searchText: '' };
     }
 
     /**
@@ -40,7 +41,7 @@ class Header extends React.Component {
     onSearch() {
         const searchText = this.state.searchText;
         if (searchText) {
-            this.setState({ searchText: ''});
+            this.setState({ searchText: '' });
             this.props.history.push(`/traces/${searchText}`);
         }
     }
@@ -57,10 +58,46 @@ class Header extends React.Component {
         }
     }
 
+    /**
+     * Upload Trace
+     *
+     * Description: The handler that's fired when a trace is uploaded.
+     * @param e {event} // The event object.
+     */
+    onUploadTrace(e) {
+        const files = e.target.files;
+        if (files.length <= 0) {
+            return false;
+        }
+
+        const reader = new FileReader();
+        const file = files.item(0);
+        reader.onload = e => {
+            try {
+                const spans = JSON.parse(e.target.result);
+                Zipkin.ValidateSpans(spans);
+
+                UploadLocalTrace(spans, trace => {
+                    this.props.history.push(`/traces/${trace.traceId}?storage=local`);
+                });
+            } catch(e) {
+                // An invalid trace was provided.
+                Utils.Alert(this.props.intl.formatMessage({
+                    id: 'invalid_trace_upload'
+                }, {
+                    filename: file.name
+                }));
+                console.error(e);
+            }
+        };
+
+        reader.readAsText(file);
+    }
+
     render() {
         return (
             <div className="zk-ui-header">
-                <div className="zk-ui-sidebar-toggle"  onClick={() => ToggleSidebar()}>
+                <div className="zk-ui-header-button"  onClick={() => ToggleSidebar()}>
                     <i className="fa fa-navicon"></i>
                 </div>
                 <div className="zk-ui-trace-search">
@@ -71,6 +108,14 @@ class Header extends React.Component {
                         className="zk-ui-input"
                         placeholder={this.props.intl.formatMessage({ id : 'trace_id_label' })} />
                     <i onClick={() => this.onSearch()} className="fa fa-search"></i>
+                </div>
+                <div className="zk-ui-header-button">
+                    <input
+                        onChange={e => this.onUploadTrace(e)}
+                        className="zk-ui-uploader"
+                        type="file"
+                        accept="text/json" />
+                    <i className="fa fa-upload"></i>
                 </div>
             </div>
         );

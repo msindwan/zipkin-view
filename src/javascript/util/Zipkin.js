@@ -20,8 +20,112 @@
  **/
 
 import Moment from 'moment';
+import Utils from './Utils';
 
 class Zipkin {
+
+    /**
+     * Validate Spans
+     *
+     * Description: Validates a list of spans.
+     * @param spans {array} // The collection of spans.
+     * @throws {Error}      // If one or more spans are invalid.
+     */
+    static ValidateSpans(spans) {
+        if (!Array.isArray(spans)) {
+            throw new Error("Invalid or no spans; expected an array.");
+        }
+        spans.forEach(span => Zipkin.ValidateSpan(span));
+    }
+
+    /**
+     * Validate Span
+     *
+     * Description: Validates a span against the Zipkin schema (currently v1 only).
+     * @param span {object} // The span to validate.
+     * @throws {Error}      // If the span is invalid.
+     */
+    static ValidateSpan(span) {
+        if (!Utils.isObject(span)) {
+            throw new Error("One or more spans is not an object.");
+        }
+        if (!Utils.isString(span.id)) {
+            throw new Error("Invalid or no span.id; expected a string.");
+        }
+        if (isNaN(span.duration)) {
+            throw new Error("Invalid or no span.duration; expected a string.");
+        }
+        if (!Utils.isString(span.name)) {
+            throw new Error("Invalid or no span.name; expected a string.");
+        }
+        if (isNaN(span.timestamp)) {
+            throw new Error("Invalid or no span.timestamp; expected a string.");
+        }
+    }
+
+    /**
+     * Build Heirarchy
+     *
+     * Description: Builds the tree hierarchy for a trace.
+     * @param trace {trace} // The trace object.
+     * @returns {array}     // the tree for the trace.
+     * @throws {Error}      // If one or more spans are invalid.
+     */
+    static BuildHeirarchy(trace) {
+        const spanLookup = {};
+        const spans = [];
+
+        // Build the lookup.
+        trace.spans.forEach(span => {
+            Zipkin.ValidateSpan(span);
+            spanLookup[span.id] = span;
+            span._children_ = [];
+        });
+
+        // Associate children.
+        trace.spans.forEach(span => {
+            const parent = spanLookup[span.parentId];
+            if (typeof parent !== 'undefined') {
+                parent._children_.unshift(span);
+            } else {
+                spans.push(span);
+            }
+        });
+
+        return { spanLookup, spans };
+    }
+
+    /**
+     * Normalize Traces
+     *
+     * Description: Returns traces formmatted for application use.
+     * @param traces {araray} // The array of trace objects.
+     * @returns {array}       // The array of normalized trace objects.
+     */
+    static NormalizeTraces(traces) {
+        return traces.map(trace => {
+            if (typeof trace.traceId === 'undefined' && Array.isArray(trace)) {
+                return {
+                    traceId: trace[0].traceId,
+                    spans: trace
+                };
+            }
+            return trace;
+        });
+    }
+
+    /**
+     * Get Root Span
+     *
+     * Description: Returns the root span for a trace.
+     * @param trace {trace} // The trace object.
+     * @returns {object}    // The root span.
+     */
+    static GetRootSpan(trace) {
+        // For efficiency, we assume that the root span is always the
+        // first span in the trace.
+        return trace.spans[0];
+    }
 
     /**
      * Get Trace Duration
@@ -31,8 +135,7 @@ class Zipkin {
      * @returns {int}        // The duration.
      */
     static GetTraceDuration(trace) {
-        // TODO: Find out if the root span is sufficient.
-        return trace[0].duration;
+        return Zipkin.GetRootSpan(trace).duration;
     }
 
     /**
@@ -43,7 +146,7 @@ class Zipkin {
      * @returns {string}     // The service name.
      */
     static GetTraceService(trace) {
-        return Zipkin.GetSpanService(trace[0]);
+        return Zipkin.GetSpanService(Zipkin.GetRootSpan(trace));
     }
 
     /**
@@ -54,18 +157,7 @@ class Zipkin {
      * @returns {string}     // The service name.
      */
     static GetTraceName(trace) {
-        return trace[0].name;
-    }
-
-    /**
-     * Get Trace ID
-     *
-     * Description: Gets the ID for a trace.
-     * @param trace {object} // The trace object.
-     * @returns {string}     // The trace ID.
-     */
-    static GetTraceID(trace) {
-        return trace[0].traceId;
+        return Zipkin.GetRootSpan(trace).name;
     }
 
     /**
@@ -76,7 +168,7 @@ class Zipkin {
      * @returns {int}        // The trace span count.
      */
     static GetTraceSpanCount(trace) {
-        return trace.length;
+        return trace.spans.length;
     }
 
     /**
@@ -98,7 +190,7 @@ class Zipkin {
      * @returns {int}        // The timestamp in milliseconds.
      */
     static GetTraceTimestamp(trace) {
-        return trace[0].timestamp;
+        return Zipkin.GetRootSpan(trace).timestamp;
     }
 
     /**

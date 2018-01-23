@@ -50,19 +50,43 @@
                     cursor: pointer;
                 }
 
+                &.loading {
+                    opacity: 0.5;
+
+                    .zk-ui-loader {
+                        position: absolute;
+                        width: 20px;
+                        height: 20px;
+                        margin: 0px;
+                        left: 50%;
+                    }
+                }
+
                 .zk-ui-browser-card-cell-container {
                     margin-bottom: 5px;
 
                     > table {
                         width: 100%;
+                        table-layout: fixed;
+
+                        .zk-ui-browser-card-cell-delete {
+                            width: 25px;
+                        }
 
                         .zk-ui-browser-card-cell-span-name {
                             width: 40%;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
 
                             .zk-ui-trace-name {
                                 margin-left: 10px;
                                 font-size: 12px;
                                 color: dimgrey;
+                            }
+
+                            .zk-ui-browser-card-cell-upload-date {
+                                font-size: 11px;
+                                margin-top: 4px;
                             }
 
                             .zk-ui-browser-card-cell-num-spans {
@@ -75,6 +99,13 @@
 
                         .zk-ui-browser-card-cell-span-info {
                             width: 60%;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+
+                        .zk-ui-browser-card-cell-delete {
+                            padding-left: 10px;
+                            color: #2e86a5;
                         }
 
                         .zk-ui-browser-card-cell-span-width-container {

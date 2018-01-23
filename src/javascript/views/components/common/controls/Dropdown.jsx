@@ -25,22 +25,8 @@ class Dropdown extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            focus: '',
-            value: this.props.value,
-            options: this.props.data
-        };
         this.handleClickOutside = this.handleClickOutside.bind(this);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.data !== this.state.data || nextProps.value !== this.state.value) {
-            // Update the state with the new props.
-            this.setState({
-                options: nextProps.data,
-                value: nextProps.value
-            });
-        }
+        this.state = { focus: '' };
     }
 
     componentDidMount() {
@@ -83,7 +69,7 @@ class Dropdown extends React.Component {
     onRowClicked(e, option) {
         // Update the search text.
         e.stopPropagation();
-        this.setState({ value: option.label, focus: '' });
+        this.setState({ focus: '' });
         this.props.onOptionSelected(option);
     }
 
@@ -91,18 +77,18 @@ class Dropdown extends React.Component {
         return (
             <div onClick={e => this.onClick(e)} className={`${this.props.className} zk-ui-dropdown`}>
                 <div className="zk-ui-dropdown-container">
-                    <div className="zk-ui-button">{this.state.value}</div>
+                    <div className="zk-ui-button">{this.props.value}</div>
                     <div
                         className="zk-ui-dropdown-button">
                         <div className="zk-ui-arrow-down"></div>
                     </div>
                 </div>
-                { this.state.options.length > 0 && (
+                { this.props.data.length > 0 && (
                     <div className={`zk-ui-popover-container ${this.state.focus}`}>
                         <div className="zk-ui-arrow-up"></div>
                         <div className="zk-ui-popover-content">
                             {
-                                this.state.options.map((option, i) => {
+                                this.props.data.map((option, i) => {
                                     return (
                                         <div
                                             key={i}

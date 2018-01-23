@@ -32,6 +32,18 @@ const ToggleSidebar = Action("toggleSidebar", toggle => {
     return toggle;
 });
 
+/**
+ * Set Storage
+ *
+ * Description: Dispatches the storage mode.
+ * @param storage {string} // The storage mode as a string.
+ * @returns {string} // The storage mode to set.
+ */
+const SetStorage = Action("setStorage", storage => {
+    return storage;
+});
+
 export {
-    ToggleSidebar
+    ToggleSidebar,
+    SetStorage
 };
