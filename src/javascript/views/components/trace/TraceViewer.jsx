@@ -20,90 +20,14 @@
  **/
 
 import ClusterizedContainer from '../common/controls/ClusterizedContainer.jsx';
+import { SetSpanToggleState, SetSelectedSpan } from '../../../actions/Trace';
 import { injectIntl, FormattedMessage } from 'react-intl';
+import TraceSpanRow from './TraceSpanRow.jsx';
 import Zipkin from '../../../util/Zipkin';
-import Utils from '../../../util/Utils';
+import TraceRow from './TraceRow.jsx';
 import React from 'react';
 
 class TraceViewer extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = Object.assign({}, this.buildHeirarchy(), {
-            selectedSpan: null,
-            toggleState: {}
-        });
-    }
-
-    /**
-     * Toggle Children
-     *
-     * Description: Toggles the visibility of a span's children.
-     * @param e {event}     // The event object.
-     * @param span {object} // The selected span.
-     */
-    toggleChildren(e, span) {
-        e.stopPropagation();
-        let toggleState = this.state.toggleState[span.id];
-        if (typeof toggleState === 'undefined') {
-            toggleState = true;
-        }
-
-        toggleState = !toggleState;
-        this.setState({
-            toggleState: Object.assign({}, this.state.toggleState, {
-                [span.id] : toggleState
-            })
-        });
-    }
-
-    /**
-     * Set Selected Span
-     *
-     * Description: Sets the selected span to view annotations.
-     * @param e {event}     // The event object.
-     * @param span {object} // The selected span.
-     */
-    setSelectedSpan(e, span) {
-        if (this.state.selectedSpan === span) {
-            // Toggle the current span.
-            span = null;
-        }
-        this.setState({ selectedSpan : span });
-    }
-
-    /**
-     * Build Heirarchy
-     *
-     * Description: Builds the tree hierarchy for a trace.
-     * @returns {array} // the tree for the trace.
-     */
-    buildHeirarchy() {
-        const spanLookup = {};
-        const spans = [];
-
-        // Build the lookup.
-        this.props.trace.forEach(span => {
-            spanLookup[span.id] = span;
-            span._children_ = [];
-            if (typeof span.parentId === 'undefined') {
-                spans.push(span);
-            }
-        });
-
-        // Associate children.
-        this.props.trace.forEach(span => {
-            const parent = spanLookup[span.parentId];
-            if (typeof parent !== 'undefined') {
-                parent._children_.unshift(span);
-            }
-        });
-
-        if (spans.length === 0) {
-            Utils.Alert(this.props.intl.formatMessage({ id: "no_root_spans" }), 'warning');
-        }
-        return { spanLookup, spans };
-    }
 
     /**
      * Get Table Headers
@@ -112,8 +36,8 @@ class TraceViewer extends React.Component {
      * @returns {array} // the set of headers.
      */
     getTableHeaders() {
-        const headers = [ this.props.intl.formatMessage({ id: 'service_label'}), '' ];
-        const interval = Zipkin.GetTraceDuration(this.props.trace)/5;
+        const headers = [ this.props.intl.formatMessage({ id: 'service_label'}) ];
+        const interval = Zipkin.GetTraceDuration(this.props.selectedTrace)/5;
 
         for (let i = 1; i <= 5; i++) {
             headers.push(Zipkin.DurationToString(interval*i, this.props.intl));
@@ -134,9 +58,9 @@ class TraceViewer extends React.Component {
      * @returns {array}        // the set of rows.
      */
     getTableRows(numHeaders) {
-        const duration = Zipkin.GetTraceDuration(this.props.trace);
-        const startTs = Zipkin.GetTraceTimestamp(this.props.trace);
-        const spans = [ ...this.state.spans ];
+        const duration = Zipkin.GetTraceDuration(this.props.selectedTrace);
+        const startTs = Zipkin.GetTraceTimestamp(this.props.selectedTrace);
+        const spans = [ ...this.props.spans ];
         const rows = [];
 
         while (spans.length > 0) {
@@ -146,138 +70,36 @@ class TraceViewer extends React.Component {
                 depth = span._depth_;
             }
 
-            const emptyCells = [];
-            for (let i = numHeaders - 2; i > 0; i--) {
-                emptyCells.push((<td key={i}></td>));
-            }
-
-            const left = ((span.timestamp - startTs) / duration) * (numHeaders - 1) * 100  + '%';
-            const width = Math.max((span.duration/duration) * 100 * (numHeaders - 1), 2) + '%';
-            const collapsed = this.state.toggleState[span.id] === false;
+            const left = ((span.timestamp - startTs) / duration) * (numHeaders - 1) * 100 + '%';
+            const width = `calc(${Math.max((span.duration/duration) * 100 * (numHeaders - 1), 1)}% + 6px)`;
+            const collapsed = this.props.spanToggleState[span.id] === false;
 
             rows.push((
-                <tr
-                    data-key={span.id}
-                    className={`zk-ui-trace-span-row ${span === this.state.selectedSpan ? 'zk-ui-trace-span-selected' : ''}` }
-                    onClick={e => this.setSelectedSpan(e, span)}
-                    key={span.id}>
-                    <td>
-                        <div style={{ marginLeft: depth*10 }} className="zk-ui-trace-service-name">
-                            { span._children_.length ?
-                                <i
-                                    onClick={e => this.toggleChildren(e, span)}
-                                    className={`zk-ui-trace-span-toggle fa fa-${collapsed ? 'plus' : 'minus'}`} /> :
-                                <i className="zk-ui-trace-span-toggle fa fa-minus hidden"></i> }
-                            <span>{Zipkin.GetSpanService(span)}</span>
-                        </div>
-                    </td>
-                    <td>
-                        <div className="zk-ui-trace-span" style={{ marginLeft: left, width: width }}>
-                            {`${Zipkin.DurationToString(span.duration, this.props.intl)} : ${span.name}`}
-                        </div>
-                    </td>
-                    { emptyCells }
-                </tr>
+                <TraceRow
+                    numHeaders={numHeaders}
+                    key={span.id}
+                    intl={this.props.intl}
+                    span={span}
+                    className={`zk-ui-trace-span-row ${span === this.props.selectedSpan ? 'zk-ui-trace-span-selected' : ''}`}
+                    onSpanClick={e => this.setSelectedSpan(e, span)}
+                    depth={depth*10}
+                    left={left}
+                    width={width}
+                    onToggleClicked={e => this.toggleChildren(e, span)}
+                    collapsed={collapsed}>
+                </TraceRow>
             ));
 
-            if (span === this.state.selectedSpan) {
+            if (span === this.props.selectedSpan) {
                 rows.push((
-                    <tr className="zk-ui-trace-span-context-row" key={'selected-span'}>
-                        <td colSpan={numHeaders}>
-                            <div className="zk-ui-trace-span-context">
-                                <div className="zk-ui-trace-span-name">
-                                    {`${Zipkin.GetSpanService(span)}.${span.name} : ${Zipkin.DurationToString(span.duration, this.props.intl)}`}
-                                </div>
-                                <table className="zk-ui-trace-span-context-table">
-                                    <tbody>
-                                        <tr>
-                                            <td className="header">
-                                                {this.props.intl.formatMessage({ id: "timestamp_label" })}
-                                            </td>
-                                            <td className="header">
-                                                {this.props.intl.formatMessage({ id: "trace_id_label" })}
-                                            </td>
-                                            <td className="header">
-                                                {this.props.intl.formatMessage({ id: "span_id_label" })}
-                                            </td>
-                                            <td className="header">
-                                                {this.props.intl.formatMessage({ id: "parent_id_label" })}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>{Zipkin.ConvertTimestampToDate(span.timestamp)}</td>
-                                            <td>{Zipkin.GetTraceID(this.props.trace)}</td>
-                                            <td>{span.id}</td>
-                                            <td>{span.parentId}</td>
-                                        </tr>
-                                        { span.annotations && (
-                                            <tr>
-                                                <td className="header">
-                                                    {this.props.intl.formatMessage({ id: "annotation_label" })}
-                                                </td>
-                                                <td className="header">
-                                                    {this.props.intl.formatMessage({ id: "date_time_label" })}
-                                                </td>
-                                                <td className="header">
-                                                    {this.props.intl.formatMessage({ id: "relative_time_label" })}
-                                                </td>
-                                                <td className="header">
-                                                    {this.props.intl.formatMessage({ id: "address_label" })}
-                                                </td>
-                                            </tr>
-                                        )}
-                                        { span.annotations && span.annotations.map((annotation, i) => {
-                                            let endpoint = annotation.endpoint.ipv4;
-                                            if (annotation.endpoint.port) {
-                                                endpoint += `:${annotation.endpoint.port}`;
-                                            }
-                                            return (
-                                                <tr key={i}>
-                                                    <td>
-                                                        {this.props.intl.formatMessage({ id: annotation.value })}
-                                                    </td>
-                                                    <td>
-                                                        {Zipkin.ConvertTimestampToDate(annotation.timestamp)}
-                                                    </td>
-                                                    <td>
-                                                        {
-                                                            Zipkin.DurationToString(
-                                                                annotation.timestamp - startTs,
-                                                                this.props.intl
-                                                            )
-                                                        }
-                                                    </td>
-                                                    <td>
-                                                        {`${endpoint} (${annotation.endpoint.serviceName})`}
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
-                                        { span.binaryAnnotations && (
-                                            <tr>
-                                                <td className="header">
-                                                    { this.props.intl.formatMessage({ id: 'key_label'}) }
-                                                </td>
-                                                <td className="header">
-                                                    { this.props.intl.formatMessage({ id: 'value_label'}) }
-                                                </td>
-                                            </tr>
-                                        )}
-                                        {
-                                            span.binaryAnnotations && span.binaryAnnotations.map((annotation, i) => {
-                                                return (
-                                                    <tr key={i}>
-                                                        <td>{annotation.key}</td>
-                                                        <td>{annotation.value}</td>
-                                                    </tr>
-                                                );
-                                            })
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
+                    <TraceSpanRow
+                        key={'selected-span'}
+                        numHeaders={numHeaders}
+                        traceId={this.props.selectedTrace.traceId}
+                        startTs={startTs}
+                        span={span}
+                        intl={this.props.intl}
+                    />
                 ));
             }
 
@@ -295,49 +117,44 @@ class TraceViewer extends React.Component {
     }
 
     /**
-     * On Back Click
-     *
-     * Description: Handler for when the back button is clicked.
-     */
-    onBackClicked() {
-        this.props.history.goBack();
-    }
-
-    /**
      * On Row Click
      *
      * Description: Handler for when a row is clicked.
      * @param e {event} // The event object.
      */
     onRowClicked(e, row) {
+        e.stopPropagation();
         const spanId = row.dataset.key;
         if (e.target.classList.contains('zk-ui-trace-span-toggle')) {
             // Toggle children.
-            this.toggleChildren(e, this.state.spanLookup[spanId]);
-        } else {
+            SetSpanToggleState(spanId);
+        } else if (typeof spanId !== 'undefined') {
             // Set the selected span.
-            this.setSelectedSpan(e, this.state.spanLookup[spanId]);
+            const span = this.props.spanLookup[spanId];
+            SetSelectedSpan(this.props.selectedSpan === span ? null : span);
         }
     }
 
     /**
      * Download JSON
      *
-     * Description: Handler for when the download button on the trace viewer is clicked.
+     * Description: Downloads the current trace object as JSON.
      */
     downloadJSON() {
         // Copy over the trace object with UI-specific attributes stripped.
-        const trace = this.props.trace.map(span => {
+        const trace = this.props.selectedTrace.spans.map(span => {
             const newSpan = Object.assign({}, span);
             delete newSpan._children_;
             delete newSpan._depth_;
             return newSpan;
         });
-        const data = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(trace))}`;
+        const blob = new Blob([JSON.stringify(trace)], {type: "application/json"});
+        const url  = URL.createObjectURL(blob);
+
         const node = document.createElement('a');
         document.body.appendChild(node);
-        node.setAttribute("href", data);
-        node.setAttribute("download", `${Zipkin.GetTraceID(this.props.trace)}.json`);
+        node.setAttribute("href", url);
+        node.setAttribute("download", `${this.props.selectedTrace.traceId}.json`);
         node.click();
         node.remove();
     }
@@ -351,14 +168,16 @@ class TraceViewer extends React.Component {
                 <div className="zk-ui-trace-viewer-container">
                     <div className="zk-ui-card">
                         <div className="zk-ui-card-header">
-                            <div onClick={e => this.onBackClicked(e)} className="zk-ui-button">
+                            <div onClick={() => this.props.history.goBack()} className="zk-ui-button">
                                 <i className="fa fa-arrow-left"></i>
                                 {' '}
                                 <FormattedMessage
                                     id="back_label" />
                             </div>
                             <div className="zk-ui-card-right-menu">
-                                <div onClick={e => this.downloadJSON(e)} className="zk-ui-button">
+                                <div
+                                    onClick={e => this.downloadJSON(e)}
+                                    className="zk-ui-button">
                                     <i className="fa fa-download"></i>
                                 </div>
                             </div>

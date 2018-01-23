@@ -19,31 +19,136 @@
  * @Description : Trace Browser.
  **/
 
+import { DeleteLocalTrace, SetSelectedTrace } from '../../../actions/Trace';
 import { SetBrowserFilters } from '../../../actions/Browser';
-import { SetSelectedTrace } from '../../../actions/Trace';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import Dropdown from '../common/controls/Dropdown.jsx';
+import { SetStorage } from '../../../actions/Global';
 import Zipkin from '../../../util/Zipkin';
+import BrowserRow from './BrowserRow.jsx';
 import React from 'react';
 
 class Browser extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            traces: props.traces,
-            loading: props.loading
-        };
-    }
+    /**
+     * Get Sort Options
+     *
+     * Description: Gets the sort options for the browser.
+     * @returns {array} // The list of sort options.
+     */
+    getSortOptions() {
+        const sortOptions = [
+            {
+                label: this.props.intl.formatMessage({ id: 'duration-asc' }),
+                value: 'duration-asc'
+            },
+            {
+                label: this.props.intl.formatMessage({ id: 'duration-desc' }),
+                value: 'duration-desc'
+            },
+            {
+                label: this.props.intl.formatMessage({ id: 'timestamp-asc' }),
+                value: 'timestamp-asc'
+            },
+            {
+                label: this.props.intl.formatMessage({ id: 'timestamp-desc' }),
+                value: 'timestamp-desc'
+            }
+        ];
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.traces !== this.state.traces || nextProps.loading != this.state.loading) {
-            // Update the state with the new props.
-            this.setState({
-                traces: nextProps.traces,
-                loading: nextProps.loading
+        if (this.props.storage === 'local') {
+            sortOptions.unshift({
+                label: this.props.intl.formatMessage({ id: 'upload-date-desc' }),
+                value: 'upload-date-desc'
+            });
+            sortOptions.unshift({
+                label: this.props.intl.formatMessage({ id: 'upload-date-asc' }),
+                value: 'upload-date-asc'
             });
         }
+        return sortOptions;
+    }
+
+    /**
+     * Get Trace Rows
+     *
+     * Description: Creates a browser row for each trace.
+     * @param traces {array} // The collection of trace objects.
+     * @returns {array}      // The browser rows.
+     */
+    getTraceRows() {
+        const traces = this.props.storage === 'remote' ?
+            this.props.traces:
+            this.props.localTraces;
+
+        // A search hasn't been initiated.
+        if (traces === null) {
+            return (
+                <div className="zk-ui-browser-card-content-placeholder">
+                    <div>
+                        <FormattedMessage
+                            id="search_for_traces_placeholder_label" />
+                    </div>
+                </div>
+            );
+        }
+
+        // No traces found.
+        if (traces.length === 0) {
+            return (
+                <div className="zk-ui-browser-card-content-placeholder">
+                    <FormattedMessage
+                        id="no_traces_found_placeholder_label" />
+                </div>
+            );
+        }
+
+        const sortedTraces = [ ...traces ].sort((a, b) => {
+            switch(this.props.sortOrder) {
+                case 'upload-date-asc':
+                    return b.date - a.date;
+                case 'upload-date-desc':
+                    return a.date - b.date;
+                case 'timestamp-asc':
+                    return Zipkin.GetTraceTimestamp(b) - Zipkin.GetTraceTimestamp(a);
+                case 'timestamp-desc':
+                    return Zipkin.GetTraceTimestamp(a) - Zipkin.GetTraceTimestamp(b);
+                case 'duration-asc':
+                    return Zipkin.GetTraceDuration(a) - Zipkin.GetTraceDuration(b);
+                case 'duration-desc':
+                default:
+                    return Zipkin.GetTraceDuration(b) - Zipkin.GetTraceDuration(a);
+            }
+        });
+
+        const traceDurations = sortedTraces.map(t => Zipkin.GetTraceDuration(t));
+        const maxDuration = Math.max(...traceDurations);
+
+        return sortedTraces.map((trace, i) => {
+            return (
+                <BrowserRow
+                    key={trace.traceId}
+                    onDeleteLocalTraceClick={e => this.onDeleteLocalTraceClick(e, trace)}
+                    onTraceClick={(e, trace) => this.onTraceClick(e, trace)}
+                    traceWidth={`${traceDurations[i]*100/maxDuration}%`}
+                    isDeleted={this.props.storage === 'local' && this.props.deletingLocalTraces[trace.traceId]}
+                    canDelete={this.props.storage === 'local'}
+                    trace={trace}
+                    intl={this.props.intl} />
+            );
+        });
+    }
+
+    /**
+     * Delete Local Trace
+     *
+     * Description: Deletes the selected local trace.
+     * @param e {event} // The event object.
+     * @returns {trace} // The trace object.
+     */
+    onDeleteLocalTraceClick(e, trace) {
+        e.stopPropagation();
+        DeleteLocalTrace(trace.traceId);
     }
 
     /**
@@ -55,131 +160,39 @@ class Browser extends React.Component {
      */
     onTraceClick(e, trace) {
         SetSelectedTrace(trace);
-        this.props.history.push(`/traces/${Zipkin.GetTraceID(trace)}`);
+        this.props.history.push(`/traces/${trace.traceId}?storage=${this.props.storage}`);
     }
 
     render() {
-        let card = null;
-
-        if (this.state.traces === null) {
-            card = (
-                <div className="zk-ui-browser-card-content-placeholder">
-                    <div>
-                        <FormattedMessage
-                            id="search_for_traces_placeholder_label" />
-                    </div>
-                </div>
-            );
-        } else if (this.state.traces.length > 0) {
-            const traces = this.state.traces;
-            traces.sort((a, b) => {
-                switch(this.props.sortOrder) {
-                    case 'timestamp-asc':
-                        return Zipkin.GetTraceTimestamp(b) - Zipkin.GetTraceTimestamp(a);
-                    case 'timestamp-desc':
-                        return Zipkin.GetTraceTimestamp(a) - Zipkin.GetTraceTimestamp(b);
-                    case 'duration-asc':
-                        return Zipkin.GetTraceDuration(a) - Zipkin.GetTraceDuration(b);
-                    case 'duration-desc':
-                    default:
-                        return Zipkin.GetTraceDuration(b) - Zipkin.GetTraceDuration(a);
-                }
-            });
-
-            const traceDurations = traces.map(t => Zipkin.GetTraceDuration(t));
-            const longestDuration = Math.max(...traceDurations);
-
-            card = traces.map((trace, i) => {
-                return (
-                    <div
-                        key={i}
-                        onClick={e => this.onTraceClick(e, trace)}
-                        className="zk-ui-browser-card-cell">
-                        <div className="zk-ui-browser-card-cell-container">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td className="zk-ui-browser-card-cell-span-name">
-                                            <span>
-                                                {Zipkin.GetTraceService(trace)}
-                                            </span>
-                                            <span className="zk-ui-trace-name">
-                                                {Zipkin.GetTraceName(trace)}
-                                            </span>
-                                            <div className="zk-ui-browser-card-cell-num-spans">
-                                                {
-                                                    this.props.intl.formatMessage({
-                                                        id: 'span_count'
-                                                    }, {
-                                                        count: this.props.intl.formatNumber(
-                                                            Zipkin.GetTraceSpanCount(trace)
-                                                        )
-                                                    })
-                                                }
-                                            </div>
-                                        </td>
-                                        <td className="zk-ui-browser-card-cell-span-info">
-                                            <div className="zk-ui-browser-card-cell-span-width-container">
-                                                <div
-                                                    style={{width: `${traceDurations[i]*100/longestDuration}%`}}
-                                                    className="zk-ui-browser-card-cell-span-width" />
-                                            </div>
-                                            <div className="zk-ui-browser-card-cell-span-duration">
-                                                { Zipkin.DurationToString(
-                                                    Zipkin.GetTraceDuration(trace),
-                                                    this.props.intl
-                                                )}
-                                            </div>
-                                            <div className="zk-ui-browser-card-cell-span-date">
-                                                {Zipkin.GetTraceDate(trace)}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                );
-            });
-        } else {
-            card = (
-                <div className="zk-ui-browser-card-content-placeholder">
-                    <FormattedMessage
-                        id="no_traces_found_placeholder_label" />
-                </div>
-            );
-        }
-
         return (
             <div className="zk-ui-browser">
                 <div className="zk-ui-browser-container">
                     <div className="zk-ui-card">
                         <div className="zk-ui-card-header">
-                            <Dropdown
-                                value={this.props.intl.formatMessage({ id: this.props.sortOrder })}
-                                onOptionSelected={option => SetBrowserFilters({ sortOrder : option.value })}
-                                data={[
-                                    {
-                                        label: this.props.intl.formatMessage({ id: 'duration-asc' }),
-                                        value: 'duration-asc'
-                                    },
-                                    {
-                                        label: this.props.intl.formatMessage({ id: 'duration-desc' }),
-                                        value: 'duration-desc'
-                                    },
-                                    {
-                                        label: this.props.intl.formatMessage({ id: 'timestamp-asc' }),
-                                        value: 'timestamp-asc'
-                                    },
-                                    {
-                                        label: this.props.intl.formatMessage({ id: 'timestamp-desc' }),
-                                        value: 'timestamp-desc'
-                                    }
-                                ]}
-                                className="zk-ui-browser-sort-options" />
+                            <div className="zk-ui-card-tabs">
+                                <div
+                                    onClick={() => SetStorage('remote')}
+                                    className={`zk-ui-button zk-ui-tab ${this.props.storage === 'remote' ? 'selected' : ''}`}>
+                                    <FormattedMessage
+                                        id="remote_traces_label" />
+                                </div>
+                                <div
+                                    onClick={() => SetStorage('local')}
+                                    className={`zk-ui-button zk-ui-tab ${this.props.storage !== 'remote' ? 'selected' : ''}`}>
+                                    <FormattedMessage
+                                        id="uploaded_traces_label" />
+                                </div>
+                            </div>
+                            <div className="zk-ui-card-right-menu">
+                                <Dropdown
+                                    value={this.props.intl.formatMessage({ id: this.props.sortOrder })}
+                                    onOptionSelected={option => SetBrowserFilters({ sortOrder : option.value })}
+                                    data={this.getSortOptions()}
+                                    className="zk-ui-browser-sort-options" />
+                            </div>
                         </div>
                         <div className="zk-ui-card-content">
-                            { card }
+                            { this.getTraceRows() }
                         </div>
                     </div>
                 </div>

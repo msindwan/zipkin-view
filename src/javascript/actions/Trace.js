@@ -19,9 +19,12 @@
  * @Description : Trace Actions.
  **/
 
+import { SetStorage } from './Global';
+import Zipkin from '../util/Zipkin';
 import { Action } from 'reduxion';
 import Utils from '../util/Utils';
 import API from '../util/Api';
+import DB from '../util/Db';
 
 /**
  * Set Selected Trace Action
@@ -46,6 +49,26 @@ const SetTraceLoading = Action("setTraceLoading", toggle => {
 });
 
 /**
+ * Set Span Toggle State Action
+ *
+ * Description: Sets the toggle state for a span.
+ * @param spanId {string} // The id of the span to toggle.
+ */
+const SetSpanToggleState = Action("setSpanToggleState", spanId => {
+    return spanId;
+});
+
+/**
+ * Set Selected Span Action
+ *
+ * Description: Sets the current span.
+ * @param span {object} // The span to set.
+ */
+const SetSelectedSpan = Action("setSelectedSpan", span => {
+    return span;
+});
+
+/**
  * Get Trace Action
  *
  * Description: Fetches the specified trace.
@@ -54,9 +77,10 @@ const SetTraceLoading = Action("setTraceLoading", toggle => {
 const GetTrace = (traceId) => {
     SetTraceLoading(true);
     SetSelectedTrace(null);
+    SetStorage('remote');
 
     API.FetchTrace(traceId, trace => {
-        SetSelectedTrace(trace);
+        SetSelectedTrace(Zipkin.NormalizeTraces([trace])[0]);
         SetTraceLoading(false);
     }, error => {
         Utils.Alert(error.toString());
@@ -64,7 +88,80 @@ const GetTrace = (traceId) => {
     });
 };
 
+/**
+ * Get Local Trace Action
+ *
+ * Description: Fetches the specified trace from local storage.
+ * @param traceId {string} // The ID of the trace to fetch.
+ */
+const GetLocalTrace = (traceId, intl) => {
+    SetTraceLoading(true);
+    SetSelectedTrace(null);
+    SetStorage('local');
+
+    DB.FetchTrace(traceId, trace => {
+        if (!trace) {
+            Utils.Alert(intl.formatMessage({
+                id: 'trace_not_found'
+            }, {
+                traceId: traceId
+            }));
+        } else {
+            SetSelectedTrace(trace);
+        }
+        SetTraceLoading(false);
+    }, error => {
+        Utils.Alert(error.toString());
+        SetTraceLoading(false);
+    });
+};
+
+/**
+ * Upload Local Trace
+ *
+ * Description: Saves a trace to client-side storage.
+ * @param trace {object}                // The trace to upload.
+ * @param success {function | optional} // The success callback.
+ * @param error {function | optional}   // The error callback.
+ */
+const UploadLocalTrace = (trace, success, error) => {
+    Action("uploadLocalTraceBegin", trace => trace)(trace);
+    DB.AddTrace(trace, t => {
+        if (success) success(t);
+        Action("uploadLocalTraceComplete", trace => trace)(t);
+    }, e => {
+        Utils.Alert(e.toString());
+        if (error) error(e);
+        Action("uploadLocalTraceError", trace => trace)(e);
+    });
+};
+
+/**
+ * Delete Local Trace
+ *
+ * Description: Deletes a trace from client-side storage.
+ * @param traceId {string}              // The id of trace to delete.
+ * @param success {function | optional} // The success callback.
+ * @param error {function | optional}   // The error callback.
+ */
+const DeleteLocalTrace = (traceId, success, error) => {
+    Action("deleteLocalTraceBegin", traceId => traceId)(traceId);
+    DB.DeleteTrace(traceId, () => {
+        if (success) success();
+        Action("deleteLocalTraceComplete", traceId => traceId)(traceId);
+    }, e => {
+        Utils.Alert(e.toString());
+        if (error) error(e);
+        Action("deleteLocalTraceError", traceId => traceId)(traceId);
+    });
+};
+
 export {
+    SetSpanToggleState,
     SetSelectedTrace,
+    UploadLocalTrace,
+    DeleteLocalTrace,
+    SetSelectedSpan,
+    GetLocalTrace,
     GetTrace
 };

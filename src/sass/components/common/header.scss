@@ -12,14 +12,32 @@
         content: " ";
     }
 
-    .zk-ui-sidebar-toggle {
+    .zk-ui-header-button {
         display: table-cell;
         cursor: pointer;
+        text-align: center;
+        width: 50px;
+        color: #6d6d6d;
+        border-radius: 2px;
+        border: 1px solid #eeeeee;
+        position: relative;
+
+        .zk-ui-uploader {
+            -webkit-appearance: none;
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+        }
     }
 
     .zk-ui-trace-search {
 
         display: table-cell;
+        padding: 0px 10px;
 
         .zk-ui-input {
             width: 300px;

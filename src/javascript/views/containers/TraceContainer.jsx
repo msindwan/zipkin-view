@@ -19,19 +19,16 @@
  * @Description : Trace Container.
  **/
 
+import { GetTrace, GetLocalTrace } from '../../actions/Trace';
 import TraceViewer from '../components/trace/TraceViewer.jsx';
 import AbstractContainer from './AbstractContainer.jsx';
 import Sidebar from '../components/common/Sidebar.jsx';
 import Header from '../components/common/Header.jsx';
-import { GetTrace } from '../../actions/Trace';
-import Zipkin from '../../util/Zipkin';
+import { injectIntl } from 'react-intl';
+import Utils from '../../util/Utils';
 import React from 'react';
 
 class TraceContainer extends AbstractContainer {
-
-    constructor(props) {
-        super(props);
-    }
 
     /**
      * Load State from History
@@ -40,10 +37,19 @@ class TraceContainer extends AbstractContainer {
      */
     loadStateFromHistory() {
         const traceId = this.props.match.params.traceId;
+        const queryParams = Utils.GetQueryParams();
+        const storage = queryParams['storage'] || 'remote';
 
         // Don't fetch the trace if we already have it in memory.
-        if (this.state.trace.selectedTrace == null || Zipkin.GetTraceID(this.state.trace.selectedTrace) !== traceId) {
-            GetTrace(traceId);
+        if (this.state.trace.selectedTrace == null ||
+            this.state.trace.selectedTrace.traceId !== traceId ||
+            storage !== this.state.global.storage
+        ) {
+            if (storage === 'local') {
+                GetLocalTrace(traceId, this.props.intl);
+            } else {
+                GetTrace(traceId);
+            }
         }
     }
 
@@ -58,7 +64,7 @@ class TraceContainer extends AbstractContainer {
             component = (
                 <TraceViewer
                     history={this.props.history}
-                    trace={this.state.trace.selectedTrace} />
+                    { ...this.state.trace } />
             );
         }
 
@@ -80,4 +86,4 @@ class TraceContainer extends AbstractContainer {
     }
 }
 
-export default TraceContainer;
+export default injectIntl(TraceContainer);

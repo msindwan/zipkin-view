@@ -25,7 +25,8 @@ class GlobalReducer extends Reducer {
 
     constructor(name) {
         super(name, {
-            sidebarVisible: true
+            sidebarVisible: true,
+            storage: 'remote'
         });
     }
 
@@ -33,11 +34,23 @@ class GlobalReducer extends Reducer {
      * Toggle Sidebar
      *
      * Description: Sets the state of the sidebar visibility.
-     * @param toggle {boolea | optional} // The toggle to set.
+     * @param toggle {boolean | optional} // The toggle to set.
      */
     toggleSidebar(toggle = !this.state.sidebarVisible) {
         this.setState({
             sidebarVisible: toggle
+        });
+    }
+
+    /**
+     * Set Storage
+     *
+     * Description: Sets the storage target for the application.
+     * @param storage {string} // The storage param to set.
+     */
+    setStorage(storage) {
+        this.setState({
+            storage: storage
         });
     }
 

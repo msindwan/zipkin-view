@@ -21,6 +21,7 @@
 
 import DateTimeRangePicker from './controls/DateTimeRangePicker.jsx';
 import * as BrowserActions from '../../../actions/Browser.js';
+import * as GlobalActions from '../../../actions/Global.js';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import Combobox from './controls/Combobox.jsx';
 import Utils from '../../../util/Utils.js';
@@ -39,6 +40,9 @@ class Sidebar extends React.Component {
         BrowserActions.SetBrowserFilters({
             queryKey: null
         });
+
+        // Automatically switch the tab.
+        GlobalActions.SetStorage('remote');
 
         // Redirect to the same route with the correct query parameters.
         this.props.history.push(`/${Utils.URLify({

@@ -20,8 +20,10 @@
  **/
 
 import { Action } from 'reduxion';
+import Zipkin from '../util/Zipkin';
 import Utils from '../util/Utils';
 import API from '../util/Api';
+import DB from '../util/Db';
 
 /**
  * Set Browser Filters Action
@@ -53,6 +55,17 @@ const SetBrowserLoading = Action("setBrowserLoading", toggle => {
  * @returns {array}      // The traces for the reducer to set.
  */
 const SetTraces = Action("setTraces", traces => {
+    return traces;
+});
+
+/**
+ * Set Local Traces Action
+ *
+ * Description: Dispatches the list of local traces.
+ * @param traces {array} // The traces to store.
+ * @returns {array}      // The traces for the reducer to set.
+ */
+const SetLocalTraces = Action("setLocalTraces", traces => {
     return traces;
 });
 
@@ -93,7 +106,7 @@ const GetTraces = (filters) => {
     SetBrowserLoading(true);
 
     API.FetchTraces(filters, traces => {
-        SetTraces(traces);
+        SetTraces(Zipkin.NormalizeTraces(traces));
         SetBrowserLoading(false);
     }, error => {
         Utils.Alert(error.toString());
@@ -101,8 +114,27 @@ const GetTraces = (filters) => {
     });
 };
 
+/**
+ * Get Local Traces
+ *
+ * Description: Fetches traces saved in client-side storage.
+ * @param success {function | optional} // The success callback.
+ * @param error {function | optional}   // The error callback.
+ */
+const GetLocalTraces = (success, error) => {
+    DB.FetchTraces(traces => {
+        SetLocalTraces(traces);
+        if (success) success(traces);
+    }, e => {
+        Utils.Alert(e.toString());
+        if (error) error(e);
+    });
+};
+
 export {
     SetBrowserFilters,
+    SetLocalTraces,
+    GetLocalTraces,
     GetServices,
     GetTraces,
     SetTraces,

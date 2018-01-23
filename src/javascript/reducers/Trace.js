@@ -19,15 +19,50 @@
  * @Description : The reducer for trace details.
  **/
 
+import Zipkin from '../util/Zipkin';
 import { Reducer } from 'reduxion';
 
 class TraceReducer extends Reducer {
 
     constructor(name) {
         super(name, {
+            spanToggleState: {},
             selectedTrace: null,
+            selectedSpan: null,
+            spanLookup: {},
             loading: false,
+            spans: null
         });
+    }
+
+    /**
+     * Set Span Toggle State
+     *
+     * Description: Sets the toggle state for a span.
+     * @param spanId {string} // The id of the span to toggle.
+     */
+    setSpanToggleState(spanId) {
+        let toggleState = this.state.spanToggleState[spanId];
+        if (typeof toggleState === 'undefined') {
+            toggleState = true;
+        }
+
+        toggleState = !toggleState;
+        this.setState({
+            spanToggleState: Object.assign({}, this.state.spanToggleState, {
+                [spanId] : toggleState
+            })
+        });
+    }
+
+    /**
+     * Set Selected Span
+     *
+     * Description: Sets the current span.
+     * @param span {object} // The span to set.
+     */
+    setSelectedSpan(span) {
+        this.setState({ selectedSpan : span });
     }
 
     /**
@@ -38,8 +73,19 @@ class TraceReducer extends Reducer {
      */
     setSelectedTrace(trace) {
         this.setState({
-            selectedTrace: trace
+            selectedTrace: null,
+            spanLookup: {},
+            spans: null
         });
+
+        if (trace !== null) {
+            const { spanLookup, spans } = Zipkin.BuildHeirarchy(trace);
+            this.setState({
+                selectedTrace: trace,
+                spanLookup: spanLookup,
+                spans: spans
+            });
+        }
     }
 
     /**
