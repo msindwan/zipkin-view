@@ -8,9 +8,6 @@ This is an alternative UI for [OpenZipkin/zipkin](https://github.com/openzipkin/
 a new UI is to try and re-invent the existing layout while improving the usability and performance of the client-side
 application. Zipkin View is built from scratch using React and other JavaScript technologies.
 
-**By using Zipkin View you agree to the [terms of use and privacy policy](
-    https://github.com/msindwan/zipkin-view/wiki/Terms-of-Use-and-Privacy-Policy)**
-
 ## Requirements
 
 Zipkin View requires `node >= 6.10.0` to build and serve assets. After cloning the zipkin-view repo, make sure to run `npm install` from the root directory before running any npm scripts. You'll also need to have an instance of Zipkin running.
