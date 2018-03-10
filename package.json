@@ -22,6 +22,9 @@
       "react"
     ]
   },
+  "peerDependencies": {
+    "ssri": "^5.2.2"
+  },
   "dependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
