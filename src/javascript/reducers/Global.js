@@ -26,7 +26,7 @@ class GlobalReducer extends Reducer {
     constructor(name) {
         super(name, {
             configLoading: false,
-            sidebarVisible: true,
+            sidebarVisible: false,
             storage: 'remote',
             config: null
         });

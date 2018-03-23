@@ -76,6 +76,7 @@ const GetConfig = () => {
     SetConfigLoading(true);
     API.FetchConfig(config => {
         SetConfig(config);
+        ToggleSidebar(config.searchEnabled);
         SetConfigLoading(false);
     }, error => {
         Utils.Alert(error.toString());
