@@ -31,6 +31,11 @@
 
     .zk-ui-sidebar-wrapper {
 
+        &.zk-ui-sidebar-search-disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
         .zk-ui-form-control-container {
             margin: 15px 15px;
 
@@ -54,5 +59,17 @@
                 width: 100%;
             }
         }
+    }
+
+    .zk-ui-sidebar-search-disabled-text-title {
+        color: #4298b4;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .zk-ui-sidebar-search-disabled-text-description {
+        color: #eeeeee;
+        font-size: 12px;
+        margin: 15px;
     }
 }
