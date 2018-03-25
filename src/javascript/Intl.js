@@ -64,7 +64,7 @@ const translations = {
         remote_traces_label: 'Remote Traces',
         search_for_traces_placeholder_label: "Search for Traces",
         search_disabled_label: "Search is Disabled",
-        search_disabled_description: "You're likely tracing at 100% and have disabled indexing in the underlying datastore",
+        search_disabled_description: "The current Zipkin configuration has search features disabled",
         service_label: 'Service',
         span_count: '{count} spans',
         span_label: 'Span Name',
