@@ -77,6 +77,18 @@ class API {
     static FetchTrace(traceId, success, failure) {
         Utils.FetchJSON(`${process.env.ZIPKIN_API}/api/v1/trace/${traceId}`, success, failure);
     }
+
+
+    /**
+     * Fetch Config
+     *
+     * Description: Fetches the application config.
+     * @param success {function} // The success callback.
+     * @param failure {function} // The failure callback.
+     */
+    static FetchConfig(success, failure) {
+        Utils.FetchJSON(`${process.env.ZIPKIN_API}/config.json`, success, failure);
+    }
 }
 
 export default API;

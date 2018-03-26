@@ -20,6 +20,30 @@
  **/
 
 import { Action } from 'reduxion';
+import Utils from '../util/Utils';
+import API from '../util/Api';
+
+/**
+ * Set Config
+ *
+ * Description: Dispatches the config object.
+ * @param config {object} // The config object.
+ * @returns {object} // The config object to set.
+ */
+const SetConfig = Action("setConfig", config => {
+    return config;
+});
+
+/**
+ * Set Config Loading
+ *
+ * Description: Dispatches the config loading toggle.
+ * @param isLoading {boolean} // True if the config is loading; false otherwise.
+ * @returns {boolean} // The config loading toggle.
+ */
+const SetConfigLoading = Action("setConfigLoading", isLoading => {
+    return isLoading;
+});
 
 /**
  * Toggle Sidebar
@@ -43,7 +67,25 @@ const SetStorage = Action("setStorage", storage => {
     return storage;
 });
 
+/**
+ * Get Config
+ *
+ * Description: Fetches the application config.
+ */
+const GetConfig = () => {
+    SetConfigLoading(true);
+    API.FetchConfig(config => {
+        SetConfig(config);
+        ToggleSidebar(config.searchEnabled);
+        SetConfigLoading(false);
+    }, error => {
+        Utils.Alert(error.toString());
+        SetConfigLoading(false);
+    });
+};
+
 export {
     ToggleSidebar,
-    SetStorage
+    SetStorage,
+    GetConfig
 };

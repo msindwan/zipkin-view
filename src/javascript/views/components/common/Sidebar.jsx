@@ -75,91 +75,117 @@ class Sidebar extends React.Component {
     }
 
     render() {
+        let component;
+        if (this.props.configLoading) {
+            component = (
+                <div className="zk-ui-loader"></div>
+            );
+        } else {
+            const searchDisabled = this.props.config && this.props.config.searchEnabled === false;
+            component = (
+                <div>
+                    <div className={`zk-ui-sidebar-wrapper ${searchDisabled ? 'zk-ui-sidebar-search-disabled' : ''}`}>
+                        <div className="zk-ui-form-control-container">
+                            <span className="zk-ui-form-control-label">
+                                <FormattedMessage
+                                    id="service_label" />
+                            </span>
+                            <Combobox
+                                placeholder={this.props.intl.formatMessage({ id: 'all_placeholder_label' })}
+                                value={this.props.serviceName}
+                                data={this.props.services}
+                                onBlur={e => this.onServiceSelected(e)} />
+                        </div>
+                        <div className="zk-ui-form-control-container">
+                            <span className="zk-ui-form-control-label">
+                                <FormattedMessage
+                                    id="span_label" />
+                            </span>
+                            <Combobox
+                                placeholder={this.props.intl.formatMessage({ id: 'all_placeholder_label' })}
+                                value={this.props.spanName}
+                                data={this.props.spans}
+                                onBlur={e => BrowserActions.SetBrowserFilters({ spanName: e.target.value })} />
+                        </div>
+                        <div className="zk-ui-form-control-container">
+                            <span className="zk-ui-form-control-label">
+                                <FormattedMessage
+                                    id="date_time_range_label" />
+                            </span>
+                            <DateTimeRangePicker
+                                dateInputFrom={this.props.startTs}
+                                dateInputTo={this.props.endTs}
+                                locale={navigator.language}
+                                onDateRangeSelected={(from, to) => BrowserActions.SetBrowserFilters({
+                                    endTs: Moment(to).valueOf(),
+                                    startTs: Moment(from).valueOf()
+                                })} />
+                        </div>
+                        <div className="zk-ui-form-control-container">
+                            <span className="zk-ui-form-control-label">
+                                <FormattedMessage
+                                    id="duration_label" />
+                            </span>
+                            <input
+                                value={this.props.minDuration || ''}
+                                className="zk-ui-input dark"
+                                onChange={e => BrowserActions.SetBrowserFilters({ minDuration: e.target.value })} />
+                        </div>
+                        <div className="zk-ui-form-control-container">
+                            <span className="zk-ui-form-control-label">
+                                <FormattedMessage
+                                    id="limit_label" />
+                            </span>
+                            <input
+                                value={this.props.limit || ''}
+                                className="zk-ui-input dark"
+                                onChange={e => BrowserActions.SetBrowserFilters({ limit: e.target.value })} />
+                        </div>
+                        <div className="zk-ui-form-control-container">
+                            <span className="zk-ui-form-control-label zk-ui-form-help">
+                                <FormattedMessage
+                                    id="annotations_label" />
+                            </span>
+                            <textarea
+                                value={this.props.annotationQuery}
+                                onChange={e => BrowserActions.SetBrowserFilters({
+                                    annotationQuery: e.target.value
+                                })}
+                                placeholder={this.props.intl.formatMessage({ id: 'annotations_placeholder_label' })}
+                                rows="5"
+                                className="zk-ui-input"></textarea>
+                        </div>
+                        {!searchDisabled && (
+                            <div className="zk-ui-form-control-container">
+                                <button
+                                    onClick={() => this.onFindTracesClicked()}
+                                    className="zk-ui-button primary">
+                                    <FormattedMessage
+                                        id="find_traces_label" />
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                    {searchDisabled && (
+                        <div>
+                            <div className="zk-ui-sidebar-search-disabled-text-title">
+                                {this.props.intl.formatMessage({ id: 'search_disabled_label' })}
+                            </div>
+                            <p className="zk-ui-sidebar-search-disabled-text-description">
+                                {this.props.intl.formatMessage({ id: 'search_disabled_description' })}
+                            </p>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
         return (
             <div className={`zk-ui-sidebar ${!this.props.sidebarVisible ? 'zk-ui-sidebar-collapsed' : ''}`}>
                 <div className="zk-ui-logo">
                     <a href="/">Zipkin View</a>
                 </div>
-                <div className="zk-ui-sidebar-wrapper">
-                    <div className="zk-ui-form-control-container">
-                        <span className="zk-ui-form-control-label">
-                            <FormattedMessage
-                                id="service_label" />
-                        </span>
-                        <Combobox
-                            placeholder={this.props.intl.formatMessage({ id: 'all_placeholder_label' })}
-                            value={this.props.serviceName}
-                            data={this.props.services}
-                            onBlur={e => this.onServiceSelected(e)} />
-                    </div>
-                    <div className="zk-ui-form-control-container">
-                        <span className="zk-ui-form-control-label">
-                            <FormattedMessage
-                                id="span_label" />
-                        </span>
-                        <Combobox
-                            placeholder={this.props.intl.formatMessage({ id: 'all_placeholder_label' })}
-                            value={this.props.spanName}
-                            data={this.props.spans}
-                            onBlur={e => BrowserActions.SetBrowserFilters({ spanName: e.target.value })} />
-                    </div>
-                    <div className="zk-ui-form-control-container">
-                        <span className="zk-ui-form-control-label">
-                            <FormattedMessage
-                                id="date_time_range_label" />
-                        </span>
-                        <DateTimeRangePicker
-                            dateInputFrom={this.props.startTs}
-                            dateInputTo={this.props.endTs}
-                            locale={navigator.language}
-                            onDateRangeSelected={(from, to) => BrowserActions.SetBrowserFilters({
-                                endTs: Moment(to).valueOf(),
-                                startTs: Moment(from).valueOf()
-                            })} />
-                    </div>
-                    <div className="zk-ui-form-control-container">
-                        <span className="zk-ui-form-control-label">
-                            <FormattedMessage
-                                id="duration_label" />
-                        </span>
-                        <input
-                            value={this.props.minDuration || ''}
-                            className="zk-ui-input dark"
-                            onChange={e => BrowserActions.SetBrowserFilters({ minDuration: e.target.value })} />
-                    </div>
-                    <div className="zk-ui-form-control-container">
-                        <span className="zk-ui-form-control-label">
-                            <FormattedMessage
-                                id="limit_label" />
-                        </span>
-                        <input
-                            value={this.props.limit || ''}
-                            className="zk-ui-input dark"
-                            onChange={e => BrowserActions.SetBrowserFilters({ limit: e.target.value })} />
-                    </div>
-                    <div className="zk-ui-form-control-container">
-                        <span className="zk-ui-form-control-label zk-ui-form-help">
-                            <FormattedMessage
-                                id="annotations_label" />
-                        </span>
-                        <textarea
-                            value={this.props.annotationQuery}
-                            onChange={e => BrowserActions.SetBrowserFilters({
-                                annotationQuery: e.target.value
-                            })}
-                            placeholder={this.props.intl.formatMessage({ id: 'annotations_placeholder_label' })}
-                            rows="5"
-                            className="zk-ui-input"></textarea>
-                    </div>
-                    <div className="zk-ui-form-control-container">
-                        <button
-                            onClick={() => this.onFindTracesClicked()}
-                            className="zk-ui-button primary">
-                            <FormattedMessage
-                                id="find_traces_label" />
-                        </button>
-                    </div>
-                </div>
+                { component }
             </div>
         );
     }

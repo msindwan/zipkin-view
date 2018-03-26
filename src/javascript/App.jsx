@@ -24,6 +24,7 @@ import NotFoundContainer from './views/containers/NotFoundContainer.jsx';
 import BrowserContainer from './views/containers/BrowserContainer.jsx';
 import TraceContainer from './views/containers/TraceContainer.jsx';
 import { GetServices, GetLocalTraces } from './actions/Browser';
+import { GetConfig } from './actions/Global';
 import { IntlProvider } from 'react-intl';
 import ReactDOM from 'react-dom';
 import React from 'react';
@@ -43,6 +44,7 @@ class App extends React.Component {
      * Description: Dispatches async calls to populate initial application data.
      */
     fetchInitialData() {
+        GetConfig();
         GetServices();
         GetLocalTraces();
     }

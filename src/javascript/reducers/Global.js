@@ -25,8 +25,34 @@ class GlobalReducer extends Reducer {
 
     constructor(name) {
         super(name, {
-            sidebarVisible: true,
-            storage: 'remote'
+            configLoading: false,
+            sidebarVisible: false,
+            storage: 'remote',
+            config: null
+        });
+    }
+
+    /**
+     * Set Config Loading
+     *
+     * Description: Sets the flag to indicate if the config is loading.
+     * @param configLoading {boolean} // The toggle to set.
+     */
+    setConfigLoading(configLoading) {
+        this.setState({
+            configLoading: configLoading
+        });
+    }
+
+    /**
+     * Set Config
+     *
+     * Description: Sets the config for the application.
+     * @param config {object} // The config to set.
+     */
+    setConfig(config) {
+        this.setState({
+            config: config
         });
     }
 
