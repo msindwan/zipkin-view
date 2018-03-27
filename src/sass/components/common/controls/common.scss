@@ -146,6 +146,20 @@ input.zk-ui-input {
     }
 }
 
+.zk-ui-banner {
+    font-size: 13px;
+    padding: 10px;
+
+    .fa.fa-warning {
+        margin-right: 2px;
+        color: #e5a105;
+    }
+
+    &.warning {
+        background: #f7e3b4;
+    }
+}
+
 /* https://projects.lukehaas.me/css-loaders/ */
 .zk-ui-loader,
 .zk-ui-loader:after {

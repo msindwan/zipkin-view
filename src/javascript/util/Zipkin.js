@@ -74,44 +74,43 @@ class Zipkin {
     static BuildHeirarchy(trace) {
         const spanLookup = {};
         const spans = [];
+        let broken = false;
 
         // Build the lookup.
         trace.spans.forEach(span => {
             Zipkin.ValidateSpan(span);
             spanLookup[span.id] = span;
-            span._children_ = [];
+            span._meta_ = {
+                children : [],
+                depth: null,
+                orphan: false
+            };
         });
 
         // Associate children.
         trace.spans.forEach(span => {
             const parent = spanLookup[span.parentId];
             if (typeof parent !== 'undefined') {
-                parent._children_.unshift(span);
+                parent._meta_.children.unshift(span);
             } else {
+                if (span.parentId) {
+                    span._meta_.orphan = true;
+                    broken = true;
+                }
                 spans.push(span);
             }
         });
 
-        return { spanLookup, spans };
-    }
-
-    /**
-     * Normalize Traces
-     *
-     * Description: Returns traces formmatted for application use.
-     * @param traces {araray} // The array of trace objects.
-     * @returns {array}       // The array of normalized trace objects.
-     */
-    static NormalizeTraces(traces) {
-        return traces.map(trace => {
-            if (typeof trace.traceId === 'undefined' && Array.isArray(trace)) {
-                return {
-                    traceId: trace[0].traceId,
-                    spans: trace
-                };
-            }
-            return trace;
+        // Sort spans by timestamp from latest to earliest.
+        spans.sort((a, b) => {
+            return b.timestamp - a.timestamp;
         });
+
+        return {
+            spanLookup,
+            spans,
+            broken
+        };
     }
 
     /**
@@ -122,9 +121,9 @@ class Zipkin {
      * @returns {object}    // The root span.
      */
     static GetRootSpan(trace) {
-        // For efficiency, we assume that the root span is always the
-        // first span in the trace.
-        return trace.spans[0];
+        // For efficiency, we assume that the span with the earliest timestamp
+        // is the root span.
+        return trace.spans[trace.spans.length - 1];
     }
 
     /**
