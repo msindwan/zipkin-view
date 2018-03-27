@@ -29,9 +29,8 @@ class TraceReducer extends Reducer {
             spanToggleState: {},
             selectedTrace: null,
             selectedSpan: null,
-            spanLookup: {},
+            hierarchy: null,
             loading: false,
-            spans: null
         });
     }
 
@@ -73,17 +72,12 @@ class TraceReducer extends Reducer {
      */
     setSelectedTrace(trace) {
         this.setState({
-            selectedTrace: null,
-            spanLookup: {},
-            spans: null
+            hierarchy: null
         });
 
         if (trace !== null) {
-            const { spanLookup, spans } = Zipkin.BuildHeirarchy(trace);
             this.setState({
-                selectedTrace: trace,
-                spanLookup: spanLookup,
-                spans: spans
+                hierarchy: Zipkin.BuildHierarchy(trace)
             });
         }
     }

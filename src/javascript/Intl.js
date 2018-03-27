@@ -54,6 +54,8 @@ const translations = {
         key_label: 'Key',
         limit_label: 'Limit',
         minute_placeholder: 'MM',
+        missing_spans_label: 'Some spans might be missing from the trace',
+        missing_parent_label: 'The parent for this span is missing',
         not_found_code: '404',
         not_found_go_back_message: 'Click to go back to the homepage',
         not_found_message: 'The requested resource was not found',

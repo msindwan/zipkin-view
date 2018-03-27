@@ -37,7 +37,7 @@ class TraceViewer extends React.Component {
      */
     getTableHeaders() {
         const headers = [ this.props.intl.formatMessage({ id: 'service_label'}) ];
-        const interval = Zipkin.GetTraceDuration(this.props.selectedTrace)/5;
+        const interval = Zipkin.GetTraceDuration(this.props.hierarchy)/5;
 
         for (let i = 1; i <= 5; i++) {
             headers.push(Zipkin.DurationToString(interval*i, this.props.intl));
@@ -58,16 +58,16 @@ class TraceViewer extends React.Component {
      * @returns {array}        // the set of rows.
      */
     getTableRows(numHeaders) {
-        const duration = Zipkin.GetTraceDuration(this.props.selectedTrace);
-        const startTs = Zipkin.GetTraceTimestamp(this.props.selectedTrace);
-        const spans = [ ...this.props.spans ];
+        const duration = Zipkin.GetTraceDuration(this.props.hierarchy);
+        const startTs = Zipkin.GetTraceTimestamp(this.props.hierarchy);
+        const spans = [ ...this.props.hierarchy.spans ];
         const rows = [];
 
         while (spans.length > 0) {
             const span = spans.pop();
             let depth = 0;
-            if (typeof span._depth_ !== 'undefined') {
-                depth = span._depth_;
+            if (typeof span._meta_.depth !== 'undefined') {
+                depth = span._meta_.depth;
             }
 
             const left = ((span.timestamp - startTs) / duration) * (numHeaders - 1) * 100 + '%';
@@ -95,7 +95,7 @@ class TraceViewer extends React.Component {
                     <TraceSpanRow
                         key={'selected-span'}
                         numHeaders={numHeaders}
-                        traceId={this.props.selectedTrace.traceId}
+                        traceId={this.props.hierarchy.traceId}
                         startTs={startTs}
                         span={span}
                         intl={this.props.intl}
@@ -106,8 +106,8 @@ class TraceViewer extends React.Component {
             depth++;
 
             if (!collapsed) {
-                span._children_.forEach(child => {
-                    child._depth_ = depth;
+                span._meta_.children.forEach(child => {
+                    child._meta_.depth = depth;
                     spans.push(child);
                 });
             }
@@ -130,7 +130,7 @@ class TraceViewer extends React.Component {
             SetSpanToggleState(spanId);
         } else if (typeof spanId !== 'undefined') {
             // Set the selected span.
-            const span = this.props.spanLookup[spanId];
+            const span = this.props.hierarchy.spanLookup[spanId];
             SetSelectedSpan(this.props.selectedSpan === span ? null : span);
         }
     }
@@ -142,10 +142,9 @@ class TraceViewer extends React.Component {
      */
     downloadJSON() {
         // Copy over the trace object with UI-specific attributes stripped.
-        const trace = this.props.selectedTrace.spans.map(span => {
+        const trace = this.props.hierarchy.spans.map(span => {
             const newSpan = Object.assign({}, span);
-            delete newSpan._children_;
-            delete newSpan._depth_;
+            delete newSpan._meta_;
             return newSpan;
         });
         const blob = new Blob([JSON.stringify(trace)], {type: "application/json"});
@@ -154,7 +153,7 @@ class TraceViewer extends React.Component {
         const node = document.createElement('a');
         document.body.appendChild(node);
         node.setAttribute("href", url);
-        node.setAttribute("download", `${this.props.selectedTrace.traceId}.json`);
+        node.setAttribute("download", `${this.props.hierarchy.traceId}.json`);
         node.click();
         node.remove();
     }
@@ -167,6 +166,12 @@ class TraceViewer extends React.Component {
             <div className="zk-ui-trace-viewer">
                 <div className="zk-ui-trace-viewer-container">
                     <div className="zk-ui-card">
+                        { this.props.hierarchy.broken && (
+                            <div className="zk-ui-banner warning">
+                                <i className="fa fa-warning"></i>
+                                { this.props.intl.formatMessage({ id: 'missing_spans_label'}) }
+                            </div>
+                        )}
                         <div className="zk-ui-card-header">
                             <div onClick={() => this.props.history.goBack()} className="zk-ui-button">
                                 <i className="fa fa-arrow-left"></i>

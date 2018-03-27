@@ -46,11 +46,16 @@ const TraceRow = ({
             key={span.id}>
             <td>
                 <div style={{ marginLeft: depth }} className="zk-ui-trace-service-name">
-                    { span._children_.length ?
+                    { span._meta_.children.length ?
                         <i
                             onClick={e => onToggleClicked(e, span)}
                             className={`zk-ui-trace-span-toggle fa fa-${collapsed ? 'plus' : 'minus'}`} /> :
                         <i className="zk-ui-trace-span-toggle fa fa-minus hidden"></i> }
+                    { span._meta_.orphan && (
+                        <i
+                            className="fa fa-warning"
+                            title={`${intl.formatMessage({ id: 'missing_parent_label'})}`} />
+                    )}
                     <span>{ Zipkin.GetSpanService(span) }</span>
                 </div>
             </td>

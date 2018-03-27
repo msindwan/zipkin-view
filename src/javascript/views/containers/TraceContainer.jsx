@@ -60,7 +60,7 @@ class TraceContainer extends AbstractContainer {
             component = (
                 <div className="zk-ui-loader"></div>
             );
-        } else if (this.state.trace.selectedTrace !== null) {
+        } else if (this.state.trace.hierarchy !== null) {
             component = (
                 <TraceViewer
                     history={this.props.history}
@@ -71,8 +71,8 @@ class TraceContainer extends AbstractContainer {
         return (
             <div className="zk-ui-container">
                 <Sidebar
-                    sidebarVisible={this.state.global.sidebarVisible}
                     history={this.props.history}
+                    { ...this.state.global }
                     { ...this.state.browser } />
                 <div className="zk-ui-content">
                     <div className="zk-ui-content-container">
