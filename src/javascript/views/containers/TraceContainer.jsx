@@ -60,7 +60,7 @@ class TraceContainer extends AbstractContainer {
             component = (
                 <div className="zk-ui-loader"></div>
             );
-        } else if (this.state.trace.heirarchy !== null) {
+        } else if (this.state.trace.hierarchy !== null) {
             component = (
                 <TraceViewer
                     history={this.props.history}

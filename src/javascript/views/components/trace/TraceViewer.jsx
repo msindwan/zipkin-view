@@ -37,7 +37,7 @@ class TraceViewer extends React.Component {
      */
     getTableHeaders() {
         const headers = [ this.props.intl.formatMessage({ id: 'service_label'}) ];
-        const interval = Zipkin.GetTraceDuration(this.props.heirarchy)/5;
+        const interval = Zipkin.GetTraceDuration(this.props.hierarchy)/5;
 
         for (let i = 1; i <= 5; i++) {
             headers.push(Zipkin.DurationToString(interval*i, this.props.intl));
@@ -58,9 +58,9 @@ class TraceViewer extends React.Component {
      * @returns {array}        // the set of rows.
      */
     getTableRows(numHeaders) {
-        const duration = Zipkin.GetTraceDuration(this.props.heirarchy);
-        const startTs = Zipkin.GetTraceTimestamp(this.props.heirarchy);
-        const spans = [ ...this.props.heirarchy.spans ];
+        const duration = Zipkin.GetTraceDuration(this.props.hierarchy);
+        const startTs = Zipkin.GetTraceTimestamp(this.props.hierarchy);
+        const spans = [ ...this.props.hierarchy.spans ];
         const rows = [];
 
         while (spans.length > 0) {
@@ -95,7 +95,7 @@ class TraceViewer extends React.Component {
                     <TraceSpanRow
                         key={'selected-span'}
                         numHeaders={numHeaders}
-                        traceId={this.props.heirarchy.traceId}
+                        traceId={this.props.hierarchy.traceId}
                         startTs={startTs}
                         span={span}
                         intl={this.props.intl}
@@ -130,7 +130,7 @@ class TraceViewer extends React.Component {
             SetSpanToggleState(spanId);
         } else if (typeof spanId !== 'undefined') {
             // Set the selected span.
-            const span = this.props.heirarchy.spanLookup[spanId];
+            const span = this.props.hierarchy.spanLookup[spanId];
             SetSelectedSpan(this.props.selectedSpan === span ? null : span);
         }
     }
@@ -142,7 +142,7 @@ class TraceViewer extends React.Component {
      */
     downloadJSON() {
         // Copy over the trace object with UI-specific attributes stripped.
-        const trace = this.props.heirarchy.spans.map(span => {
+        const trace = this.props.hierarchy.spans.map(span => {
             const newSpan = Object.assign({}, span);
             delete newSpan._meta_;
             return newSpan;
@@ -153,7 +153,7 @@ class TraceViewer extends React.Component {
         const node = document.createElement('a');
         document.body.appendChild(node);
         node.setAttribute("href", url);
-        node.setAttribute("download", `${this.props.heirarchy.traceId}.json`);
+        node.setAttribute("download", `${this.props.hierarchy.traceId}.json`);
         node.click();
         node.remove();
     }
@@ -166,7 +166,7 @@ class TraceViewer extends React.Component {
             <div className="zk-ui-trace-viewer">
                 <div className="zk-ui-trace-viewer-container">
                     <div className="zk-ui-card">
-                        { this.props.heirarchy.broken && (
+                        { this.props.hierarchy.broken && (
                             <div className="zk-ui-banner warning">
                                 <i className="fa fa-warning"></i>
                                 { this.props.intl.formatMessage({ id: 'missing_spans_label'}) }

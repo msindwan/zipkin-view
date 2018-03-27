@@ -71,7 +71,7 @@ class Zipkin {
      * @returns {array}     // the tree for the trace.
      * @throws {Error}      // If one or more spans are invalid.
      */
-    static BuildHeirarchy(trace) {
+    static BuildHierarchy(trace) {
         const spanLookup = {};
         const spans = [];
         let broken = false;
