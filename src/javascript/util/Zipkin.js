@@ -64,6 +64,25 @@ class Zipkin {
     }
 
     /**
+     * Normalize Traces
+     *
+     * Description: Returns traces formmatted for application use.
+     * @param traces {araray} // The array of trace objects.
+     * @returns {array}       // The array of normalized trace objects.
+     */
+    static NormalizeTraces(traces) {
+        return traces.map(trace => {
+            if (typeof trace.traceId === 'undefined' && Array.isArray(trace)) {
+                return {
+                    traceId: trace[0].traceId,
+                    spans: trace
+                };
+            }
+            return trace;
+        });
+    }
+
+    /**
      * Build Heirarchy
      *
      * Description: Builds the tree hierarchy for a trace.

@@ -20,6 +20,7 @@
  **/
 
 import { SetStorage } from './Global';
+import Zipkin from '../util/Zipkin';
 import { Action } from 'reduxion';
 import Utils from '../util/Utils';
 import API from '../util/Api';
@@ -79,7 +80,7 @@ const GetTrace = (traceId) => {
     SetStorage('remote');
 
     API.FetchTrace(traceId, trace => {
-        SetSelectedTrace(trace);
+        SetSelectedTrace(Zipkin.NormalizeTraces([trace])[0]);
         SetTraceLoading(false);
     }, error => {
         Utils.Alert(error.toString());
