@@ -32,7 +32,7 @@
                 border-collapse: collapse;
 
                 td {
-                    padding: 5px 0px;
+                    padding: 0px;
                     border-left: 1px solid #e8e8e8;
 
                     &:nth-child(1) {
@@ -77,7 +77,7 @@
                 }
 
                 .zk-ui-trace-span-context {
-                    box-shadow: 0px 0px 1px #ababab;
+                    border: 1px solid #e8e8e8;
                     padding: 10px;
 
                     .zk-ui-trace-span-context-table {
@@ -88,6 +88,7 @@
                             border-left: 0;
                             overflow: hidden;
                             text-overflow: ellipsis;
+                            padding: 3px 0px;
                         }
                         th {
                             border-left: 0;
@@ -112,12 +113,20 @@
                 }
 
                 .zk-ui-trace-service-name {
+                    border-left: 1px solid #e8e8e8;
+                    padding: 5px 0px;
+
                     .fa.fa-minus,
                     .fa.fa-plus {
                         color: #5fd2f7;
                         margin-right: 5px;
+                        margin-left: 2px;
                         &.hidden {
-                            visibility: hidden;
+                            color: transparent;
+                            height: 6px;
+                            width: 15px;
+                            border-bottom: 1px solid #e8e8e8;
+                            margin-left: 0;
                         }
                     }
 
