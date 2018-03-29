@@ -93,11 +93,16 @@ class Zipkin {
     static BuildHierarchy(trace) {
         const spanLookup = {};
         const spans = [];
+        let traceId = null;
         let broken = false;
 
         // Build the lookup.
         trace.spans.forEach(span => {
             Zipkin.ValidateSpan(span);
+            if (traceId === null) {
+                traceId = span.traceId;
+            }
+
             spanLookup[span.id] = span;
             span._meta_ = {
                 children : [],
@@ -126,6 +131,7 @@ class Zipkin {
         });
 
         return {
+            traceId,
             spanLookup,
             spans,
             broken
