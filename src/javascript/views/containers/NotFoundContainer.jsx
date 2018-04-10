@@ -33,7 +33,7 @@ const NotFoundContainer = () => (
                 <FormattedMessage
                     id="not_found_message" />
             </div>
-            <a href="/">
+            <a href={`${process.env.ZIPKIN_UI_PREFIX}`}>
                 <FormattedMessage
                     id="not_found_go_back_message" />
             </a>

@@ -45,7 +45,7 @@ class Sidebar extends React.Component {
         GlobalActions.SetStorage('remote');
 
         // Redirect to the same route with the correct query parameters.
-        this.props.history.push(`/${Utils.URLify({
+        this.props.history.push(`${process.env.ZIPKIN_UI_PREFIX}${Utils.URLify({
             serviceName: this.props.serviceName,
             spanName: this.props.spanName,
             endTs: this.props.endTs,

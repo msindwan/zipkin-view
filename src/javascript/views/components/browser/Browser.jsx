@@ -160,7 +160,7 @@ class Browser extends React.Component {
      */
     onTraceClick(e, trace) {
         SetSelectedTrace(trace);
-        this.props.history.push(`/traces/${trace.traceId}?storage=${this.props.storage}`);
+        this.props.history.push(`${process.env.ZIPKIN_UI_PREFIX}traces/${trace.traceId}?storage=${this.props.storage}`);
     }
 
     render() {

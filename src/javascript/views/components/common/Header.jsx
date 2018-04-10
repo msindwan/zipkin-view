@@ -42,7 +42,7 @@ class Header extends React.Component {
         const searchText = this.state.searchText;
         if (searchText) {
             this.setState({ searchText: '' });
-            this.props.history.push(`/traces/${searchText}`);
+            this.props.history.push(`${process.env.ZIPKIN_UI_PREFIX}traces/${searchText}`);
         }
     }
 
@@ -78,7 +78,7 @@ class Header extends React.Component {
                 Zipkin.ValidateSpans(spans);
 
                 UploadLocalTrace(spans, trace => {
-                    this.props.history.push(`/traces/${trace.traceId}?storage=local`);
+                    this.props.history.push(`${process.env.ZIPKIN_UI_PREFIX}traces/${trace.traceId}?storage=local`);
                 });
             } catch(e) {
                 // An invalid trace was provided.

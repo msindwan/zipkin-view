@@ -94,7 +94,8 @@ module.exports = {
         new webpack.DefinePlugin({
             "process.env": {
                 "NODE_ENV": `"${process.env.NODE_ENV}"`,
-                "ZIPKIN_API": `"${process.env.ZIPKIN_API}"`
+                "ZIPKIN_API": `"${process.env.ZIPKIN_API}"`,
+                "ZIPKIN_UI_PREFIX": `"${process.env.ZIPKIN_UI_PREFIX || '/'}"`
             }
         })
     ]

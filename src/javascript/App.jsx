@@ -56,8 +56,8 @@ class App extends React.Component {
                 messages={this.intl.getTranslations()}>
                 <Router>
                     <Switch>
-                        <Route exact path="/" component={BrowserContainer}/>
-                        <Route path="/traces/:traceId" component={TraceContainer}/>
+                        <Route exact path={`${process.env.ZIPKIN_UI_PREFIX}`} component={BrowserContainer}/>
+                        <Route path={`${process.env.ZIPKIN_UI_PREFIX}traces/:traceId`} component={TraceContainer}/>
                         <Route component={NotFoundContainer}/>
                     </Switch>
                 </Router>
